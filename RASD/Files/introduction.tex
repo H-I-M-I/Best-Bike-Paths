@@ -47,6 +47,27 @@ BBP is introduced into this world as a software system that interacts with biker
 \end{sharedphenomena}
 
 
+\subsection{Scope-Purpose Traceability Matrix}
+\begin{table}[htbp]
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.08\textwidth}>{\raggedright\arraybackslash}p{0.25\textwidth}>{\raggedright\arraybackslash}p{0.27\textwidth}>{\raggedright\arraybackslash}p{0.30\textwidth}}
+	\toprule
+		\textbf{Goal} & \textbf{Short description} & \textbf{Related world phenomena} & \textbf{Related shared phenomena} \\
+\midrule
+G1 & Trip recording + stats + weather for registered users & WP1 – Bikers travelling along paths and roads; WP3 – Variability of weather conditions; WP5 – Use of smartphones by bikers & SP1 – User authentication and identification; SP2 – Start and end of trip recording; SP3 – Provision of positional and motion-related data; SP8 – Presentation of trip history and statistics; SP9 – Use of external services for weather information \\
+G2 & Manual contribution and maintenance of publishable path/obstacle info & WP1 – Bikers travelling along paths and roads; WP2 – Evolution of path conditions; WP4 – Distribution of knowledge about path conditions; WP5 – Use of smartphones by bikers & SP1 – User authentication and identification; SP4 – Manual contribution and maintenance of path information \\
+G3 & Automatic detection of issues + user confirmation/correction & WP1 – Bikers travelling along paths and roads; WP2 – Evolution of path conditions; WP5 – Use of smartphones by bikers & SP2 – Start and end of trip recording; SP3 – Provision of positional and motion-related data; SP5 – Confirmation or correction of automatically inferred issues; SP9 – Use of external services (if used for context in detection) \\
+G4 & Path search between origin and destination + ranked suggestions for any user & WP1 – Bikers travelling along paths and roads; WP2 – Evolution of path conditions; WP3 – Variability of weather conditions; WP4 – Distribution of knowledge about path conditions & SP6 – Request for a path between two locations; SP7 – Presentation of suggested paths and their properties; SP9 – Use of external map/geocoding and weather services \\
+G5 & Merging info from multiple users; privileging fresher/confirmed data & WP2 – Evolution of path conditions; WP4 – Distribution of knowledge about path conditions & SP4 – Manual contribution and maintenance of path information; SP5 – Confirmation or correction of automatically inferred issues \\
+G6 & Maintain a consistent, up-to-date repository of paths for future use & WP2 – Evolution of path conditions; WP3 – Variability of weather conditions; WP4 – Distribution of knowledge about path conditions & SP4 – Manual contribution and maintenance of path information; SP5 – Confirmation/correction of inferred issues; SP7 – Presentation of path information to users; SP8 – Presentation of trip history and statistics; SP9 – Use of external map and weather services \\
+\bottomrule
+\end{tabular}
+\caption{Scope-purpose traceability matrix for BBP goals.}\label{tab:scope-purpose-traceability}
+\end{table}
+
+
 
 
 
