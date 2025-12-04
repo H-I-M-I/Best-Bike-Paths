@@ -8,8 +8,12 @@
 \usepackage[utf8]{inputenc}
 \usepackage{xspace}      % for abbrev.tex
 \usepackage{soul}        % for highlight.tex
+\PassOptionsToPackage{table}{xcolor} % allow table coloring before TikZ loads xcolor
+\usepackage[dvipsnames]{xcolor}      % safer color handling with extended palette
 \usepackage{tikz}        % for highlight.tex (if using TikZ diagrams)
-\usepackage{xcolor}      % safer color handling
+\usepackage{graphicx}    % enable image inclusion
+\usepackage{booktabs}    % professional table rules
+\usepackage{array}       % extended table column tools
 \usepackage{enumitem}
 \usepackage{fancyhdr}
 \setlength{\headheight}{13.59999pt}
@@ -40,11 +44,11 @@
 
 \begin{table}[t!]
 \centering
-\begin{tabular}{>{\raggedleft\arraybackslash}p{0.55\textwidth}|>{\raggedright\arraybackslash}p{0.45\textwidth}}
-\hline
-\textcolor{Blue}{\textbf{\small{Best Bike Paths + project by Shuvro Ahmed, Umme Humaira Himi, Ahmed Hassan}}} & \includegraphics[width=0.5\textwidth]{Images/PolimiLogo} \\
-\hline
-\end{tabular}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}X>{\centering\arraybackslash}p{0.28\textwidth}@{}}
+\toprule
+{\small \textcolor{blue}{\textbf{Best Bike Paths+ project by Shuvro Ahmed, Umme Humaira Himi, Ahmed Hassan}}} & \includegraphics[width=0.25\textwidth]{Images/PolimiLogo} \\
+\bottomrule
+\end{tabularx}
 \end{table}
 \vspace{7cm}
 %TITLE 
@@ -52,7 +56,7 @@
 \begin{flushleft}
 
 %Replace the text string with your title
-{\textcolor{Blue}{\textbf{\Huge{Requirement Analysis and Specification
+{\textcolor{blue}{\textbf{\Huge{Requirement Analysis and Specification
         Document}}}} \\ [1cm]
 
 \end{flushleft}
@@ -62,17 +66,17 @@
 %Define deliverable specific info
 %Replace cell contents where needed
 \begin{table}[h!]
-\begin{tabular}{|p{0.3\textwidth}|p{0.65\textwidth}|}
-\hline
-    \textbf{Deliverable:} & RASD \\
-    \textbf{Title:} & Requirement Analysis and Verification Document \\
-    \textbf{Authors:} & Shuvro Ahmed, Umme Humaira Himi, Ahmed Hassan \\
-    \textbf{Version:} & 1.0 \\
-    \textbf{Date:} & 23-December-2025 \\
-    \textbf{Download page:} & https://github.com/H-I-M-I/HassanAhmedHimi \\
-    \textbf{Copyright:} & Copyright © 2025, Shuvro Ahmed, Umme Humaira Himi, Ahmed Hassan – All rights reserved \\
-\hline
-\end{tabular}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.3\textwidth}>{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{Deliverable:} & RASD \\
+\textbf{Title:} & Requirement Analysis and Verification Document \\
+\textbf{Authors:} & Shuvro Ahmed, Umme Humaira Himi, Ahmed Hassan \\
+\textbf{Version:} & 1.0 \\
+\textbf{Date:} & 23-December-2025 \\
+\textbf{Download page:} & \url{https://github.com/H-I-M-I/HassanAhmedHimi} \\
+\textbf{Copyright:} & {\small Copyright © 2025, Shuvro Ahmed, Umme Humaira Himi, Ahmed Hassan – All rights reserved} \\
+\bottomrule
+\end{tabularx}
 \end{table}
 
 
@@ -93,10 +97,9 @@
 
 %------------------------------------------------------------------------------------------------------------------------------------------------
 \clearpage
-{\color{Blue}{\section{Introduction}}}
-\label{sect:introduction}
+\section{\textcolor{blue}{Introduction}}\label{sect:introduction}
 \input{Files/introduction}
-{\subsection{Purpose}}
+\subsection{Purpose}
 Cycling is an increasingly popular mode of urban transport and recreation, yet cyclists often struggle to find routes that are both safe and comfortable. Existing information about bike paths is scattered and unreliable: some paths are well maintained while others contain potholes, uneven surfaces, or suffer frequent vehicle interference. There is no centralized platform that continuously collects and validates this information in a structured way.
 
 The Best Bike Paths (BBP) system addresses this gap by providing a unified, data-driven platform where cyclists can record trips, assess path quality, and share observations with the community. BBP supports two data-collection modes: manual entry, where users input details about paths they travel, and automatic acquisition, where the system records GPS and sensor data during rides to detect irregular surfaces. It also integrates external weather information to enrich trip records and improve analysis accuracy.
@@ -115,26 +118,22 @@ G4: Provide personalized route suggestions that balance safety and effectiveness
 
 %------------------------------------------------------------------------------------------------------------------------------------------------
 \clearpage
-{\color{Blue}{\section{Overall Description}}}
-\label{sect:overview}
+\section{\textcolor{blue}{Overall Description}}\label{sect:overview}
 \input{Files/overview}
 
 %------------------------------------------------------------------------------------------------------------------------------------------------
 \clearpage
-{\color{Blue}{\section{Specific Requirements}}}
-\label{sect:requirements}
+\section{\textcolor{blue}{Specific Requirements}}\label{sect:requirements}
 \input{Files/requirements}
 
 %------------------------------------------------------------------------------------------------------------------------------------------------
 \clearpage
-{\color{Blue}{\section{Formal Analysis Using Alloy}}}
-\label{sect:alloy}
+\section{\textcolor{blue}{Formal Analysis Using Alloy}}\label{sect:alloy}
 \input{Files/alloy}
 
 %------------------------------------------------------------------------------------------------------------------------------------------------
 \clearpage
-{\color{Blue}{\section{Effort Spent}}}
-\label{sect:effort}
+\section{\textcolor{blue}{Effort Spent}}\label{sect:effort}
 \input{Files/effort}
 
 

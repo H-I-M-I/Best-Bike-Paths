@@ -74,7 +74,7 @@
 }{
     \gdef\pdf@landscape@rotate#1{}%
 }
-\let\latex@outputpage\@outputpage
+\let\latex@outputpage\@outputpage%
 \def\@outputpage{
     \ifx\within@landscape\@true%
         \if@twoside%
@@ -103,7 +103,6 @@
 
 %graphics
 \usepackage{graphicx}
-\usepackage[dvipsnames, table]{xcolor}
 %If you upload images from PC, you need to insert code for the path here (different for Windows and Unix OS)
 
 %References
