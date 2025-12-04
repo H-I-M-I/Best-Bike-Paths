@@ -7,14 +7,27 @@ By aggregating reports from multiple users and resolving inconsistencies using d
 
 \subsubsection{Goal}
 \begin{goalpoints}
-	\item[G1] Enable cyclists to travel along paths that are safe, smooth, and well maintained.
-	\item[G2] Inform cyclists about current path conditions and route quality before they start a trip.
-	\item[G3] Keep path information accurate and consistent over time by combining reports from multiple users.
-	\item[G4] Provide personalized route suggestions that balance safety and effectiveness (distance, effort, weather).
+	\item[G1] Allow registered users to record their bike trips and review them later with statistics (distance, duration, average speed, etc.) and related weather information.
+	\item[G2] Allow registered users to insert and maintain publishable information about bike paths and obstacles, through manual specification of the travelled paths and reported issues.
+	\item[G3] Support automatic detection of possible issues on bike paths during users' trips, and allow users to confirm or correct such detections before they become publishable information.
+	\item[G4] Allow any user to find and view suitable bike paths between an origin and a destination, ranked by a path score that considers factors such as length and reported quality (and possibly weather conditions along the paths).
+	\item[G5] Merge information collected from multiple users about the same path, resolving conflicts by privileging fresher and more confirmed data so that the resulting path information is reliable.
+	\item[G6] Maintain a consistent and up-to-date repository of bike paths and related information that can be used for future analysis and extensions of the service.  
 \end{goalpoints}
 
 
 \subsection{Scope}
 
 \subsubsection{World Phenomena}
+The Best Bike Paths (BBP) project takes place in a world in which people use bicycles to move through an urban environment composed of roads and bike paths. In this environment, several relevant phenomena occur independently of the presence of BBP:\
+
+\begin{worldphenomena}
+	\worldphenomenon{WP1}{Bikers travelling along physical bike paths and roads}{Bikers choose where and when to ride, move along the existing road and bike path network, and complete trips between different locations.}
+	\worldphenomenon{WP2}{Evolution of path conditions}{The physical and traffic conditions of bike paths change over time because of high traffic, obstacles, maintenance, and other variables.}
+	\worldphenomenon{WP3}{Variability of weather conditions}{Weather conditions vary by location and time, affecting the comfort, safety, and attractiveness of riding along specific paths.}
+	\worldphenomenon{WP4}{Distribution of knowledge about path conditions}{Information about the actual conditions and obstacles on bike paths is initially distributed among individual bikers, who may discover issues while riding and may informally share this knowledge (e.g., by word of mouth or private messages) without any centralized support.}
+	\worldphenomenon{WP5}{Use of smartphones by bikers}{Many bikers carry smartphones capable of determining their position and sensing aspects of their motion (e.g., through GPS and inertial sensors) and can connect to the internet either during or after their trips.}
+\end{worldphenomena}
+
+These phenomena characterize the problem world in which BBP is introduced. BBP cannot directly change the physical properties of roads, the weather, or the decisions of bikers about how to ride, but may observe and exploit some of these phenomena through its interaction with users and devices.
 
