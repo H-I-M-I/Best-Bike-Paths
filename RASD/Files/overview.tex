@@ -1,17 +1,48 @@
-Here you can see how to include an image in your document.
+\section{Overall Description}
+\subsection{Product Functions}
 
-\begin{sidewaysfigure}
-\centering
-\includegraphics[width=\textwidth]{Images/11.png}
-\caption{\label{fig:metamodel}DICE DPIM metamodel.}
-\end{sidewaysfigure}
+At a high level, the Best Bike Paths (BBP) system provides the following main functions.
+Each function corresponds to one or more of the goals defined in Section 1.1.
 
-\begin{figure}
-\centering
-\includegraphics[width=\textwidth]{Images/11.png}
-\caption{\label{fig:metamodel2}DICE DPIM metamodel in portrait form.}
-\end{figure}
+\subsubsection*{F1 -- User Management}
+BBP manages registered user accounts. It allows people to create an account, authenticate, 
+and access functionalities that are reserved to registered users (such as trip recording and 
+contribution of publishable path information).\\
+\textit{(mainly supports G1, G2, G3)}
 
-%Here is the command to refer to another element (section, figure, table, ...) in the document: \emph{As discussed in Section~\ref{sect:overview} and as shown in Figure~\ref{fig:metamodel}, ...}. Here is how to introduce a bibliographic citation~\cite{DAM}. Bibliographic references should be included in a \texttt{.bib} file. 
+\subsubsection*{F2 -- Trip Recording and Review}
+BBP allows registered users to record their bike trips and to review them afterwards. 
+For each recorded trip, the system stores basic information such as the path followed and 
+the time interval, and it computes and presents statistics such as distance, duration and 
+average speed, together with contextual information such as the weather experienced during 
+the trip.\\
+\textit{(mainly supports G1)}
 
-Table generation is a bit complicated in Latex. You will soon become proficient, but to start you can rely on tools or external services. See for instance this \href{https://www.tablesgenerator.com}{https://www.tablesgenerator.com}. 
+\subsubsection*{F3 -- Manual Contribution and Maintenance of Path Information}
+BBP allows registered users to manually provide and maintain publishable information about 
+bike paths. Users can indicate path segments they have ridden and annotate them with 
+information about status and obstacles. Users can later modify or remove their own 
+contributions when conditions change.\\
+\textit{(mainly supports G2, G6)}
+
+\subsubsection*{F4 -- Support for Automatic Detection and Validation of Issues}
+BBP supports the automatic detection of possible issues on bike paths during users’ trips 
+and their subsequent validation. Based on sensor data collected while a user is riding, the 
+system can infer candidate issues on path segments and present them to the user, who can 
+confirm, reject or refine them. Only validated information becomes part of the publishable 
+path information.\\
+\textit{(mainly supports G2, G3, G6)}
+
+\subsubsection*{F5 -- Path Search and Ranked Presentation}
+BBP allows any user to request one or more bike paths between a given origin and 
+destination. The system computes or retrieves suitable paths, presents them on a map, and 
+provides a ranking based on a path score that considers factors such as length, reported 
+quality, and weather conditions along the paths.\\
+\textit{(mainly supports G4, G6)}
+
+\subsubsection*{F6 -- Aggregation and Maintenance of Path Knowledge}
+BBP aggregates information from multiple users about the same path segments and maintains 
+a consistent, up-to-date view of their status and obstacles. When contributions conflict, the 
+system resolves them by privileging fresher and more validated data. This aggregated view 
+is used when answering path queries and when presenting detailed path information to users.\\
+\textit{(mainly supports G5, G6)}
