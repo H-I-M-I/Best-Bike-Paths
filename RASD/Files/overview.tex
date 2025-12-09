@@ -1,5 +1,3 @@
-\section{Overall Description}
-
 \subsection{Product perspective}
 \subsubsection{Scenarios}
 
@@ -8,88 +6,68 @@ the Best Bike Paths (BBP) system under typical circumstances. Each scenario illu
 actions performed by actors and the corresponding reactions of the system. The scenarios are
 story-based and independent of implementation or user interface details. They are derived
 from the goals, world phenomena, and shared phenomena identified in Section~1 and provide
-the basis for the definition of use cases in later sections.\\
+the basis for the definition of use cases in later sections.
 
-\noindent\textbf{Scenario S1 -- Recording and reviewing a bike trip}
+\textbf{Scenario S1 --- Recording and reviewing a bike trip}
  
-\noindent A registered user, Alice, goes for a bicycle ride in her neighborhood. Before starting the activity, she logs into BBP and initiates a new trip. While Alice is riding, BBP retrieves position information from her device and records the start time of the trip. At the end of the ride, Alice stops the recording. Later in the day, Alice accesses BBP again, opens the list of
+A registered user, Alice, goes for a bicycle ride in her neighborhood. Before starting the activity, she logs into BBP and initiates a new trip. While Alice is riding, BBP retrieves position information from her device and records the start time of the trip. At the end of the ride, Alice stops the recording. Later in the day, Alice accesses BBP again, opens the list of
 recorded trips, selects the trip she completed, and reviews its statistics together with the contextual weather information recorded during the ride.
-\\
-\textbf{Involved goals:} G1\\
-\textbf{Main supported functions:} F1, F2\\
-\textbf{Relevant shared phenomena:} SP1, SP2, SP3, SP8, SP9
-\\
+\scenarioinfo{G1}{F1, F2}{SP1, SP2, SP3, SP8, SP9}
 
-\noindent\textbf{Scenario S2 -- Manual contribution of path information}
-
-\noindent Bob, a registered user, regularly rides on a bike path that he notices has recently deteriorated.
+\textbf{Scenario S2 --- Manual contribution of path information}
+Bob, a registered user, regularly rides on a bike path that he notices has recently deteriorated.
 After completing his ride, Bob logs into BBP and manually selects the streets he travelled along.
 For one path segment, he indicates that the route \emph{requires maintenance} due to the
 presence of several potholes. BBP stores Bob's contribution as publishable path information
 associated with that segment. A few weeks later, after maintenance work has been completed,
 Bob updates his previous contribution by changing the status of the same path segment to
 \emph{good condition}.
-\\
-\textbf{Involved goals:} G2, G6\\
-\textbf{Main supported functions:} F1, F3\\
-\textbf{Relevant shared phenomena:} SP1, SP4\\
+\scenarioinfo{G2, G6}{F1, F3}{SP1, SP4}
 
 
-\noindent\textbf{Scenario S3 -- Automatic detection and validation of issues}
-
-\noindent Carol is a registered user who enables automatic trip recording before starting her bike ride.
+\textbf{Scenario S3 --- Automatic detection and validation of issues}
+Carol is a registered user who enables automatic trip recording before starting her bike ride.
 During the ride, BBP collects GPS and motion-related data from her device. After the trip ends,
 BBP analyzes the collected data and detects a possible irregularity on one of the travelled path
 segments. The system presents Carol with a candidate issue indicating the potential presence
 of an obstacle. Carol reviews the reported issue and confirms that it corresponds to a real
 pothole. BBP stores the validated information and makes it available to other users as
 publishable path information.
-\\
-\textbf{Involved goals:} G2, G3, G6\\
-\textbf{Main supported functions:} F2, F4\\
-\textbf{Relevant shared phenomena:} SP2, SP3, SP5\\
+\scenarioinfo{G2, G3, G6}{F2, F4}{SP2, SP3, SP5}
 
 
-\noindent\textbf{Scenario S4 -- Searching for a bike path between two locations}
+\textbf{Scenario S4 --- Searching for a bike path between two locations}
 
-\noindent David, who may or may not be a registered user, wants to plan a bike ride from his home to a
+David, who may or may not be a registered user, wants to plan a bike ride from his home to a
 nearby park. He provides BBP with an origin and a destination. The system processes the
 request, searches for available bike paths between the two locations, and ranks them based on
 criteria such as route length and reported conditions. BBP presents several alternative routes
 together with their scores. David reviews the available options and selects the path he prefers
 for his journey.
-\\
-\textbf{Involved goals:} G4\\
-\textbf{Main supported functions:} F5\\
-\textbf{Relevant shared phenomena:} SP6, SP7, SP9\\
+\scenarioinfo{G4}{F5}{SP6, SP7, SP9}
 
 
-\noindent\textbf{Scenario S5 -- Aggregation of information from multiple users}
-
-\noindent Over time, multiple registered users submit information regarding the same bike path segment.
+\textbf{Scenario S5 --- Aggregation of information from multiple users}
+Over time, multiple registered users submit information regarding the same bike path segment.
 Two users report the segment as being in \emph{optimal} condition, while another user confirms
 an automatically detected issue indicating that maintenance may be required. BBP aggregates
 the received contributions and resolves the inconsistency by considering the freshness of the
 data and the number of confirmations associated with each report. As a result, BBP maintains
 a consistent and up-to-date representation of the path segment, which is used when answering
 path queries from other users.
-\\
-\textbf{Involved goals:} G5, G6\\
-\textbf{Main supported functions:} F6\\
-\textbf{Relevant shared phenomena:} SP4, SP5, SP7\\
+\scenarioinfo{G5, G6}{F6}{SP4, SP5, SP7}
 
 \subsection{Product Functions}
-
 At a high level, the Best Bike Paths (BBP) system provides the following main functions.
 Each function corresponds to one or more of the goals defined in Section 1.1.
 
-\subsubsection*{F1 -- User Management}
+\subsubsection*{F1 --- User Management}
 BBP manages registered user accounts. It allows people to create an account, authenticate, 
 and access functionalities that are reserved to registered users (such as trip recording and 
 contribution of publishable path information).\\
 \textit{(mainly supports G1, G2, G3)}
 
-\subsubsection*{F2 -- Trip Recording and Review}
+\subsubsection*{F2 --- Trip Recording and Review}
 BBP allows registered users to record their bike trips and to review them afterwards. 
 For each recorded trip, the system stores basic information such as the path followed and 
 the time interval, and it computes and presents statistics such as distance, duration and 
@@ -97,14 +75,14 @@ average speed, together with contextual information such as the weather experien
 the trip.\\
 \textit{(mainly supports G1)}
 
-\subsubsection*{F3 -- Manual Contribution and Maintenance of Path Information}
+\subsubsection*{F3 --- Manual Contribution and Maintenance of Path Information}
 BBP allows registered users to manually provide and maintain publishable information about 
 bike paths. Users can indicate path segments they have ridden and annotate them with 
 information about status and obstacles. Users can later modify or remove their own 
 contributions when conditions change.\\
 \textit{(mainly supports G2, G6)}
 
-\subsubsection*{F4 -- Support for Automatic Detection and Validation of Issues}
+\subsubsection*{F4 --- Support for Automatic Detection and Validation of Issues}
 BBP supports the automatic detection of possible issues on bike paths during users’ trips 
 and their subsequent validation. Based on sensor data collected while a user is riding, the 
 system can infer candidate issues on path segments and present them to the user, who can 
@@ -112,14 +90,14 @@ confirm, reject or refine them. Only validated information becomes part of the p
 path information.\\
 \textit{(mainly supports G2, G3, G6)}
 
-\subsubsection*{F5 -- Path Search and Ranked Presentation}
+\subsubsection*{F5 --- Path Search and Ranked Presentation}
 BBP allows any user to request one or more bike paths between a given origin and 
 destination. The system computes or retrieves suitable paths, presents them on a map, and 
 provides a ranking based on a path score that considers factors such as length, reported 
 quality, and weather conditions along the paths.\\
 \textit{(mainly supports G4, G6)}
 
-\subsubsection*{F6 -- Aggregation and Maintenance of Path Knowledge}
+\subsubsection*{F6 --- Aggregation and Maintenance of Path Knowledge}
 BBP aggregates information from multiple users about the same path segments and maintains 
 a consistent, up-to-date view of their status and obstacles. When contributions conflict, the 
 system resolves them by privileging fresher and more validated data. This aggregated view 
