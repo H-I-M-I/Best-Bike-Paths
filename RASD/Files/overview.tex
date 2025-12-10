@@ -127,6 +127,65 @@ The most relevant relationships in the domain are the following:
 Together, these entities and relationships provide a domain-level view that supports all project aspects required for a three-person group:
 trip recording and review, manual and automatic contribution of publishable path information, confirmation and correction of inferred issues, path search and ranking for any user, and aggregation of information from multiple users to maintain an up-to-date, reliable repository of bike paths.
 
+\subsubsection{State Diagrams}
+Besides the static domain model, some concepts in BBP have a non-trivial lifecycle. They need more emphasis on when they are created and how they evolve over time. State diagrams are used here to describe the possible states of an object and the events that trigger transitions between those states. They help to clarify which operations are allowed in each phase of the lifecycle and how the system guarantees that only consistent, validated information is used when supporting users.
+
+Among the entities defined in the domain model, \textit{Issue} and \textit{SegmentStatus} are the ones whose lifecycle is most critical for the behaviour of BBP.\ Issues are created in different ways (manual versus automatic), must sometimes be validated by users, and eventually become obsolete or archived. SegmentStatus is the publishable summary of all contributions on a segment and is directly used in path ranking; it must react to new information, detect conflicts, and allow moderator intervention. For these reasons, dedicated state diagrams are provided for these two entities (Figures~\ref{fig:issue-lifecycle} and~\ref{fig:segmentstatus-lifecycle}).
+
+\paragraph{Issue lifecycle.}
+The state diagram for \textit{Issue} describes how a single Issue (a report about the condition of a segment) evolves from creation to the end of its life. An Issue can be created in two ways: manually by a Biker, or automatically by the system from sensor data collected during a trip. These two modes correspond to two different starting paths in the lifecycle.
+
+\textbf{Manual path.}
+When a Biker starts filling in a report about a segment, the Issue is conceptually in a ``manual draft'' state: it exists in the client or in a temporary form, but it is not yet part of the publishable information. When the Biker submits this report, the Issue immediately becomes valid and enters the \textit{Validated} state. From this moment on, it can be used in the aggregation that computes the segment's published status. If the Biker abandons or cancels the draft before submitting, the Issue is discarded and may go directly to an \textit{Archived} end state without ever becoming visible.
+
+\textbf{Automatic path.}
+When BBP infers a potential problem from trip data (for example from accelerometer or GPS patterns), it creates an Issue in an \textit{AutoDetected} state. In this state, the Issue represents a candidate problem that has not yet been approved by the user. The Biker is then presented this candidate in the validation interface, moving the Issue into \textit{PendingValidation}. While in PendingValidation, the system is waiting for the user's decision.
+
+From \textit{PendingValidation} there are two main outcomes:
+\begin{itemize}
+    \item If the user chooses to confirm the candidate issue (possibly refining its type or severity), the Issue moves to \textit{Validated}. It is now treated like a normal confirmed report and is included in the publishable information.
+    \item If the user rejects the candidate issue, the Issue moves to \textit{Rejected}. Rejected Issues are not used in computing segment status.
+\end{itemize}
+
+\textbf{Later evolution.}
+A \textit{Validated} Issue may eventually become outdated. For example, the problem might be fixed, or newer reports may indicate that conditions have changed. In this case, the Issue moves from \textit{Validated} to \textit{Obsolete}. Obsolete Issues are information that was once correct but no longer reflects the current state of the segment.
+
+Both \textit{Rejected} and \textit{Obsolete} Issues can then be cleaned up by the system or by a Moderator. This is represented by transitions to an \textit{Archived} state, in which the Issue is kept only for historical or analytical reasons and is no longer taken into account when computing current segment status.
+
+Overall, the Issue state diagram shows that manually submitted reports become \textit{Validated} directly, whereas automatically detected issues must pass through a \textit{PendingValidation} step. It also makes explicit that obsolete or rejected information is eventually archived and does not influence current publishable path information.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.88\textwidth]{Figures/state_diagram_issue.png}
+    \caption{State diagram for the Issue lifecycle.}\label{fig:issue-lifecycle}
+\end{figure}
+
+\paragraph{SegmentStatus lifecycle.}
+The state diagram for \textit{SegmentStatus} describes how the published status of a single path segment evolves as BBP receives new information, aggregates reports, and involves Moderators when needed.
+
+A path segment initially has no published status. In this situation, it is considered to be in a \textit{NoStatus} state: BBP has not yet computed any \textit{SegmentStatus} object for that segment. When enough information is available, the system computes a first status for the segment. This may be based on the absence of issues (for example, assigning a default ``sufficient'' status with low confidence when no problems have been reported) or based on existing Issues and their Confirmations. Once this first status is created, the SegmentStatus enters the \textit{Active} state.
+
+The \textit{Active} state represents the current published status of the segment. This is what users see on the map and what the path search function uses to evaluate and rank paths. While in Active, the status attributes (such as the qualitative status value and confidence level) may be periodically recomputed as new Issues and Confirmations arrive for that segment. When the new information is broadly consistent with the current status, the aggregation algorithm can update the attributes without changing the state: the SegmentStatus remains Active, but with refreshed values. This corresponds to automatic merging of contributions that agree with the existing picture.
+
+Sometimes, however, contributions from different bikers might contradict each other in the same time period. For example, some bikers in a given week might report the segment as ``good'', but several fresh, high-severity reports indicate that the segment is blocked or dangerous. If the automatic aggregation logic cannot resolve this discrepancy with sufficient confidence, the SegmentStatus moves to a \textit{Conflict detected} state. In this state, the system acknowledges that there is a serious disagreement between the existing status and the new evidence.
+
+From the \textit{Conflict detected} state there are two possible directions. If, after receiving more data, the automatic algorithm is able to reconcile the conflict (for instance because one side clearly dominates in terms of recency and confirmations), the SegmentStatus can move back to \textit{Active} with updated attributes. This represents conflicts that are resolved automatically by the merging logic. If instead the conflict remains unclear or is explicitly flagged as problematic, the SegmentStatus moves to \textit{Under moderation}.
+
+In the \textit{Under moderation} state, a human Moderator reviews the situation. They inspect the underlying Issues and Confirmations, and might have to do site checks, make calls, or check local news to make a decision. If the Moderator decides on a specific status, it is applied and the SegmentStatus moves back to \textit{Active}, now reflecting the status and confidence explicitly set by the Moderator. In more problematic cases---for example, if there is a lot of spam, clearly abusive reports, or the information is too unreliable---the Moderator may decide to temporarily hide the status for the segment. In that case, the SegmentStatus moves from \textit{Under moderation} to \textit{Suspended} (hidden).
+
+When a SegmentStatus is in the \textit{Suspended} state, BBP treats the segment as having no reliable published status. The system might, for example, show a generic ``status unavailable'' indicator on the map or penalise paths that pass through that segment because its safety is uncertain. At some later time, after further reports or manual cleanup, the Moderator can decide that it is appropriate to show a status again. This is represented by a transition from \textit{Suspended} back to \textit{Active}, possibly with a newly computed or Moderator-assigned status.
+
+Finally, any particular SegmentStatus object can become \textit{Superseded}. When a newer SegmentStatus replaces it as the current Active status for the same segment, or when the Suspended status is permanently retired, it becomes Superseded. In the \textit{Superseded} state, the SegmentStatus is only an archived snapshot and is no longer used when answering path queries. At any given time, each path segment has at most one Active SegmentStatus; other statuses for that segment are either Superseded or in transient states such as \textit{Conflict detected} or \textit{Under moderation}.
+
+Taken together, the SegmentStatus state diagram captures three key aspects of the system: automatic aggregation of many Issues and Confirmations into a single published status, detection and handling of conflicts between new and existing information, and the special role of Moderators in resolving ambiguous situations or temporarily hiding unreliable status information.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.88\textwidth]{Figures/state_diagram_segment_status.png}
+    \caption{State diagram for the SegmentStatus lifecycle.}\label{fig:segmentstatus-lifecycle}
+\end{figure}
+
+
 \subsection{Product Functions}
 At a high level, the Best Bike Paths (BBP) system provides the following main functions.
 Each function corresponds to one or more of the goals defined in Section 1.1.
