@@ -58,13 +58,18 @@ path queries from other users.
 \scenarioinfo{G5, G6}{F6}{SP4, SP5, SP7}
 
 \clearpage
-\subsubsection{Domain Class Diagram}
-\label{subsec:domain-model}
+\subsubsection{Domain Class Diagram}\label{subsec:domain-model}
 
 This subsection describes the main concepts that BBP maintains over time and their relationships, independently of user interface or implementation details. The corresponding domain model is shown in Figure~\ref{fig:domain-model}.
 
-\paragraph{Main entities.}
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.9\textwidth]{Figures/domain-model.png}
+    \caption{Domain model for Best Bike Paths.}\label{fig:domain-model}
+\end{figure}
 
+\paragraph{Main entities}
+\mbox{}\\
 \textbf{RegisteredUser, Biker, Moderator.}
 \textit{RegisteredUser} is an abstract concept representing any authenticated user of BBP whose data is stored by the system.
 It is specialised into:
@@ -126,7 +131,7 @@ trip recording and review, manual and automatic contribution of publishable path
 At a high level, the Best Bike Paths (BBP) system provides the following main functions.
 Each function corresponds to one or more of the goals defined in Section 1.1.
 
-\begin{description}[style=nextline,itemsep=0.9em,leftmargin=0pt,labelsep=0.6em]
+\begin{description}[style=nextline,itemsep=0.9em,labelwidth=4.5em,leftmargin=!,labelsep=0.6em]
     \item[F1 --- User Management]
     BBP manages registered user accounts. It allows people to create an account, authenticate, and access functionalities that are reserved to registered users (such as trip recording and contribution of publishable path information).\\
     \textit{(mainly supports G1, G2, G3)}
