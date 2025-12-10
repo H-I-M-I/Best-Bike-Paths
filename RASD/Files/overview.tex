@@ -57,6 +57,71 @@ a consistent and up-to-date representation of the path segment, which is used wh
 path queries from other users.
 \scenarioinfo{G5, G6}{F6}{SP4, SP5, SP7}
 
+\clearpage
+\subsubsection{Domain Class Diagram}
+\label{subsec:domain-model}
+
+This subsection describes the main concepts that BBP maintains over time and their relationships, independently of user interface or implementation details. The corresponding domain model is shown in Figure~\ref{fig:domain-model}.
+
+\paragraph{Main entities.}
+
+\textbf{RegisteredUser, Biker, Moderator.}
+\textit{RegisteredUser} is an abstract concept representing any authenticated user of BBP whose data is stored by the system.
+It is specialised into:
+\begin{itemize}
+    \item \textbf{Biker}: a registered user who records trips and contributes path information.
+          In line with the user characteristics, bikers can record trips, manually insert and maintain publishable information about bike paths and obstacles, and confirm or correct automatically inferred issues.
+    \item \textbf{Moderator}: a registered user with administrative privileges.
+          Moderators can perform maintenance operations on user-generated content, especially when contributions are clearly abusive or incorrect, and can intervene on the published representation of path information when necessary.
+\end{itemize}
+
+\textbf{Trip.}
+A \textit{Trip} represents a bike ride actually recorded by a Biker.
+For each trip, BBP stores identifiers and timestamps and computes basic statistics such as distance, duration, and average speed, together with a summary of the weather experienced during the ride (for example, obtained from the Weather Information Service).
+
+\textbf{PathSegment and Path.}
+A \textit{PathSegment} is an atomic portion of the bike network (e.g., a street or part of a street between two relevant points).
+A \textit{Path} is an ordered sequence of PathSegments representing a candidate bike route between an origin and a destination.
+Paths are computed or retrieved by BBP and ranked based on a \textit{score} that takes into account length, reported quality, and possibly weather conditions along the path.
+
+\textbf{Issue.}
+An \textit{Issue} encapsulates one raw contribution about conditions or obstacles on a single PathSegment.
+In accordance with the functional requirements for manual and automatic contribution of information, Issues may be submitted:
+\begin{itemize}
+    \item in \textbf{manual mode}, when a Biker selects travelled segments and annotates them with status and obstacles;
+    \item in \textbf{automatic mode}, when BBP infers candidate issues from sensor data collected during a trip and then presents them to the user for validation.
+\end{itemize}
+Each Issue has a type (e.g., pothole, flood, ``good condition''), a severity, a creation time, and a \textit{sourceType} indicating whether it originated manually or automatically.
+
+\textbf{Confirmation.}
+A \textit{Confirmation} represents the validation action that a Biker performs on an Issue detected by BBP in automatic mode, or on existing information in general.
+Users can confirm, reject, or refine candidate issues before they become part of the publishable information.
+Confirmations are stored with a \textit{kind} (e.g., confirm / reject / refine) and a timestamp.
+
+\textbf{SegmentStatus.}
+\textit{SegmentStatus} models the publishable information about a path segment that BBP maintains and exposes to all users.
+It captures the current status of a segment (e.g., optimal, medium, sufficient, requires maintenance), its validity interval, and a confidence value reflecting how fresh and well-confirmed the underlying information is.
+This entity supports the functions related to providing and maintaining publishable information, and to merging information from different users, by providing a consistent, aggregated view of segment conditions used when answering path queries and when presenting detailed path information.
+
+\paragraph{Relationships.}
+
+The most relevant relationships in the domain are the following:
+\begin{itemize}
+    \item A \textbf{Biker} performs zero or more Trips; each Trip is associated with exactly one Biker.
+    \item Each \textbf{Trip} traverses one or more PathSegments, representing the path actually followed during that ride.
+    \item A \textbf{Biker} can report zero or more Issues; each Issue concerns exactly one PathSegment.
+    \item A \textbf{Biker} can provide zero or more Confirmations, each referring to exactly one Issue.
+    \item A \textbf{Moderator} can moderate Issues (for example by flagging or removing clearly incorrect or abusive contributions) and can manage SegmentStatus objects, for instance by overriding or correcting the published representation in exceptional cases.
+    \item A \textbf{Path} includes one or more PathSegments and is associated with a path score that is computed using the SegmentStatus of its segments, together with other factors such as length and effectiveness in reaching the destination.
+    \item Each \textbf{PathSegment} can have zero or more associated Issues and zero or more SegmentStatus instances over time.
+          At any given moment, at most one SegmentStatus represents the current published status of the segment.
+    \item \textbf{SegmentStatus summarises Issues}: for each segment, SegmentStatus objects are conceptually derived by aggregating the Issues reported for that segment and the Confirmations they have received, privileging fresher and more confirmed data.
+          This summarised view is used when ranking paths and when presenting conditions on the map.
+\end{itemize}
+
+Together, these entities and relationships provide a domain-level view that supports all project aspects required for a three-person group:
+trip recording and review, manual and automatic contribution of publishable path information, confirmation and correction of inferred issues, path search and ranking for any user, and aggregation of information from multiple users to maintain an up-to-date, reliable repository of bike paths.
+
 \subsection{Product Functions}
 At a high level, the Best Bike Paths (BBP) system provides the following main functions.
 Each function corresponds to one or more of the goals defined in Section 1.1.
