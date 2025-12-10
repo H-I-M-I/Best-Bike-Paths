@@ -46,26 +46,36 @@ BBP is introduced into this world as a software system that interacts with biker
 	\sharedphenomenon{SP9}{Use of external services for map, traffic, and weather information}{BBP issues requests to external map/geocoding, traffic, and weather information services and receives responses that provide data about maps, routes, traffic, and weather conditions, which it then uses when enriching trip records or presenting paths to users.}
 \end{sharedphenomena}
 
-\clearpage % or \newpage
+
+\Needspace{16\baselineskip}
 \subsection{Scope-Purpose Traceability Matrix}
-\begin{table}[H]
-\centering
-\small
+{\small
 \setlength{\tabcolsep}{4pt}
-\begin{tabular}{>{\raggedright\arraybackslash}p{0.08\textwidth}>{\raggedright\arraybackslash}p{0.25\textwidth}>{\raggedright\arraybackslash}p{0.27\textwidth}>{\raggedright\arraybackslash}p{0.30\textwidth}}
-	\toprule
-		\textbf{Goal} & \textbf{Short description} & \textbf{Related world phenomena} & \textbf{Related shared phenomena} \\
+\setlength{\LTleft}{\fill}
+\setlength{\LTright}{\fill}
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.08\textwidth}>{\raggedright\arraybackslash}p{0.25\textwidth}>{\raggedright\arraybackslash}p{0.27\textwidth}>{\raggedright\arraybackslash}p{0.30\textwidth}}
+\caption{Scope-purpose traceability matrix for BBP goals.}\label{tab:scope-purpose-traceability}\\
+\toprule
+\textbf{Goal} & \textbf{Short description} & \textbf{Related world phenomena} & \textbf{Related shared phenomena} \\
 \midrule
+\endfirsthead
+
+\toprule
+\textbf{Goal} & \textbf{Short description} & \textbf{Related world phenomena} & \textbf{Related shared phenomena} \\
+\midrule
+\endhead
+\midrule
+\endfoot
+\bottomrule
+\endlastfoot
 G1 & Trip recording + stats + weather for registered users & \begin{tabular}[t]{@{}>{\raggedright\arraybackslash}p{\linewidth}@{}}WP1 -Bikers travelling along paths and roads\\WP3 -Variability of weather conditions\\WP5 -Use of smartphones by bikers\end{tabular} & \begin{tabular}[t]{@{}>{\raggedright\arraybackslash}p{\linewidth}@{}}SP1 -User authentication and identification\\SP2 -Start and end of trip recording\\SP3 -Provision of positional and motion-related data\\SP8 -Presentation of trip history and statistics\\SP9 -Use of external services for weather information\end{tabular} \\
 G2 & Manual contribution and maintenance of publishable path/obstacle info & \begin{tabular}[t]{@{}>{\raggedright\arraybackslash}p{\linewidth}@{}}WP1 -Bikers travelling along paths and roads\\WP2 -Evolution of path conditions\\WP4 -Distribution of knowledge about path conditions\\WP5 -Use of smartphones by bikers\end{tabular} & \begin{tabular}[t]{@{}>{\raggedright\arraybackslash}p{\linewidth}@{}}SP1 -User authentication and identification\\SP4 -Manual contribution and maintenance of path information\end{tabular} \\
 G3 & Automatic detection of issues + user confirmation/correction & \begin{tabular}[t]{@{}>{\raggedright\arraybackslash}p{\linewidth}@{}}WP1 -Bikers travelling along paths and roads\\WP2 -Evolution of path conditions\\WP5 -Use of smartphones by bikers\end{tabular} & \begin{tabular}[t]{@{}>{\raggedright\arraybackslash}p{\linewidth}@{}}SP2 -Start and end of trip recording\\SP3 -Provision of positional and motion-related data\\SP5 -Confirmation or correction of automatically inferred issues\\SP9 -Use of external services (if used for context in detection)\end{tabular} \\
 G4 & Path search between origin and destination + ranked suggestions for any user & \begin{tabular}[t]{@{}>{\raggedright\arraybackslash}p{\linewidth}@{}}WP1 -Bikers travelling along paths and roads\\WP2 -Evolution of path conditions\\WP3 -Variability of weather conditions\\WP4 -Distribution of knowledge about path conditions\end{tabular} & \begin{tabular}[t]{@{}>{\raggedright\arraybackslash}p{\linewidth}@{}}SP6 -Request for a path between two locations\\SP7 -Presentation of suggested paths and their properties\\SP9 -Use of external map/geocoding and weather services\end{tabular} \\
 G5 & Merging info from multiple users; privileging fresher/confirmed data & \begin{tabular}[t]{@{}>{\raggedright\arraybackslash}p{\linewidth}@{}}WP2 -Evolution of path conditions\\WP4 -Distribution of knowledge about path conditions\end{tabular} & \begin{tabular}[t]{@{}>{\raggedright\arraybackslash}p{\linewidth}@{}}SP4 -Manual contribution and maintenance of path information\\SP5 -Confirmation or correction of automatically inferred issues\end{tabular} \\
 G6 & Maintain a consistent, up-to-date repository of paths for future use & \begin{tabular}[t]{@{}>{\raggedright\arraybackslash}p{\linewidth}@{}}WP2 -Evolution of path conditions\\WP3 -Variability of weather conditions\\WP4 -Distribution of knowledge about path conditions\end{tabular} & \begin{tabular}[t]{@{}>{\raggedright\arraybackslash}p{\linewidth}@{}}SP4 -Manual contribution and maintenance of path information\\SP5 -Confirmation/correction of inferred issues\\SP7 -Presentation of path information to users\\SP8 -Presentation of trip history and statistics\\SP9 -Use of external map and weather services\end{tabular} \\
-\bottomrule
-\end{tabular}
-\caption{Scope-purpose traceability matrix for BBP goals.}\label{tab:scope-purpose-traceability}
-\end{table}
+\end{longtable}
+}
 
 
 
