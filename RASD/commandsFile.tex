@@ -144,6 +144,15 @@
     \item[#1] \textbf{#2}\par
     #3}
 
+\newlist{domainassumptions}{description}{1}
+\setlist[domainassumptions]{labelwidth=3em, labelsep=0.6em, leftmargin=!, align=parleft,
+    itemsep=0.6em, topsep=0.6em}
+
+\newcommand{\domainassumption}[3]{%
+    \needspace{4\baselineskip}% keep headline with its explanation
+    \item[#1] \textbf{#2}\par
+    #3}
+
 
 %Helper to render scenario metadata with consistent styling
 \newcommand{\scenarioinfo}[3]{%

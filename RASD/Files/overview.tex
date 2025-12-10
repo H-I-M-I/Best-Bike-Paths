@@ -141,3 +141,51 @@ An external service that provides map data, geocoding, and, where available, rou
     \item Translate user-specified locations (e.g., addresses) into coordinates.
     \item Compute or retrieve candidate bike paths between an origin and a destination.
 \end{itemize}
+
+
+\subsection{Assumptions, Dependencies and Constraints}
+\subsubsection{Domain Assumptions}
+This section lists the main domain assumptions and environmental constraints that affect the requirements of BBP but are not under the direct control of the system. 
+They are used together with the requirements to achieve the goals identified in Section 1.1. 
+
+\begin{domainassumptions}
+    \domainassumption{DA1}{Availability of suitable devices for end users}{
+        Registered users access BBP from personal devices (typically smartphones) equipped with:
+        \begin{itemize}[nosep,leftmargin=1.4em]
+            \item a GPS receiver;
+            \item motion-related sensors (e.g., accelerometer, gyroscope);
+            \item display and input mechanisms that support interaction with the BBP user interface.
+        \end{itemize}
+        The device operating system permits the BBP client to read these sensors in line with the platform security and privacy policies.
+    }
+
+    \domainassumption{DA2}{Network connectivity}{
+        Devices used by registered and unregistered users have at least intermittent connectivity to the BBP back end. Continuous connectivity during an entire trip is not guaranteed, yet data recorded locally is assumed to reach BBP within a reasonable time after the ride.
+    }
+
+    \domainassumption{DA3}{Availability and quality of external services (WIS, MGRS)}{
+        The Weather Information Service (WIS) and the Map/Geocoding/Routing Service (MGRS) remain available and provide sufficiently accurate, up-to-date data for BBP.\ Temporary outages or inaccuracies can degrade functionality (e.g., weather enrichment or path computation), but overall availability is assumed.
+    }
+
+    \domainassumption{DA4}{Existence and stability of the road and bike path network}{
+        BBP operates in areas with a road and bike path network that can be represented by MGRS.\ Changes to the network (such as new roads or closures) are eventually reflected in the data provided by MGRS, even if the updates are not immediate.
+    }
+
+    \domainassumption{DA5}{Reasonable behaviour of users}{
+        Registered users are expected to act in good faith when they:
+        \begin{itemize}[nosep,leftmargin=1.4em]
+            \item record trips,
+            \item manually contribute information about paths and obstacles,
+            \item confirm or correct automatically inferred issues.
+        \end{itemize}
+        Occasional mistakes are anticipated, but systematic malicious behaviour (e.g., spamming false reports) is exceptional and only partially mitigated by aggregation and moderation mechanisms.
+    }
+
+    \domainassumption{DA6}{Non-critical usage context and user responsibility}{
+        BBP supports planning and review of bike trips but is not safety-critical. Users remain responsible for their own safety and compliance with traffic laws and regulations. The application cannot detect real-time path conditions and therefore cannot be held liable for accidents or damages.
+    }
+
+    \domainassumption{DA7}{Regulatory and platform constraints on data handling}{
+        The collection, storage, and processing of trip data and path information must comply with applicable data-protection and privacy regulations, as well as with the usage policies of the platforms on which BBP runs and of the external services it uses. These requirements may constrain, for example, how long detailed trip data can be retained, how it can be shared, or which consents must be obtained from users.
+    }
+\end{domainassumptions}
