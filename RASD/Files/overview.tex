@@ -61,45 +61,83 @@ path queries from other users.
 At a high level, the Best Bike Paths (BBP) system provides the following main functions.
 Each function corresponds to one or more of the goals defined in Section 1.1.
 
-\subsubsection*{F1 --- User Management}
-BBP manages registered user accounts. It allows people to create an account, authenticate, 
-and access functionalities that are reserved to registered users (such as trip recording and 
-contribution of publishable path information).\\
-\textit{(mainly supports G1, G2, G3)}
+\begin{description}[style=nextline,itemsep=0.9em,leftmargin=0pt,labelsep=0.6em]
+    \item[F1 --- User Management]
+    BBP manages registered user accounts. It allows people to create an account, authenticate, and access functionalities that are reserved to registered users (such as trip recording and contribution of publishable path information).\\
+    \textit{(mainly supports G1, G2, G3)}
 
-\subsubsection*{F2 --- Trip Recording and Review}
-BBP allows registered users to record their bike trips and to review them afterwards. 
-For each recorded trip, the system stores basic information such as the path followed and 
-the time interval, and it computes and presents statistics such as distance, duration and 
-average speed, together with contextual information such as the weather experienced during 
-the trip.\\
-\textit{(mainly supports G1)}
+    \item[F2 --- Trip Recording and Review]
+    BBP allows registered users to record their bike trips and to review them afterwards. For each recorded trip, the system stores basic information such as the path followed and the time interval, and it computes and presents statistics such as distance, duration, and average speed, together with contextual information such as the weather experienced during the trip.\\
+    \textit{(mainly supports G1)}
 
-\subsubsection*{F3 --- Manual Contribution and Maintenance of Path Information}
-BBP allows registered users to manually provide and maintain publishable information about 
-bike paths. Users can indicate path segments they have ridden and annotate them with 
-information about status and obstacles. Users can later modify or remove their own 
-contributions when conditions change.\\
-\textit{(mainly supports G2, G6)}
+    \item[F3 --- Manual Contribution and Maintenance of Path Information]
+    BBP allows registered users to manually provide and maintain publishable information about bike paths. Users can indicate path segments they have ridden and annotate them with information about status and obstacles. Users can later modify or remove their own contributions when conditions change.\\
+    \textit{(mainly supports G2, G6)}
 
-\subsubsection*{F4 --- Support for Automatic Detection and Validation of Issues}
-BBP supports the automatic detection of possible issues on bike paths during users’ trips 
-and their subsequent validation. Based on sensor data collected while a user is riding, the 
-system can infer candidate issues on path segments and present them to the user, who can 
-confirm, reject or refine them. Only validated information becomes part of the publishable 
-path information.\\
-\textit{(mainly supports G2, G3, G6)}
+    \item[F4 --- Support for Automatic Detection and Validation of Issues]
+    BBP supports the automatic detection of possible issues on bike paths during users’ trips and their subsequent validation. Based on sensor data collected while a user is riding, the system can infer candidate issues on path segments and present them to the user, who can confirm, reject, or refine them. Only validated information becomes part of the publishable path information.\\
+    \textit{(mainly supports G2, G3, G6)}
 
-\subsubsection*{F5 --- Path Search and Ranked Presentation}
-BBP allows any user to request one or more bike paths between a given origin and 
-destination. The system computes or retrieves suitable paths, presents them on a map, and 
-provides a ranking based on a path score that considers factors such as length, reported 
-quality, and weather conditions along the paths.\\
-\textit{(mainly supports G4, G6)}
+    \item[F5 --- Path Search and Ranked Presentation]
+    BBP allows any user to request one or more bike paths between a given origin and destination. The system computes or retrieves suitable paths, presents them on a map, and provides a ranking based on a path score that considers factors such as length, reported quality, and weather conditions along the paths.\\
+    \textit{(mainly supports G4, G6)}
 
-\subsubsection*{F6 --- Aggregation and Maintenance of Path Knowledge}
-BBP aggregates information from multiple users about the same path segments and maintains 
-a consistent, up-to-date view of their status and obstacles. When contributions conflict, the 
-system resolves them by privileging fresher and more validated data. This aggregated view 
-is used when answering path queries and when presenting detailed path information to users.\\
-\textit{(mainly supports G5, G6)}
+    \item[F6 --- Aggregation and Maintenance of Path Knowledge]
+    BBP aggregates information from multiple users about the same path segments and maintains a consistent, up-to-date view of their status and obstacles. When contributions conflict, the system resolves them by privileging fresher and more validated data. This aggregated view is used when answering path queries and when presenting detailed path information to users.\\
+    \textit{(mainly supports G5, G6)}
+\end{description}
+
+
+\subsection{User Characteristics}
+BBP is intended for the following categories of users and external actors.
+
+\subsubsection{End Users}
+
+\paragraph{Unregistered User}
+\mbox{}\\
+A person who accesses BBP without having created an account, or without logging in. Unregistered users can:
+\begin{itemize}[nosep,leftmargin=1.4em]
+    \item Request bike paths between an origin and a destination.
+    \item View suggested paths and their basic properties on a map.
+\end{itemize}
+They are assumed to have basic familiarity with mobile or web applications and with map-based interfaces, but they do not need technical expertise.
+
+\paragraph{Registered User (Biker)}
+\mbox{}\\
+A user who has created an account and is authenticated in BBP.\ In addition to the capabilities of unregistered users, registered users can:
+\begin{itemize}[nosep,leftmargin=1.4em]
+    \item Record their own bike trips and later review trip history and statistics.
+    \item Manually insert, update, and remove publishable information about bike paths and obstacles.
+    \item Confirm, reject, or refine issues that BBP has inferred from data collected during their trips.
+\end{itemize}
+Registered users are assumed to be regular or occasional bicycle riders, carrying a smartphone while riding and having at least intermittent internet connectivity. They are not required to have technical knowledge beyond normal use of smartphone applications.
+
+\paragraph{System Administrator / Moderator}
+\mbox{}\\
+A user with administrative privileges on BBP.\ Administrators can:
+\begin{itemize}[nosep,leftmargin=1.4em]
+    \item Perform maintenance operations on the system.
+    \item Access diagnostic information.
+    \item Moderate user-generated content when needed, for example by handling clearly abusive or obviously incorrect reports.
+\end{itemize}
+Administrators are assumed to have technical expertise in system administration and are not representative of typical end users.
+
+\subsubsection{External System Actors}
+These actors provide data or services that BBP relies on while processing user requests.
+
+\paragraph{Weather Information Service}
+\mbox{}\\
+An external service that provides weather data for specific locations and times. BBP queries this service in order to:
+\begin{itemize}[nosep,leftmargin=1.4em]
+    \item Associate weather information with recorded trips.
+    \item Consider expected weather along candidate paths when available.
+\end{itemize}
+
+\paragraph{Map / Geocoding / Routing Service}
+\mbox{}\\
+An external service that provides map data, geocoding, and, where available, routing information. BBP uses this service in order to:
+\begin{itemize}[nosep,leftmargin=1.4em]
+    \item Represent paths and locations on a map.
+    \item Translate user-specified locations (e.g., addresses) into coordinates.
+    \item Compute or retrieve candidate bike paths between an origin and a destination.
+\end{itemize}
