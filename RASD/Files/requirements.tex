@@ -258,7 +258,7 @@ Each requirement is labelled for traceability and later mapping to use cases.
 
 \end{itemize}
 
-% =========================================================
+% ========================================================
 \subsubsection*{F2 --- Trip Recording and Review}\label{sec:F2}
 
 \begin{itemize}
@@ -388,5 +388,146 @@ Each requirement is labelled for traceability and later mapping to use cases.
     \item \textbf{RE-F6--5: Consistency of SegmentStatus}\label{req:RE-F6-5}\\
     The system shall ensure that at most one active SegmentStatus exists for each 
     path segment at any given time.
+
+\end{itemize}
+
+
+\subsection{Performance Requirements}
+\label{sec:performance_requirements}
+
+The following performance requirements constrain the responsiveness and timing of BBP functionalities.
+Each requirement is grounded in the shared phenomena (SP), world phenomena (WP), and domain assumptions (DA) defined in earlier sections.
+
+\begin{itemize}
+
+    \item \textbf{PR-1: GPS Sampling Frequency}
+    \label{req:PR-1}\\
+    The system shall acquire GPS coordinates at intervals suitable for reconstructing the path taken by the user.
+    \textit{(Supports SP2, SP3; Relates to WP7; Depends on DA1, DA2)}
+
+    \item \textbf{PR-2: Sensor Data Responsiveness}
+    \label{req:PR-2}\\
+    The system shall process accelerometer and gyroscope data in near real time while a trip is being recorded.
+    \textit{(Supports SP3; Relates to WP6; Depends on DA1)}
+
+    \item \textbf{PR-3: Path Search Response Time}
+    \label{req:PR-3}\\
+    The system shall compute and present path options within a few seconds under normal network conditions.
+    \textit{(Supports SP6, SP7; Depends on DA3)}
+
+    \item \textbf{PR-4: Weather Data Retrieval Delay}
+    \label{req:PR-4}\\
+    The system shall retrieve weather information with minimal delay following a request.
+    \textit{(Supports SP9; Relates to WP4; Depends on DA3)}
+
+    \item \textbf{PR-5: Aggregation Processing Time}
+    \label{req:PR-5}\\
+    The system shall update SegmentStatus values promptly after receiving new manual or validated automatic contributions.
+    \textit{(Supports SP4, SP5, SP7; Relates to WP1; Depends on DA5)}
+
+    \item \textbf{PR-6: Trip Summary Availability}
+    \label{req:PR-6}\\
+    The system shall make trip statistics available immediately after the trip has ended, subject to network availability.
+    \textit{(Supports SP2, SP8; Relates to WP2; Depends on DA2)}
+
+\end{itemize}
+
+
+\subsection{Design Constraints}
+\label{sec:design_constraints}
+
+The system shall comply with the following constraints derived from environmental factors, device capabilities, and domain assumptions.
+
+\begin{itemize}
+
+    \item \textbf{DC-1: Device Sensor Availability}
+    \label{req:DC-1}\\
+    The application will be supported on GPS, accelerometer and gyroscope enabled devices.
+    \textit{(Relates to WP6, WP7; Depends on DA1)}
+
+    \item \textbf{DC-2: External Service Dependency}
+    \label{req:DC-2}\\
+    The system is expected to make use of weather and mapping services via an interface and is planned to interact with their ARN (availability resolution network).
+    \textit{(Supports SP9; Relates to WP4; Depends on DA3, DA4)}
+
+    \item \textbf{DC-3: Non-Safety-Critical Role}
+    \label{req:DC-3}\\
+    The hazard warning or safety injecting shall not need any real-time from the system.
+    \textit{(Relates to WP3; Depends on DA6)}
+
+    \item \textbf{DC-4: Contribution Integrity}
+    \label{req:DC-4}\\
+    The system will take the stance that users are contributing in good faith, meaning they have no malicious intent.
+    \textit{(Relates to WP8; Depends on DA5)}
+
+\end{itemize}
+
+\subsection{Software System Attributes}
+\label{sec:system_attributes}
+
+This section specifies the non-functional requirements that constrain the quality, robustness, and maintainability of BBP.
+
+\subsubsection*{Reliability}
+
+\begin{itemize}
+
+    \item \textbf{NFR-REL-1: Connectivity Tolerance}
+    \label{req:NFR-REL-1}\\
+    The system shall tolerate intermittent loss of network connectivity without interrupting the recording of local trip data.
+    \textit{(Supports SP2, SP3; Relates to WP2; Depends on DA2)}
+
+    \item \textbf{NFR-REL-2: Status Consistency}
+    \label{req:NFR-REL-2}\\
+    The system shall prevent inconsistencies such as duplicate or conflicting SegmentStatus entries for the same path segment.
+    \textit{(Supports SP7; Relates to WP1; Depends on DA5)}
+
+\end{itemize}
+
+\subsubsection*{Availability}
+
+\begin{itemize}
+
+    \item \textbf{NFR-AV-1: Service Continuity}
+    \label{req:NFR-AV-1}\\
+    Core functionalities (trip recording, path search) shall remain available provided that required device sensors and external services are reachable.
+    \textit{(Supports SP2, SP6; Relates to WP6, WP7; Depends on DA1, DA3)}
+
+\end{itemize}
+
+\subsubsection*{Security}
+
+\begin{itemize}
+
+    \item \textbf{NFR-SEC-1: Access Restriction}
+    \label{req:NFR-SEC-1}\\
+    Only logged-in users can post, edit, or validate published path contributions.
+    \textit{(Supports SP4, SP5; Relates to WP8; Depends on DA7)}
+
+    \item \textbf{NFR-SEC-2: Moderator Controls}
+    \label{req:NFR-SEC-2}\\
+    Top moderators for bypassing the cumulative status of a path will be limited to valid account(s) only.
+    \textit{(Supports SP7; Depends on DA7)}
+
+\end{itemize}
+
+\subsubsection*{Maintainability}
+
+\begin{itemize}
+
+    \item \textbf{NFR-MNT-1: Modular Structure}
+    \label{req:NFR-MNT-1}\\
+    The system shall isolate acquisition logic from aggregation and scoring logic to aid maintenance and extension.
+    \textit{(Supports SP3, SP7; Depends on DA5)}
+
+\end{itemize}
+
+\subsubsection*{Portability}
+
+\begin{itemize}
+
+    \item \textbf{NFR-PORT-1: Device Compatibility}
+    \label{req:NFR-PORT-1}\\
+    The system shall operate on different mobile devices that support the sensors required by DA1.
+    \textit{(Relates to WP6, WP7; Depends on DA1)}
 
 \end{itemize}
