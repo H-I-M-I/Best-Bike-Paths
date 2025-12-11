@@ -141,6 +141,65 @@ any user (G4, F5), and aggregation and moderation of contributions (G5--G6, F6).
 They are intended as illustrative examples; the final implementation may vary in appearance as long
 as these interaction patterns and information needs are preserved.
 
+\subsubsection{Hardware interfaces}
+BBP is designed primarily for smartphones carried by bikers and for server-side hardware operated by
+the service provider.
+
+\paragraph{Client devices.}
+
+\begin{itemize}[noitemsep,topsep=0.4em]
+  \item \textbf{Smartphone}: modern Android or iOS device.
+  \item \textbf{Location and motion sensors}: integrated GPS receiver and inertial sensors inside the mobile,
+        usually an accelerometer and a gyroscope. They help to measure position and motion data during trips.
+  \item \textbf{Network connectivity}: Wi-Fi or mobile data (3G/4G/5G) to communicate with the BBP backend
+        and external services.
+\end{itemize}
+
+The smartphone hardware is controlled by the user and its operating system. BBP can only access sensors
+and networks that have been allowed by the users and their devices' OSes.
+
+\paragraph{Server-side hardware.}
+
+BBP backend services utilize general-purpose server hardware. No assumptions are made on the specific CPU,
+memory, or storage configuration other than being sufficient to:
+\begin{itemize}[noitemsep,topsep=0.4em]
+  \item handle concurrent requests from client devices;
+  \item store and retrieve trip records, path information, and user accounts;
+  \item communicate with external map, traffic, and weather services.
+\end{itemize}
+
+Details of server provisioning and scaling are considered design and deployment concerns and are outside
+the scope of this RASD.\
+
+\subsubsection{Software interfaces}
+BBP interacts with many external software systems, platforms and services.
+\paragraph{Map / geocoding / routing service.}
+An external map service provides:
+\begin{itemize}[noitemsep,topsep=0.4em]
+  \item digital map tiles for visualization in the client UI;\
+  \item geocoding and reverse-geocoding of addresses and points of interest;
+  \item routing between origin and destination, including alternative paths.
+\end{itemize}
+The interface is a web API invoked by the BBP backend; requests contain origin/destination coordinates or textual addresses, and responses contain route geometries, distances, and metadata.
+
+\paragraph{Weather information service.}
+A weather service provides current and recent weather conditions for given locations and times. BBP uses this interface to:
+\begin{itemize}[noitemsep,topsep=0.4em]
+  \item enrich trip records with observed weather conditions;
+  \item optionally influence path ranking based on adverse weather.
+\end{itemize}
+The interface is a web API that accepts geographic coordinates and timestamps and returns structured weather data (e.g., temperature, precipitation, wind).
+
+\paragraph{Mobile platform services.}
+On client devices, BBP relies on operating system services exposed through standard SDKs:
+\begin{itemize}[noitemsep,topsep=0.4em]
+  \item location services (to access GPS position with user consent);
+  \item sensor APIs (to read accelerometer and related motion data);
+  \item network APIs (to perform secure HTTP requests to the BBP backend).
+\end{itemize}
+These interfaces are platform-dependent but are logically equivalent across supported mobile operating systems.
+
+
 
 \subsection{Functional Requirements}\label{sec:functional_requirements}
 
