@@ -1,3 +1,147 @@
+\subsection{External Interface Requirements}\label{subsec:external-interfaces}
+
+\subsubsection{User Interfaces}\label{subsec:user-interfaces}
+This subsection presents a high-level illustration of the core user interfaces of Best Bike Paths (BBP). 
+The goal is to give a specific visual design and clarify the main interaction flows.
+The subsection explores the information that must be presented, and how these interfaces support the goals and
+product functions defined in Sections~\ref{sec:goals} and~\ref{sec:product_functions}.
+
+Unless otherwise stated, we assume a smartphone client application used in portrait orientation.
+Both unregistered users and registered users (Bikers and Moderators) interact with BBP through
+map-based screens with a consistent layout: a top bar with navigation and context, a central map
+or content area, and bottom panels for actions and lists. This is consistent with the domain
+assumptions on user devices (DA1) and connectivity (DA2).
+
+\paragraph{Home / Map and Path Search}\mbox{}\\
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{Images/ui-home.png}
+    \caption{Conceptual home / map screen for path search.}\label{fig:ui-home}
+\end{figure}
+
+The home screen (Figure~\ref{fig:ui-home}) is the main entry point for both unregistered users and
+Bikers when searching for paths (F5). It corresponds to Scenario~S4 and to shared phenomena
+SP6--SP7.
+
+At the top, a simple form allows the user to specify an \emph{origin} and a \emph{destination}.
+By default, the origin field is pre-filled with the current location, while the destination field
+accepts a free-text address or point of interest. A prominent ``Find path'' button triggers the
+path query.
+
+The central area shows a map with the user position and the candidate paths between the chosen
+origin and destination. At least two alternative paths are shown, using different colours to
+represent their overall status (e.g., green for good, yellow for medium, red for avoid). A small
+legend clarifies the meaning of these colours. A bottom sheet lists the candidate routes with
+their main properties (estimated time, distance, summary status). Selecting a path in the list
+highlights it on the map. This directly supports requirements RE-F5--1 to RE-F5--5.
+
+\paragraph{Trip Recording screen}\mbox{}\\
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{Images/ui-recording.png}
+    \caption{Conceptual trip-recording screen for registered users.}\label{fig:ui-recording}
+\end{figure}
+The trip recording screen (Figure~\ref{fig:ui-recording}) is available only to registered users
+(Bikers). It supports Scenario~S1 and function F2.
+
+The top bar indicates the current mode (e.g., ``Recording Trip''). The central map shows the
+current GPS position and the portion of the path already travelled during the active trip. A small
+indicator (e.g., ``GPS active'') provides feedback on sensor availability (SP2--SP3).
+
+A stats panel above the bottom edge displays key trip statistics updated in real time:
+distance, elapsed time, and average speed. A large, high-contrast button in the panel controls
+recording: it appears as ``Start'' when no recording is active, and as ``Stop'' (or ``Pause'') while
+recording is ongoing. A short status message (such as ``Recording in background'') confirms the
+current state. An optional ``Add note / mark issue'' control lets the user drop a marker on the
+current segment to be refined later in the contribution screen. Together, these elements support
+requirements RE-F2--1 to RE-F2--6.
+
+\paragraph{Manual Contribution / Path Information}\mbox{}\\
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{Images/ui-manual.png}
+    \caption{Conceptual manual contribution screen.}\label{fig:ui-manual}
+\end{figure}
+The manual contribution screen (Figure~\ref{fig:ui-manual}) is used by Bikers to insert and
+update publishable information about the path segments they have travelled (Scenario~S2, function
+F3, shared phenomenon SP4).
+
+At the top, the map displays the most recently travelled path. The path is broken into separate
+segments; each selected segment is shown in a colour that reflects its chosen status (e.g., green
+for good, yellow for medium, red for poor/avoid). Below the map, a list contains one entry per
+selected segment. Each entry shows:
+\begin{itemize}
+  \item the street name and approximate length;
+  \item a drop-down menu to choose the segment status (Good / Medium / Poor / Avoid);
+  \item checkboxes to indicate specific obstacles (e.g., potholes, road works, flooded);
+  \item an optional text field for comments at the bottom of the list.
+\end{itemize}
+A primary ``Submit contributions'' button confirms the edits and stores them as publishable
+information (RE-F3--2, RE-F3--4), while ``Discard changes'' allows the user to cancel the
+operation without updating the stored data (RE-F3--3).
+
+\paragraph{Validation of Automatically Detected Issues}\mbox{}\\
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{Images/ui-confirm-issues.png}
+    \caption{Conceptual screen for validating automatically detected issues.}\label{fig:ui-confirm-issues}
+\end{figure}
+The issue confirmation screen (Figure~\ref{fig:ui-confirm-issues}) is presented to Bikers when
+BBP has inferred candidate Issues from sensor data collected during a recorded trip (Scenario~S3,
+function F4, shared phenomenon SP5).
+
+At the top, the screen shows the title (e.g., ``Confirm issues'') and the number of pending
+candidate issues. The central panel displays one Issue at a time as a card containing:
+\begin{itemize}
+  \item a mini-map with the affected segment highlighted;
+  \item a short textual description (issue type, detection time on the current trip, segment name
+        and length).
+\end{itemize}
+Below the card, two large buttons allow the user to \emph{Confirm} or \emph{Reject} the candidate
+Issue. A secondary text ``Refine details'' opens a compact form in case the biker wants to edit before confirming. A ``Skip for now'' action leaves the Issue in the
+\textit{PendingValidation} state. Confirmed or refined Issues are stored as validated information,
+while rejected Issues are discarded, in line with requirements RE-F4--2 to RE-F4--5.
+
+\paragraph{Moderator Review screen}\mbox{}\\
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{Images/ui-moderation.png}
+    \caption{Conceptual moderation screen for resolving conflicts.}\label{fig:ui-moderation}
+\end{figure}
+The moderation screen (Figure~\ref{fig:ui-moderation}) is intended for Moderators and supports the
+conflict-resolution and aggregation behaviour described in Scenario~S5, function F6, and in the
+SegmentStatus state diagram.
+
+At the top, a summary shows the current problem segment (e.g., ``Via Garibaldi (20m)'') together
+with a chip indicating whether its SegmentStatus is in \emph{Conflict} or \emph{Suspended}. A
+short line summarises the situation (e.g., ``3 conflicting issues, low confidence''). Below, a map
+highlights the affected segment.
+
+The ``Underlying issues'' table lists the Issues that contributed to the conflict, with columns for
+type, status (e.g., Good/Bad), recency (time since the report), and number of confirmations. This
+directly addresses the aggregation and conflict-detection logic (F6).
+
+At the bottom of the screen, some inputs allows the Moderator to:
+\begin{itemize}
+  \item choose a new published status for the segment from a drop-down menu (Good / Medium /
+        Poor / Avoid);
+  \item adjust a confidence value via a slider;
+  \item apply the chosen status (``Set status'' button);
+  \item temporarily hide the status by pressing a prominent ``Suspend status'' button, moving the
+        SegmentStatus into the Suspended state.
+\end{itemize}
+These actions correspond to the transitions between \textit{Active}, \textit{Conflict detected},
+\textit{Under moderation} and \textit{Suspended} in the SegmentStatus lifecycle.
+
+\paragraph{Consistency with requirements}\mbox{}\\
+The five screens described above collectively cover all the main interactions defined in the RASD:\
+trip recording and review (G1, F2), manual contribution and maintenance of path information (G2,
+F3), validation of automatically detected issues (G3, F4), path search and ranked presentation for
+any user (G4, F5), and aggregation and moderation of contributions (G5--G6, F6).
+They are intended as illustrative examples; the final implementation may vary in appearance as long
+as these interaction patterns and information needs are preserved.
+
+
 \subsection{Functional Requirements}\label{sec:functional_requirements}
 
 This section defines the functional requirements of the Best Bike Paths (BBP) system.
