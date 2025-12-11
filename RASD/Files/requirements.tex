@@ -199,6 +199,31 @@ On client devices, BBP relies on operating system services exposed through stand
 \end{itemize}
 These interfaces are platform-dependent but are logically equivalent across supported mobile operating systems.
 
+\subsubsection{Communication interfaces}
+BBP uses standard internet protocols to exchange data between client applications, backend services, and external providers.
+\paragraph{Client–server communication.}
+\begin{itemize}[noitemsep,topsep=0.4em]
+  \item \textbf{Protocol}: HTTPS over TCP/IP.\
+  \item \textbf{Interaction style}: REST-like web API exposed by the BBP backend.
+  \item \textbf{Data format}: produce structured JSON payloads for requests and responses (e.g., trip uploads, path queries, user authentication, management of path information and issues).
+\end{itemize}
+All communication between client devices and the BBP backend must be encrypted using TLS.\ Authentication tokens (for registered users) are transported in HTTP headers or equivalent secure mechanisms.
+
+\paragraph{Server-external service communication.}
+The BBP backend communicates with external map, traffic, and weather services through:
+\begin{itemize}[noitemsep,topsep=0.4em]
+  \item HTTPS-based web APIs provided by those services;
+  \item JSON or comparable structured formats, as defined by the respective providers;
+  \item API keys or similar credentials managed on the server side and never exposed to client devices.
+\end{itemize}
+
+\paragraph{Offline and intermittent connectivity.}
+If the client device is temporarily offline, trip data and issue reports may be cached locally on the device and sent to the backend when connectivity is restored. The precise buffering strategy is a design choice but must ensure that:
+\begin{itemize}[noitemsep,topsep=0.4em]
+  \item partial data is not presented as confirmed, publishable path information;
+  \item failed transmissions are detected and either retried or reported to the user.
+\end{itemize}
+
 
 
 \subsection{Functional Requirements}\label{sec:functional_requirements}
