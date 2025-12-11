@@ -1,202 +1,163 @@
-\subsection{Functional Requirements}
-\label{sec:functional_requirements}
+\subsection{Functional Requirements}\label{sec:functional_requirements}
 
 This section defines the functional requirements of the Best Bike Paths (BBP) system.
 Requirements are grouped according to the Product Functions F1--F6 defined in Section~\ref{sec:product_functions}.
 Each requirement is labelled for traceability and later mapping to use cases.
 
 
-\subsubsection*{F1 --- User Management}
-\label{sec:F1}
+\subsubsection*{F1 --- User Management}\label{sec:F1}
 
 \begin{itemize}
 
-    \item \textbf{RE-F1-1: Account Creation}
-    \label{req:RE-F1-1}\\
+    \item \textbf{RE-F1--1: Account Creation}\label{req:RE-F1-1}\\
     The system shall allow a person to create a registered user account, 
     provided they supply the information required for authentication.
 
-    \item \textbf{RE-F1-2: User Authentication}
-    \label{req:RE-F1-2}\\
+    \item \textbf{RE-F1--2: User Authentication}\label{req:RE-F1-2}\\
     The system shall authenticate a user when valid credentials are provided.
 
-    \item \textbf{RE-F1-3: Access Control}
-    \label{req:RE-F1-3}\\
+    \item \textbf{RE-F1--3: Access Control}\label{req:RE-F1-3}\\
     The system shall restrict access to trip recording and contribution 
     functionalities to authenticated registered users only.
 
-    \item \textbf{RE-F1-4: Unregistered User Access}
-    \label{req:RE-F1-4}\\
+    \item \textbf{RE-F1--4: Unregistered User Access}\label{req:RE-F1-4}\\
     The system shall allow unregistered users to request bike paths and 
     view ranked results with no authentication.
 
-    \item \textbf{RE-F1-5: Session Termination}
-    \label{req:RE-F1-5}\\
+    \item \textbf{RE-F1--5: Session Termination}\label{req:RE-F1-5}\\
     The system shall allow a registered user to log out, after which no 
     registered-only functionalities may be accessed.
 
 \end{itemize}
 
 % =========================================================
-\subsubsection*{F2 --- Trip Recording and Review}
-\label{sec:F2}
+\subsubsection*{F2 --- Trip Recording and Review}\label{sec:F2}
 
 \begin{itemize}
 
-    \item \textbf{RE-F2-1: Start Trip Recording}
-    \label{req:RE-F2-1}\\
+    \item \textbf{RE-F2--1: Start Trip Recording}\label{req:RE-F2-1}\\
     The system shall start recording a trip when a registered user initiates recording.
 
-    \item \textbf{RE-F2-2: Stop Trip Recording}
-    \label{req:RE-F2-2}\\
+    \item \textbf{RE-F2--2: Stop Trip Recording}\label{req:RE-F2-2}\\
     The system shall stop trip recording when a registered user ends the trip.
 
-    \item \textbf{RE-F2-3: GPS Data Acquisition}
-    \label{req:RE-F2-3}\\
+    \item \textbf{RE-F2--3: GPS Data Acquisition}\label{req:RE-F2-3}\\
     The system shall acquire positional data (GPS coordinates) at regular intervals 
     during an active trip.
 
-    \item \textbf{RE-F2-4: Sensor Data Acquisition}
-    \label{req:RE-F2-4}\\
+    \item \textbf{RE-F2--4: Sensor Data Acquisition}\label{req:RE-F2-4}\\
     The system shall acquire motion-related sensor data (accelerometer, gyroscope) 
     during an active trip.
 
-    \item \textbf{RE-F2-5: Trip Statistics Computation}
-    \label{req:RE-F2-5}\\
+    \item \textbf{RE-F2--5: Trip Statistics Computation}\label{req:RE-F2-5}\\
     The system shall compute trip statistics, including distance, duration and average speed, 
     after recording ends.
 
-    \item \textbf{RE-F2-6: Weather Data Attachment}
-    \label{req:RE-F2-6}\\
+    \item \textbf{RE-F2--6: Weather Data Attachment}\label{req:RE-F2-6}\\
     The system shall retrieve and associate weather information with the recorded trip.
 
-    \item \textbf{RE-F2-7: Trip History Presentation}
-    \label{req:RE-F2-7}\\
+    \item \textbf{RE-F2--7: Trip History Presentation}\label{req:RE-F2-7}\\
     The system shall display a list of previously recorded trips for each registered user.
 
-    \item \textbf{RE-F2-8: Trip Review}
-    \label{req:RE-F2-8}\\
+    \item \textbf{RE-F2--8: Trip Review}\label{req:RE-F2-8}\\
     The system shall display detailed information for any selected trip, including statistics 
     and associated weather information.
 
 \end{itemize}
 
 % ============================================================
-\subsubsection*{F3 --- Manual Contribution and Maintenance of Path Information}
-\label{sec:F3}
+\subsubsection*{F3 --- Manual Contribution and Maintenance of Path Information}\label{sec:F3}
 
 \begin{itemize}
 
-    \item \textbf{RE-F3-1: Manual Path Selection}
-    \label{req:RE-F3-1}\\
+    \item \textbf{RE-F3--1: Manual Path Selection}\label{req:RE-F3-1}\\
     The system shall allow registered users to select travelled path segments for reporting.
 
-    \item \textbf{RE-F3-2: Manual Issue Submission}
-    \label{req:RE-F3-2}\\
+    \item \textbf{RE-F3--2: Manual Issue Submission}\label{req:RE-F3-2}\\
     The system shall allow registered users to annotate selected path segments 
     with status or obstacle information.
 
-    \item \textbf{RE-F3-3: Edit Existing Contributions}
-    \label{req:RE-F3-3}\\
+    \item \textbf{RE-F3--3: Edit Existing Contributions}\label{req:RE-F3-3}\\
     The system shall allow registered users to update or remove their previously submitted 
     path information.
 
-    \item \textbf{RE-F3-4: Publishable Information Storage}
-    \label{req:RE-F3-4}\\
+    \item \textbf{RE-F3--4: Publishable Information Storage}\label{req:RE-F3-4}\\
     The system shall store submitted or updated manual contributions as publishable 
     path information.
 
 \end{itemize}
 
 % ============================================================
-\subsubsection*{F4 --- Automatic Detection and Validation of Issues}
-\label{sec:F4}
+\subsubsection*{F4 --- Automatic Detection and Validation of Issues}\label{sec:F4}
 
 \begin{itemize}
 
-    \item \textbf{RE-F4-1: Issue Inference}
-    \label{req:RE-F4-1}\\
+    \item \textbf{RE-F4--1: Issue Inference}\label{req:RE-F4-1}\\
     The system shall infer candidate issues from motion-related sensor data collected 
     during a recorded trip.
 
-    \item \textbf{RE-F4-2: Candidate Issue Presentation}
-    \label{req:RE-F4-2}\\
+    \item \textbf{RE-F4--2: Candidate Issue Presentation}\label{req:RE-F4-2}\\
     The system shall present inferred candidate issues to the user for validation 
     after the trip ends.
 
-    \item \textbf{RE-F4-3: User Validation Actions}
-    \label{req:RE-F4-3}\\
+    \item \textbf{RE-F4--3: User Validation Actions}\label{req:RE-F4-3}\\
     The system shall allow users to confirm, reject or refine candidate issues.
 
-    \item \textbf{RE-F4-4: Acceptance of Validated Issues}
-    \label{req:RE-F4-4}\\
+    \item \textbf{RE-F4--4: Acceptance of Validated Issues}\label{req:RE-F4-4}\\
     The system shall store confirmed or refined issues as publishable information.
 
-    \item \textbf{RE-F4-5: Discarding Rejected Issues}
-    \label{req:RE-F4-5}\\
+    \item \textbf{RE-F4--5: Discarding Rejected Issues}\label{req:RE-F4-5}\\
     The system shall discard rejected issues so that they do not influence 
     publishable path information.
 
 \end{itemize}
 
 % ============================================================
-\subsubsection*{F5 --- Path Search and Ranked Presentation}
-\label{sec:F5}
+\subsubsection*{F5 --- Path Search and Ranked Presentation}\label{sec:F5}
 
 \begin{itemize}
 
-    \item \textbf{RE-F5-1: Path Query Input}
-    \label{req:RE-F5-1}\\
+    \item \textbf{RE-F5--1: Path Query Input}\label{req:RE-F5-1}\\
     The system shall allow any user to provide an origin and a destination to request a bike path.
 
-    \item \textbf{RE-F5-2: Path Computation}
-    \label{req:RE-F5-2}\\
+    \item \textbf{RE-F5--2: Path Computation}\label{req:RE-F5-2}\\
     The system shall compute one or more candidate paths between the specified origin 
     and destination, using external mapping or routing services when needed.
 
-    \item \textbf{RE-F5-3: Path Ranking}
-    \label{req:RE-F5-3}\\
+    \item \textbf{RE-F5--3: Path Ranking}\label{req:RE-F5-3}\\
     The system shall compute a path score for each candidate path using segment conditions, 
     quality indicators and path length.
 
-    \item \textbf{RE-F5-4: Path Presentation}
-    \label{req:RE-F5-4}\\
+    \item \textbf{RE-F5--4: Path Presentation}\label{req:RE-F5-4}\\
     The system shall present ranked paths and their associated properties to the user.
 
-    \item \textbf{RE-F5-5: Path Details Display}
-    \label{req:RE-F5-5}\\
+    \item \textbf{RE-F5--5: Path Details Display}\label{req:RE-F5-5}\\
     The system shall display detailed information for any selected path, including the 
     conditions of its constituent segments.
 
 \end{itemize}
 
 % ============================================================
-\subsubsection*{F6 --- Aggregation and Maintenance of Path Knowledge}
-\label{sec:F6}
+\subsubsection*{F6 --- Aggregation and Maintenance of Path Knowledge}\label{sec:F6}
 
 \begin{itemize}
 
-    \item \textbf{RE-F6-1: Aggregation of Issues}
-    \label{req:RE-F6-1}\\
+    \item \textbf{RE-F6--1: Aggregation of Issues}\label{req:RE-F6-1}\\
     The system shall aggregate issues from multiple users for each path segment.
 
-    \item \textbf{RE-F6-2: Freshness and Confirmation Priority}
-    \label{req:RE-F6-2}\\
+    \item \textbf{RE-F6--2: Freshness and Confirmation Priority}\label{req:RE-F6-2}\\
     The system shall resolve conflicts between issues by privileging fresher reports 
     and those with more confirmations.
 
-    \item \textbf{RE-F6-3: SegmentStatus Update}
-    \label{req:RE-F6-3}\\
+    \item \textbf{RE-F6--3: SegmentStatus Update}\label{req:RE-F6-3}\\
     The system shall compute and update the SegmentStatus representing the current 
     publishable condition of each path segment.
 
-    \item \textbf{RE-F6-4: Moderator Override}
-    \label{req:RE-F6-4}\\
+    \item \textbf{RE-F6--4: Moderator Override}\label{req:RE-F6-4}\\
     The system shall allow moderators to override or correct aggregated segment statuses 
     when necessary.
 
-    \item \textbf{RE-F6-5: Consistency of SegmentStatus}
-    \label{req:RE-F6-5}\\
+    \item \textbf{RE-F6--5: Consistency of SegmentStatus}\label{req:RE-F6-5}\\
     The system shall ensure that at most one active SegmentStatus exists for each 
     path segment at any given time.
 
