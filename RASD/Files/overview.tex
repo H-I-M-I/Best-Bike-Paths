@@ -318,3 +318,141 @@ They are used together with the requirements to achieve the goals identified in 
         The collection, storage, and processing of trip data and path information must comply with applicable data-protection and privacy regulations, as well as with the usage policies of the platforms on which BBP runs and of the external services it uses. These requirements may constrain, for example, how long detailed trip data can be retained, how it can be shared, or which consents must be obtained from users.
     }
 \end{domainassumptions}
+
+\subsection{Functional Requirements}
+\subsubsection{ Use Case Diagram}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\textwidth]{Figures/Final Use Case Diagram RASD_SWE2.jpg}
+    \caption{Use Case Diagram for the Best Bike Paths (BBP) system}
+\end{figure}
+
+
+\subsubsection{ Use Cases}
+
+\paragraph{[UC1] Record Trip} \mbox{}\\
+\textbf{Name:} Record Trip\\
+\textbf{Actors:} Registered User\\
+\textbf{Entry Condition:} The user is logged into BBP on a device capable of recording trips\\
+\textbf{Event Flow:}
+\begin{enumerate}[label=(\alph*)]
+    \item The user opens the Trips section
+    \item The user selects the option to start recording a new trip
+    \item The system records the start time of the trip and creates a new trip record in recording state
+    \item While the trip is ongoing, the system periodically collects positional and motion-related data from the user’s device
+    \item At the end of the ride, the user selects the option to stop recording the trip
+    \item The system finalizes the trip record, stores the collected data, and marks the trip as completed
+\end{enumerate}
+\textbf{Exit Condition:} A completed trip is stored in the system with associated raw data.\\
+\textbf{Exceptions:}
+\begin{itemize}
+    \item[(d)] Device temporarily unable to provide positional data; system marks affected segments as incomplete.
+    \item[(e)] Application closes unexpectedly before stopping; the system attempts to recover the partial recording.
+\end{itemize}
+
+
+\paragraph{[UC1.1] Acquire Sensor Data (included in UC1)} \mbox{}\\
+\textbf{Name:} Acquire Sensor Data\\
+\textbf{Actors:} Registered User\\
+\textbf{Entry Condition:} UC1 has started and the trip is in recording state\\
+\textbf{Event Flow:}
+\begin{enumerate}[label=(\alph*)]
+    \item At regular intervals, the system requests GPS position from the device
+    \item The system acquires accelerometer and gyroscope samples describing motion
+    \item Sensor samples are associated with the current trip and time-ordered
+    \item The system stores the collected samples for later analysis
+\end{enumerate}
+\textbf{Exit Condition:} A consistent set of sensor readings is stored.\\
+\textbf{Exception:} Some sensor readings unavailable or out of range; system skips affected samples.
+
+
+\paragraph{[UC2] Review Trip} \mbox{}\\
+\textbf{Name:} Review Trip\\
+\textbf{Actors:} Registered User\\
+\textbf{Entry Condition:} User is logged into BBP and has at least one recorded trip\\
+\textbf{Event Flow:}
+\begin{enumerate}[label=(\alph*)]
+    \item The user opens the Trips section
+    \item The system displays previously recorded trips with basic information
+    \item The user selects one trip
+    \item The system displays reconstructed path, statistics (distance, duration, speed), and weather info
+\end{enumerate}
+\textbf{Exit Condition:} User views trip details successfully.\\
+\textbf{Exception:} No trips available; system informs user and may offer to start a new recording.
+
+
+\paragraph{[UC3] Manual Path Contribution} \mbox{}\\
+\textbf{Name:} Manual Path Contribution\\
+\textbf{Actors:} Registered User\\
+\textbf{Entry Condition:} User is logged in and wants to create/update publishable path information\\
+\textbf{Event Flow:}
+\begin{enumerate}[label=(\alph*)]
+    \item User opens manual path contribution section
+    \item System allows selection of path segments
+    \item For each segment, the user provides or updates status/obstacle information
+    \item User confirms submission
+    \item System validates and updates stored publishable path information
+\end{enumerate}
+\textbf{Exit Condition:} New/updated publishable information stored.\\
+\textbf{Exceptions:}
+\begin{itemize}
+    \item[(c)] Required info missing → system requests completion
+    \item[(e)] Path segment cannot be resolved → system warns user
+\end{itemize}
+
+
+\paragraph{[UC4] Confirm Detected Issues} \mbox{}\\
+\textbf{Name:} Confirm Detected Issues\\
+\textbf{Actors:} Registered User\\
+\textbf{Entry Condition:} Automatically detected issues exist from previous trips\\
+\textbf{Event Flow:}
+\begin{enumerate}[label=(\alph*)]
+    \item User opens detected issues section
+    \item System displays list of candidate issues
+    \item User chooses to confirm / reject / refine
+    \item System updates publishable information accordingly
+\end{enumerate}
+\textbf{Exit Condition:} All issues processed and updated.\\
+\textbf{Exception:} No pending issues → system informs the user.
+
+
+\paragraph{[UC5] Search Path} \mbox{}\\
+\textbf{Name:} Search Path\\
+\textbf{Actors:} Registered User, Unregistered User, Weather Information Service\\
+\textbf{Entry Condition:} User wishes to find bike paths between two locations\\
+\textbf{Event Flow:}
+\begin{enumerate}[label=(\alph*)]
+    \item User opens Path Search
+    \item User specifies origin/destination
+    \item System validates input, queries external services
+    \item System identifies candidate bike paths
+    \item System invokes UC6 (View Suggested Paths)
+\end{enumerate}
+\textbf{Exit Condition:} Candidate paths computed.\\
+\textbf{Exceptions:}
+\begin{itemize}
+    \item[(c)] Destination cannot be resolved
+    \item[(d)] No feasible path found
+\end{itemize}
+
+
+\paragraph{[UC6] View Suggested Paths} \mbox{}\\
+\textbf{Name:} View Suggested Paths\\
+\textbf{Actors:} Registered User, Unregistered User, Weather Information Service\\
+\textbf{Entry Condition:} System has computed one or more candidate paths\\
+\textbf{Event Flow:}
+\begin{enumerate}[label=(\alph*)]
+    \item System displays candidate paths with:
+    \begin{itemize}
+        \item route
+        \item length and metrics
+        \item aggregated quality
+        \item weather information (if available)
+    \end{itemize}
+    \item System orders paths using path score
+    \item User browses and selects one path
+    \item System displays detailed path info
+\end{enumerate}
+\textbf{Exit Condition:} User inspects and compares suggested paths.\\
+\textbf{Exception:} Only one path available → shown without ranking.
