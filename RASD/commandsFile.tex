@@ -48,6 +48,9 @@
 \usepackage{longtable}
 \usepackage{float} % To allow the use of H modifier in long tables
 \usepackage{needspace}
+\usepackage{placeins}   % for \FloatBarrier (optional)
+\usepackage{array}      % better tables
+\renewcommand{\arraystretch}{1.15}
 
 %landscape mode
 \usepackage{pdflscape}
@@ -152,7 +155,6 @@
     \needspace{4\baselineskip}% keep headline with its explanation
     \item[#1] \textbf{#2}\par
     #3}
-
 
 %Helper to render scenario metadata with consistent styling
 \newcommand{\scenarioinfo}[3]{%
