@@ -239,22 +239,27 @@ Each requirement is labelled for traceability and later mapping to use cases.
 
     \item \textbf{RE-F1--1: Account Creation}\label{req:RE-F1-1}\\
     The system shall allow a person to create a registered user account, 
-    provided they supply the information required for authentication.
+    provided they supply the information required for authentication.\\
+    \textbf{Supports UC1}
 
     \item \textbf{RE-F1--2: User Authentication}\label{req:RE-F1-2}\\
-    The system shall authenticate a user when valid credentials are provided.
+    The system shall authenticate a user when valid credentials are provided.\\
+    \textbf{Supports UC1}
 
     \item \textbf{RE-F1--3: Access Control}\label{req:RE-F1-3}\\
     The system shall restrict access to trip recording and contribution 
-    functionalities to authenticated registered users only.
+    functionalities to authenticated registered users only.\\
+    \textbf{Supports UC1}
 
     \item \textbf{RE-F1--4: Unregistered User Access}\label{req:RE-F1-4}\\
     The system shall allow unregistered users to request bike paths and 
-    view ranked results with no authentication.
+    view ranked results with no authentication.\\
+    \textbf{Supports UC5}
 
     \item \textbf{RE-F1--5: Session Termination}\label{req:RE-F1-5}\\
     The system shall allow a registered user to log out, after which no 
-    registered-only functionalities may be accessed.
+    registered-only functionalities may be accessed.\\
+    \textbf{Supports UC1}
 
 \end{itemize}
 
@@ -264,32 +269,40 @@ Each requirement is labelled for traceability and later mapping to use cases.
 \begin{itemize}
 
     \item \textbf{RE-F2--1: Start Trip Recording}\label{req:RE-F2-1}\\
-    The system shall start recording a trip when a registered user initiates recording.
+    The system shall start recording a trip when a registered user initiates recording.\\
+    \textbf{Supports UC1}
 
     \item \textbf{RE-F2--2: Stop Trip Recording}\label{req:RE-F2-2}\\
-    The system shall stop trip recording when a registered user ends the trip.
+    The system shall stop trip recording when a registered user ends the trip.\\
+    \textbf{Supports UC1}
 
     \item \textbf{RE-F2--3: GPS Data Acquisition}\label{req:RE-F2-3}\\
     The system shall acquire positional data (GPS coordinates) at regular intervals 
-    during an active trip.
+    during an active trip.\\
+    \textbf{Supports UC1.1}
 
     \item \textbf{RE-F2--4: Sensor Data Acquisition}\label{req:RE-F2-4}\\
     The system shall acquire motion-related sensor data (accelerometer, gyroscope) 
-    during an active trip.
+    during an active trip.\\
+    \textbf{Supports UC1.1}
 
     \item \textbf{RE-F2--5: Trip Statistics Computation}\label{req:RE-F2-5}\\
     The system shall compute trip statistics, including distance, duration and average speed, 
-    after recording ends.
+    after recording ends.\\
+    \textbf{Supports UC1}
 
     \item \textbf{RE-F2--6: Weather Data Attachment}\label{req:RE-F2-6}\\
-    The system shall retrieve and associate weather information with the recorded trip.
+    The system shall retrieve and associate weather information with the recorded trip.\\
+    \textbf{Supports UC1}
 
     \item \textbf{RE-F2--7: Trip History Presentation}\label{req:RE-F2-7}\\
-    The system shall display a list of previously recorded trips for each registered user.
+    The system shall display a list of previously recorded trips for each registered user.\\
+    \textbf{Supports UC1}
 
     \item \textbf{RE-F2--8: Trip Review}\label{req:RE-F2-8}\\
     The system shall display detailed information for any selected trip, including statistics 
-    and associated weather information.
+    and associated weather information.\\
+    \textbf{Supports UC2}
 
 \end{itemize}
 
@@ -299,19 +312,23 @@ Each requirement is labelled for traceability and later mapping to use cases.
 \begin{itemize}
 
     \item \textbf{RE-F3--1: Manual Path Selection}\label{req:RE-F3-1}\\
-    The system shall allow registered users to select travelled path segments for reporting.
+    The system shall allow registered users to select travelled path segments for reporting.\\
+    \textbf{Supports UC3}
 
     \item \textbf{RE-F3--2: Manual Issue Submission}\label{req:RE-F3-2}\\
-    The system shall allow registered users to annotate selected path segments 
-    with status or obstacle information.
+    The system shall allow registered users to annotate selected path segments
+    with status or obstacle information.\\
+    \textbf{Supports UC3}
 
     \item \textbf{RE-F3--3: Edit Existing Contributions}\label{req:RE-F3-3}\\
     The system shall allow registered users to update or remove their previously submitted 
-    path information.
+    path information.\\
+    \textbf{Supports UC3}
 
     \item \textbf{RE-F3--4: Publishable Information Storage}\label{req:RE-F3-4}\\
     The system shall store submitted or updated manual contributions as publishable 
-    path information.
+    path information.\\
+    \textbf{Supports UC3}
 
 \end{itemize}
 
@@ -322,21 +339,26 @@ Each requirement is labelled for traceability and later mapping to use cases.
 
     \item \textbf{RE-F4--1: Issue Inference}\label{req:RE-F4-1}\\
     The system shall infer candidate issues from motion-related sensor data collected 
-    during a recorded trip.
+    during a recorded trip.\\
+    \textbf{Supports UC4}
 
     \item \textbf{RE-F4--2: Candidate Issue Presentation}\label{req:RE-F4-2}\\
     The system shall present inferred candidate issues to the user for validation 
-    after the trip ends.
+    after the trip ends.\\
+    \textbf{Supports UC4}
 
     \item \textbf{RE-F4--3: User Validation Actions}\label{req:RE-F4-3}\\
-    The system shall allow users to confirm, reject or refine candidate issues.
+    The system shall allow users to confirm, reject or refine candidate issues.\\
+    \textbf{Supports UC4}
 
     \item \textbf{RE-F4--4: Acceptance of Validated Issues}\label{req:RE-F4-4}\\
-    The system shall store confirmed or refined issues as publishable information.
+    The system shall store confirmed or refined issues as publishable information.\\
+    \textbf{Supports UC4}
 
     \item \textbf{RE-F4--5: Discarding Rejected Issues}\label{req:RE-F4-5}\\
     The system shall discard rejected issues so that they do not influence 
-    publishable path information.
+    publishable path information.\\
+    \textbf{Supports UC4}
 
 \end{itemize}
 
@@ -346,22 +368,27 @@ Each requirement is labelled for traceability and later mapping to use cases.
 \begin{itemize}
 
     \item \textbf{RE-F5--1: Path Query Input}\label{req:RE-F5-1}\\
-    The system shall allow any user to provide an origin and a destination to request a bike path.
+    The system shall allow any user to provide an origin and a destination to request a bike path.\\
+    \textbf{Supports UC5}
 
     \item \textbf{RE-F5--2: Path Computation}\label{req:RE-F5-2}\\
     The system shall compute one or more candidate paths between the specified origin 
-    and destination, using external mapping or routing services when needed.
+    and destination, using external mapping or routing services when needed.\\
+    \textbf{Supports UC5}
 
     \item \textbf{RE-F5--3: Path Ranking}\label{req:RE-F5-3}\\
     The system shall compute a path score for each candidate path using segment conditions, 
-    quality indicators and path length.
+    quality indicators and path length.\\
+    \textbf{Supports UC5}
 
     \item \textbf{RE-F5--4: Path Presentation}\label{req:RE-F5-4}\\
-    The system shall present ranked paths and their associated properties to the user.
+    The system shall present ranked paths and their associated properties to the user.\\
+    \textbf{Supports UC6}
 
     \item \textbf{RE-F5--5: Path Details Display}\label{req:RE-F5-5}\\
     The system shall display detailed information for any selected path, including the 
-    conditions of its constituent segments.
+    conditions of its constituent segments.\\
+    \textbf{Supports UC6}
 
 \end{itemize}
 
@@ -371,25 +398,156 @@ Each requirement is labelled for traceability and later mapping to use cases.
 \begin{itemize}
 
     \item \textbf{RE-F6--1: Aggregation of Issues}\label{req:RE-F6-1}\\
-    The system shall aggregate issues from multiple users for each path segment.
+    The system shall aggregate issues from multiple users for each path segment.\\
+    \textbf{Supports UC4}
 
     \item \textbf{RE-F6--2: Freshness and Confirmation Priority}\label{req:RE-F6-2}\\
     The system shall resolve conflicts between issues by privileging fresher reports 
-    and those with more confirmations.
+    and those with more confirmations.\\
+    \textbf{Supports UC4}
 
     \item \textbf{RE-F6--3: SegmentStatus Update}\label{req:RE-F6-3}\\
     The system shall compute and update the SegmentStatus representing the current 
-    publishable condition of each path segment.
+    publishable condition of each path segment.\\
+    \textbf{Supports UC4}
 
     \item \textbf{RE-F6--4: Moderator Override}\label{req:RE-F6-4}\\
     The system shall allow moderators to override or correct aggregated segment statuses 
-    when necessary.
+    when necessary.\\
+    \textbf{Supports UC4}
 
     \item \textbf{RE-F6--5: Consistency of SegmentStatus}\label{req:RE-F6-5}\\
     The system shall ensure that at most one active SegmentStatus exists for each 
-    path segment at any given time.
+    path segment at any given time.\\
+    \textbf{Supports UC4}
 
 \end{itemize}
+
+\subsection{Traceability of Functional Requirements}
+
+The following tables provide traceability between functional requirements, use cases, goals, phenomena, and domain assumptions. Each table corresponds to one product function (F1-F6).
+
+\subsubsection{Traceability for F1 -- User Management}
+
+\begin{table}[H]
+\centering
+\caption{Traceability for F1 -- User Management}
+\label{tab:trace_f1}
+  \begin{tabular}{@{}p{1.6cm}p{2cm}p{2.5cm}p{2.2cm}p{1cm}p{4cm}@{}}
+  \toprule
+  \textbf{RE} & \textbf{UC} & \textbf{Goals} & \textbf{Phenomena} & \textbf{DA} & \textbf{Description} \\
+  \midrule
+  RE-F1-1 & UC1 & G1, G2, G3 & SP1 & DA7 & Enables account creation and identification \\
+  RE-F1-2 & UC1 & G1, G2, G3 & SP1 & DA7 & Authenticates registered users \\
+  RE-F1-3 & UC1,UC3, UC4 & G1, G2, G3 & SP1 & DA6 & Restricts access to protected functions \\
+  RE-F1-4 & UC5, UC6 & G4 & SP6, SP7 & -- & Allows public access to path search \\
+  RE-F1-5 & UC1 & G1, G2, G3 & SP1 & -- & Terminates authenticated sessions \\
+  \bottomrule
+  \end{tabular}
+\end{table}
+
+
+\subsubsection{Traceability for F2 -- Trip Recording and Review}
+
+\begin{table}[H]
+\centering
+\caption{Traceability for F2 -- Trip Recording and Review}
+\label{tab:trace_f2}
+  \begin{tabular}{@{}p{1.6cm}p{2cm}p{2.5cm}p{2.2cm}p{1cm}p{4cm}@{}}
+  \toprule
+  \textbf{RE} & \textbf{UC} & \textbf{Goals} & \textbf{Phenomena} & \textbf{DA} & \textbf{Description} \\
+  \midrule
+  RE-F2-1 & UC1 & G1 & SP2 & DA1 & Starts trip recording \\
+  RE-F2-2 & UC1 & G1 & SP2 & -- & Stops trip recording \\
+  RE-F2-3 & UC1.1 & G1 & SP3 & DA1, DA2 & Collects GPS data \\
+  RE-F2-4 & UC1.1 & G1, G3 & SP3 & DA1 & Collects motion data \\
+  RE-F2-5 & UC1 & G1 & -- & -- & Computes trip statistics \\
+  RE-F2-6 & UC1 & G1 & SP9 & DA3 & Adds weather information \\
+  RE-F2-7 & UC1 & G1 & SP8 & -- & Shows trip history \\
+  RE-F2-8 & UC2 & G1 & SP8, SP9 & -- & Displays trip details \\
+  \bottomrule
+  \end{tabular}
+\end{table}
+
+
+\subsubsection{Traceability for F3 -- Manual Contribution}
+
+\begin{table}[H]
+\centering
+\caption{Traceability for F3 -- Manual Contribution}
+\label{tab:trace_f3}
+  \begin{tabular}{@{}p{1.6cm}p{2cm}p{2.5cm}p{2.2cm}p{1cm}p{4cm}@{}}
+  \toprule
+  \textbf{RE} & \textbf{UC} & \textbf{Goals} & \textbf{Phenomena} & \textbf{DA} & \textbf{Description} \\
+  \midrule
+  RE-F3-1 & UC3 & G2 & SP4 & DA1 & Selects travelled segments \\
+  RE-F3-2 & UC3 & G2 & SP4 & -- & Submits path issues \\
+  RE-F3-3 & UC3 & G2 & SP4 & -- & Updates or removes reports \\
+  RE-F3-4 & UC3 & G2, G6 & SP4 & -- & Stores publishable data \\
+  \bottomrule
+  \end{tabular}
+\end{table}
+
+
+\subsubsection{Traceability for F4 -- Issue Detection and Validation}
+
+\begin{table}[H]
+\centering
+\caption{Traceability for F4 -- Issue Detection and Validation}
+\label{tab:trace_f4}
+  \begin{tabular}{@{}p{1.6cm}p{2cm}p{2.5cm}p{2.2cm}p{1cm}p{4cm}@{}}
+  \toprule
+  \textbf{RE} & \textbf{UC} & \textbf{Goals} & \textbf{Phenomena} & \textbf{DA} & \textbf{Description} \\
+  \midrule
+  RE-F4-1 & UC4 & G3 & SP3 & DA1 & Infers candidate issues \\
+  RE-F4-2 & UC4 & G3 & SP5 & -- & Presents issues to user \\
+  RE-F4-3 & UC4 & G3, G6 & SP5 & -- & Validates issues \\
+  RE-F4-4 & UC4 & G3, G6 & SP5 & -- & Stores validated issues \\
+  RE-F4-5 & UC4 & G3 & SP5 & -- & Discards rejected issues \\
+  \bottomrule
+  \end{tabular}
+\end{table}
+
+
+\subsubsection{Traceability for F5 -- Path Search and Presentation}
+
+\begin{table}[H]
+\centering
+\caption{Traceability for F5 -- Path Search and Presentation}
+\label{tab:trace_f5}
+  \begin{tabular}{@{}p{1.6cm}p{2cm}p{2.5cm}p{2.2cm}p{1cm}p{4cm}@{}}
+  \toprule
+  \textbf{RE} & \textbf{UC} & \textbf{Goals} & \textbf{Phenomena} & \textbf{DA} & \textbf{Description} \\
+  \midrule
+  RE-F5-1 & UC5 & G4 & SP6 & -- & Accepts path requests \\
+  RE-F5-2 & UC5 & G4 & SP9 & DA3, DA4 & Computes candidate paths \\
+  RE-F5-3 & UC5 & G4, G6 & SP7 & -- & Ranks paths \\
+  RE-F5-4 & UC6 & G4 & SP7 & -- & Presents ranked paths \\
+  RE-F5-5 & UC6 & G4, G6 & SP7 & -- & Shows path details \\
+  \bottomrule
+  \end{tabular}
+\end{table}
+
+
+\subsubsection{Traceability for F6 -- Aggregation and Maintenance}
+
+\begin{table}[H]
+\centering
+\caption{Traceability for F6 -- Aggregation and Maintenance}
+\label{tab:trace_f6}
+  \begin{tabular}{@{}p{1.6cm}p{2cm}p{2.5cm}p{2.2cm}p{1cm}p{4cm}@{}}
+  \toprule
+  \textbf{RE} & \textbf{UC} & \textbf{Goals} & \textbf{Phenomena} & \textbf{DA} & \textbf{Description} \\
+  \midrule
+  RE-F6-1 & UC4 & G5, G6 & SP4, SP5 & -- & Aggregates issue reports \\
+  RE-F6-2 & UC4 & G5 & SP4, SP5 & DA5 & Resolves conflicts \\
+  RE-F6-3 & UC4 & G6 & SP7 & -- & Updates segment status \\
+  RE-F6-4 & UC4 & G6 & SP7 & -- & Allows moderator override \\
+  RE-F6-5 & UC4 & G6 & -- & -- & Ensures consistency \\
+  \bottomrule
+  \end{tabular}
+\end{table}
+
 
 
 \subsection{Performance Requirements}
@@ -402,32 +560,32 @@ Each requirement is grounded in the shared phenomena (SP), world phenomena (WP),
 
     \item \textbf{PR-1: GPS Sampling Frequency}
     \label{req:PR-1}\\
-    The system shall acquire GPS coordinates at intervals suitable for reconstructing the path taken by the user.
+    The system shall acquire GPS coordinates at intervals suitable for reconstructing the path taken by the user. The sampling rate should be constant even under poor signal conditions in order to prevent from losing trip path.
     \textit{(Supports SP2, SP3; Relates to WP7; Depends on DA1, DA2)}
 
     \item \textbf{PR-2: Sensor Data Responsiveness}
     \label{req:PR-2}\\
-    The system shall process accelerometer and gyroscope data in near real time while a trip is being recorded.
+    The system shall process accelerometer and gyroscope data in near real time while a trip is being recorded. Delays in processing must be minimized if the inferred problems are to reflecttrue movement.
     \textit{(Supports SP3; Relates to WP6; Depends on DA1)}
 
     \item \textbf{PR-3: Path Search Response Time}
     \label{req:PR-3}\\
-    The system shall compute and present path options within a few seconds under normal network conditions.
+    The system shall compute and present path options within a few seconds under normal network conditions. Even if slower external routing services incur delays, those are well within the bounds of user waiting.
     \textit{(Supports SP6, SP7; Depends on DA3)}
 
     \item \textbf{PR-4: Weather Data Retrieval Delay}
     \label{req:PR-4}\\
-    The system shall retrieve weather information with minimal delay following a request.
+    The system shall retrieve weather information with minimal delay following a request. More retries might be necessary when APIs externally to your own code are temporarily down or over rate limits.
     \textit{(Supports SP9; Relates to WP4; Depends on DA3)}
 
     \item \textbf{PR-5: Aggregation Processing Time}
     \label{req:PR-5}\\
-    The system shall update SegmentStatus values promptly after receiving new manual or validated automatic contributions.
+    The system shall update SegmentStatus values promptly after receiving new manual or validated automatic contributions. Updatesmust be fast to ensure that newly identified problems are taken into account quickly in the path selection.
     \textit{(Supports SP4, SP5, SP7; Relates to WP1; Depends on DA5)}
 
     \item \textbf{PR-6: Trip Summary Availability}
     \label{req:PR-6}\\
-    The system shall make trip statistics available immediately after the trip has ended, subject to network availability.
+    The system shall make trip statistics available immediately after the trip has ended, subject to network availability. The trip summary should be easily accessible as soon as you have completed making your review and there shouldn't be a need to manually refresh/reopen the app.
     \textit{(Supports SP2, SP8; Relates to WP2; Depends on DA2)}
 
 \end{itemize}
@@ -442,22 +600,22 @@ The system shall comply with the following constraints derived from environmenta
 
     \item \textbf{DC-1: Device Sensor Availability}
     \label{req:DC-1}\\
-    The application will be supported on GPS, accelerometer and gyroscope enabled devices.
+    The application will be supported on GPS, accelerometer and gyroscope enabled devices. Feature availability may be limited if devices have outdated or missing sensors.
     \textit{(Relates to WP6, WP7; Depends on DA1)}
 
     \item \textbf{DC-2: External Service Dependency}
     \label{req:DC-2}\\
-    The system is expected to make use of weather and mapping services via an interface and is planned to interact with their ARN (availability resolution network).
+    The system is expected to make use of weather and mapping services via an interface and is planned to interact with their ARN (availability resolution network). BBP should treat partial failures of these services gracefully by reverting to cached or stale data wherever suitable.
     \textit{(Supports SP9; Relates to WP4; Depends on DA3, DA4)}
 
     \item \textbf{DC-3: Non-Safety-Critical Role}
     \label{req:DC-3}\\
-    The hazard warning or safety injecting shall not need any real-time from the system.
+    The hazard warning or safety injecting shall not need any real-time from the system. BBP could be informative towards the environment of BBs, but would not deliver warnings in safety-critical context like collisions against obstacles. 
     \textit{(Relates to WP3; Depends on DA6)}
 
     \item \textbf{DC-4: Contribution Integrity}
     \label{req:DC-4}\\
-    The system will take the stance that users are contributing in good faith, meaning they have no malicious intent.
+    The system will take the stance that users are contributing in good faith, meaning they have no malicious intent. This suggests that BBP lacks any feature to recognize deliberately false reports apart from aggregation logic.
     \textit{(Relates to WP8; Depends on DA5)}
 
 \end{itemize}
@@ -473,12 +631,12 @@ This section specifies the non-functional requirements that constrain the qualit
 
     \item \textbf{NFR-REL-1: Connectivity Tolerance}
     \label{req:NFR-REL-1}\\
-    The system shall tolerate intermittent loss of network connectivity without interrupting the recording of local trip data.
+    The system shall tolerate intermittent loss of network connectivity without interrupting the recording of local trip data. When offline, data needs to be securely buffered on the device until it can be transmitted.
     \textit{(Supports SP2, SP3; Relates to WP2; Depends on DA2)}
 
     \item \textbf{NFR-REL-2: Status Consistency}
     \label{req:NFR-REL-2}\\
-    The system shall prevent inconsistencies such as duplicate or conflicting SegmentStatus entries for the same path segment.
+    The system shall prevent inconsistencies such as duplicate or conflicting SegmentStatus entries for the same path segment. The system should apply timestamps and confirmation counts to resolve conflicting updates.
     \textit{(Supports SP7; Relates to WP1; Depends on DA5)}
 
 \end{itemize}
@@ -489,7 +647,7 @@ This section specifies the non-functional requirements that constrain the qualit
 
     \item \textbf{NFR-AV-1: Service Continuity}
     \label{req:NFR-AV-1}\\
-    Core functionalities (trip recording, path search) shall remain available provided that required device sensors and external services are reachable.
+    Core functionalities (trip recording, path search) shall remain available provided that required device sensors and external services are reachable. When certain features (e.g., weather, geocoding) are temporarily unavailable the system should fail gracefully.
     \textit{(Supports SP2, SP6; Relates to WP6, WP7; Depends on DA1, DA3)}
 
 \end{itemize}
@@ -500,12 +658,12 @@ This section specifies the non-functional requirements that constrain the qualit
 
     \item \textbf{NFR-SEC-1: Access Restriction}
     \label{req:NFR-SEC-1}\\
-    Only logged-in users can post, edit, or validate published path contributions.
+    Only logged-in users can post, edit, or validate published path contributions. The transmission of credentials needs to be secured against unauthorized interception.
     \textit{(Supports SP4, SP5; Relates to WP8; Depends on DA7)}
 
     \item \textbf{NFR-SEC-2: Moderator Controls}
     \label{req:NFR-SEC-2}\\
-    Top moderators for bypassing the cumulative status of a path will be limited to valid account(s) only.
+    Top moderators for bypassing the cumulative status of a path will be limited to valid account(s) only. There should be moderation logs to keep everyone accountable.
     \textit{(Supports SP7; Depends on DA7)}
 
 \end{itemize}
@@ -516,7 +674,7 @@ This section specifies the non-functional requirements that constrain the qualit
 
     \item \textbf{NFR-MNT-1: Modular Structure}
     \label{req:NFR-MNT-1}\\
-    The system shall isolate acquisition logic from aggregation and scoring logic to aid maintenance and extension.
+    The system shall isolate acquisition logic from aggregation and scoring logic to aid maintenance and extension. What modifies one module (scoring algorithm or the like) ought not affect independent parts of the system.
     \textit{(Supports SP3, SP7; Depends on DA5)}
 
 \end{itemize}
@@ -527,7 +685,46 @@ This section specifies the non-functional requirements that constrain the qualit
 
     \item \textbf{NFR-PORT-1: Device Compatibility}
     \label{req:NFR-PORT-1}\\
-    The system shall operate on different mobile devices that support the sensors required by DA1.
+    The system shall operate on different mobile devices that support the sensors required by DA1. BBP must be seamless between different OS versions, assuming sensor APIs operate normally.
     \textit{(Relates to WP6, WP7; Depends on DA1)}
 
 \end{itemize}
+
+
+\subsection{Traceability Between Use Cases and Functional Requirements}
+\label{sec:uc_re_traceability}
+
+\begin{table}[H]
+\centering
+\caption{Traceability between Use Cases and Functional Requirements}
+\label{tab:uc_re_traceability}
+  \begin{tabular}{@{}p{5.5cm}p{9cm}@{}}
+  \toprule
+  \textbf{Use Case} & \textbf{Functional Requirements} \\
+  \midrule
+  UC1 -- Record Trip &
+  RE-F2-1, RE-F2-2, RE-F2-5, RE-F2-7 \\
+  \midrule
+  UC1.1 -- Acquire Sensor Data &
+  RE-F2-3, RE-F2-4 \\
+  \midrule
+  UC2 -- Review Trip &
+  RE-F2-8 \\
+  \midrule
+  UC3 -- Manual Path Contribution &
+  RE-F3-1, RE-F3-2, RE-F3-3, RE-F3-4 \\
+  \midrule
+  UC4 -- Confirm Detected Issues &
+  RE-F4-1, RE-F4-2, RE-F4-3, RE-F4-4, RE-F4-5 \\
+  \midrule
+  UC5 -- Search Path &
+  RE-F5-1, RE-F5-2, RE-F5-3 \\
+  \midrule
+  UC6 -- View Suggested Paths &
+  RE-F5-4, RE-F5-5 \\
+  \bottomrule
+  \end{tabular}
+\end{table}
+
+
+
