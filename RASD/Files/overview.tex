@@ -482,3 +482,224 @@ A completed trip is stored in the system with associated raw data and can later 
 \hline
 \end{tabular}
 \end{table}
+
+\subsubsection{Sequence Diagrams}
+\FloatBarrier
+
+\ucparagraph{[UC1] Record Trip}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{Figures/UC1-Sequence.png}
+    \caption{Sequence diagram for [UC1] Record Trip}
+\end{figure}
+\FloatBarrier
+
+\ucparagraph{[UC1.1] Acquire Sensor Data (included in UC1)}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{Figures/UC1.1-Sequence.drawio.png}
+    \caption{Sequence diagram for [UC1.1] Acquire Sensor Data}
+\end{figure}
+\FloatBarrier
+
+\ucparagraph{[UC2] Review Trip}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{RASD/Figures/UC2-Sequence.drawio.png}
+    \caption{Sequence diagram for [UC2] Review Trip}
+\end{figure}
+\FloatBarrier
+
+\ucparagraph{[UC3] Manual Path Contribution}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{RASD/Figures/UC3-Sequence.drawio.png}
+    \caption{Sequence diagram for [UC3] Manual Path Contribution}
+\end{figure}
+\FloatBarrier
+
+\ucparagraph{[UC4] Confirm Detected Issues}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{RASD/Figures/UC4-Sequence.drawio.png}
+    \caption{Sequence diagram for [UC4] Confirm Detected Issues}
+\end{figure}
+\FloatBarrier
+
+\ucparagraph{[UC5] Search Path}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{RASD/Figures/UC5-Sequence.drawio.png}
+    \caption{Sequence diagram for [UC5] Search Path}
+\end{figure}
+\FloatBarrier
+
+\ucparagraph{[UC6] View Suggested Paths}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{RASD/Figures/UC6-Sequence.drawio.png}
+    \caption{Sequence diagram for [UC6] View Suggested Paths}
+\end{figure}
+
+\FloatBarrier
+
+
+\subsubsection{Requirement Mapping}
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|p{0.95\textwidth}|}
+\hline
+\textbf{G1:} Registered users can record bike trips, review trip history, and
+visualize statistics enriched with contextual information such as weather. \\ \hline
+
+\textbf{Requirements:}
+\begin{itemize}
+  \item R1: The system allows registered users to authenticate and be identified.
+  \item R2: The system allows users to start and stop the recording of a bike trip.
+  \item R3: The system acquires positional and motion-related data from mobile devices.
+  \item R4: The system stores recorded trips and allows users to review trip history.
+  \item R5: The system computes and displays statistics related to recorded trips.
+  \item R6: The system integrates external services to retrieve contextual weather information.
+\end{itemize}
+
+\textbf{Domain Assumptions:}
+\begin{itemize}
+  \item D1: Users carry smartphones equipped with GPS and motion sensors.
+  \item D2: Users correctly start and stop trip recordings.
+  \item D3: External weather services provide reliable data.
+  \item D4: Users have a stable internet connection during synchronization phases.
+\end{itemize}
+\\ \hline
+\end{tabular}
+\caption{Requirement mapping for Goal G1}
+\end{table}
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|p{0.95\textwidth}|}
+\hline
+\textbf{G2:} Registered users can manually contribute and maintain publishable
+information about bike paths and obstacles. \\ \hline
+
+\textbf{Requirements:}
+\begin{itemize}
+  \item R1: The system allows registered users to authenticate and be identified.
+  \item R7: The system allows users to manually select path segments.
+  \item R8: The system allows users to add or update information about path conditions and obstacles.
+  \item R9: The system validates and stores publishable path information.
+\end{itemize}
+
+\textbf{Domain Assumptions:}
+\begin{itemize}
+  \item D5: Users provide accurate and truthful information about path conditions.
+  \item D6: Users are familiar with the paths they contribute information about.
+\end{itemize}
+\\ \hline
+\end{tabular}
+\caption{Requirement mapping for Goal G2}
+\end{table}
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|p{0.95\textwidth}|}
+\hline
+\textbf{G3:} The system automatically detects potential issues on paths and
+allows users to confirm, reject, or correct them. \\ \hline
+
+\textbf{Requirements:}
+\begin{itemize}
+  \item R2: The system records trips and collects sensor data.
+  \item R3: The system analyzes recorded data to infer potential issues.
+  \item R10: The system presents detected issues to users for validation.
+  \item R11: The system allows users to confirm, reject, or correct detected issues.
+  \item R12: The system updates publishable path information based on user decisions.
+\end{itemize}
+
+\textbf{Domain Assumptions:}
+\begin{itemize}
+  \item D7: Automatically detected issues may include false positives.
+  \item D8: Users are willing and able to validate detected issues.
+\end{itemize}
+\\ \hline
+\end{tabular}
+\caption{Requirement mapping for Goal G3}
+\end{table}
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|p{0.95\textwidth}|}
+\hline
+\textbf{G4:} Users can search for bike paths between two locations and receive
+ranked suggestions based on effectiveness and quality. \\ \hline
+
+\textbf{Requirements:}
+\begin{itemize}
+  \item R13: The system allows users to specify origin and destination locations.
+  \item R14: The system computes candidate bike paths between locations.
+  \item R15: The system ranks paths based on length, quality, and contextual data.
+  \item R16: The system displays suggested paths and their properties.
+  \item R6: The system integrates external map and weather services.
+\end{itemize}
+
+\textbf{Domain Assumptions:}
+\begin{itemize}
+  \item D9: External map and geocoding services return correct results.
+  \item D3: Weather services provide reliable contextual information.
+\end{itemize}
+\\ \hline
+\end{tabular}
+\caption{Requirement mapping for Goal G4}
+\end{table}
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|p{0.95\textwidth}|}
+\hline
+\textbf{G5:} The system merges information from multiple users, privileging
+fresher and confirmed data. \\ \hline
+
+\textbf{Requirements:}
+\begin{itemize}
+  \item R9: The system maintains publishable path information.
+  \item R11: The system updates path data based on user confirmations or corrections.
+  \item R17: The system merges contributions and resolves conflicts.
+\end{itemize}
+
+\textbf{Domain Assumptions:}
+\begin{itemize}
+  \item D10: More recent and confirmed data better reflects current path conditions.
+\end{itemize}
+\\ \hline
+\end{tabular}
+\caption{Requirement mapping for Goal G5}
+\end{table}
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|p{0.95\textwidth}|}
+\hline
+\textbf{G6:} The system maintains a consistent and up-to-date repository of bike
+paths for future use. \\ \hline
+
+\textbf{Requirements:}
+\begin{itemize}
+  \item R9: The system stores publishable path information.
+  \item R12: The system applies updates derived from user contributions and confirmations.
+  \item R16: The system presents up-to-date path information to users.
+\end{itemize}
+
+\textbf{Domain Assumptions:}
+\begin{itemize}
+  \item D11: Path conditions evolve over time and require continuous updates.
+\end{itemize}
+\\ \hline
+\end{tabular}
+\caption{Requirement mapping for Goal G6}
+\end{table}
