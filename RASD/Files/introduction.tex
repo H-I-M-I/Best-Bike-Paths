@@ -1,3 +1,6 @@
+
+% -------------------------------------------------------------------------
+
 \subsection{Purpose}\label{sec:goals}
 
 Bicycling has become an increasingly popular form of urban transportation and recreation, but cyclists frequently have difficulty finding routes that are safe and comfortable. Available bike path data is fragmented and inconsistent: some paths are well-kept, others are full of potholes or otherwise uncomfortably sloppy to ride with a road bike, or there's traffic constantly interfering. There is no common repository to store and maintain this information centralized, organized, and structured.
@@ -49,7 +52,7 @@ BBP is introduced into this world as a software system that interacts with biker
 
 
 \Needspace{16\baselineskip}
-\subsection{Scope-Purpose Traceability Matrix}
+\subsubsection{Scope-Purpose Traceability Matrix}
 {\small
 \setlength{\tabcolsep}{4pt}
 \setlength{\LTleft}{\fill}
@@ -77,6 +80,56 @@ G5 & Merging info from multiple users; privileging fresher/confirmed data & \beg
 G6 & Maintain a consistent, up-to-date repository of paths for future use & \begin{tabular}[t]{@{}>{\raggedright\arraybackslash}p{\linewidth}@{}}WP2 -Evolution of path conditions\\WP3 -Variability of weather conditions\\WP4 -Distribution of knowledge about path conditions\end{tabular} & \begin{tabular}[t]{@{}>{\raggedright\arraybackslash}p{\linewidth}@{}}SP4 -Manual contribution and maintenance of path information\\SP5 -Confirmation/correction of inferred issues\\SP7 -Presentation of path information to users\\SP8 -Presentation of trip history and statistics\\SP9 -Use of external map and weather services\end{tabular} \\
 \end{longtable}
 }
+
+\subsection{Definitions, Acronyms, Abbreviations}
+\subsubsection{Definitions}
+\begin{itemize}
+	\item \textbf{Bike Path:} A designated route or lane intended for bicycle travel, which may vary in quality, safety, and accessibility.
+	\item \textbf{Trip:} A recorded journey by a user along one or more bike paths, including associated statistics and sensor data.
+	\item \textbf{Obstacle:} Any physical or environmental condition (e.g., pothole, debris, construction) that may hinder or endanger cyclists on a bike path.
+	\item \textbf{Manual Input Mode:} The feature allowing users to enter information about their trips and encountered obstacles directly into the system.
+	\item \textbf{Automatic Acquisition:} The process by which the system collects data from user devices (e.g., GPS, sensors) during a trip to infer path quality and detect issues.
+	\item \textbf{Path Score:} A computed value representing the suitability of a bike path, based on factors such as length, reported quality, and weather conditions.
+	\item \textbf{Confirmation Count:} The number of users who have confirmed a reported issue or path condition, used to assess data reliability.
+\end{itemize}
+\subsubsection{Acronyms}
+\begin{itemize}
+	\item \textbf{BBP:} Best Bike Paths
+	\item \textbf{GPS:} Global Positioning System
+	\item \textbf{API:} Application Programming Interface
+\end{itemize}
+\subsubsection{Abbreviations}
+\begin{itemize}
+	\item \textbf{G:} Goal
+	\item \textbf{WP:} World Phenomena
+	\item \textbf{SP:} Shared Phenomena
+\end{itemize}
+
+% -------------------------------------------------------------------------
+\subsection{Revision History}
+\begin{itemize}
+	\item Version 1.0: 23/12/2025
+\end{itemize}
+
+% -------------------------------------------------------------------------
+\subsection{Reference Documents}
+The assignment for this document and all the information included refer to the following documentation:
+\begin{itemize}
+	\item The specification for the 2025/26 Requirement Engineering and Design Project for the Software Engineering II course.
+	\item The slides and materials on the webeep page of the Software Engineering II course.
+\end{itemize}
+
+% -------------------------------------------------------------------------
+\subsection{Document Structure}
+This document is organized as follows:
+\begin{enumerate}
+	\item \textbf{Introduction:} Provides an overview of the project, its goals, and its scope.
+	\item \textbf{Overall Description:} Details the product, including real-world scenarios and a technical analysis of the system.
+	\item \textbf{Specific Requirements:} Lists all requirements necessary to achieve the project goals and their relationship with domain assumptions.
+	\item \textbf{Formal Analysis Using Alloy:} Presents a formal description of selected real-world phenomena using Alloy to highlight inconsistencies between assumptions and modeled phenomena.
+	\item \textbf{Effort Spent:} Summarizes the contributions and time spent by each group member in preparing this document.
+	\item \textbf{References:} Lists documents and tools referenced in the preparation of this document.
+\end{enumerate}
 
 
 
