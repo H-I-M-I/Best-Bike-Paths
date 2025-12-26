@@ -1,3 +1,37 @@
+\documentclass[11pt,twoside]{article}
+
+% -------------------------------------------------------------------------
+% Load packages that util files or commandsFile need
+% -------------------------------------------------------------------------
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{xspace}      % for abbrev.tex
+\usepackage{soul}        % for highlight.tex
+\PassOptionsToPackage{table}{xcolor} % allow table coloring before TikZ loads xcolor
+\usepackage[dvipsnames]{xcolor}      % safer color handling with extended palette
+\usepackage{tikz}        % for highlight.tex (if using TikZ diagrams)
+\usepackage{graphicx}    % enable image inclusion
+\usepackage{booktabs}    % professional table rules
+\usepackage{array}       % extended table column tools
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\setlength{\headheight}{13.59999pt}
+\addtolength{\topmargin}{-1.59999pt}
+\usepackage{tabularx}
+% ... (any other packages you normally need) ...
+% -------------------------------------------------------------------------
+% Bring in helper macro files (before \begin{document})
+% -------------------------------------------------------------------------
+\input{util/abbrev}
+\input{util/comments}
+\input{util/highlight}
+% Load hyperref ONCE, near the end of the preamble
+\usepackage[colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
+% -------------------------------------------------------------------------
+% Bring in the main formatting commands (which sets geometry, headers, etc.)
+% -------------------------------------------------------------------------
+
+
 \input{commandsFile}
 
 \begin{document}
@@ -78,38 +112,32 @@
 
 %------------------------------------------------------------------------------------------------------------------------------------------------
 \clearpage
-{\color{Blue}{\section{Introduction}}}
-\label{sect:introduction}
+{\color{Blue}{\section{Introduction}}}\label{sect:introduction}
 \input{Files/introduction}
 
 %------------------------------------------------------------------------------------------------------------------------------------------------
 \clearpage
-{\color{Blue}{\section{Overall Description}}}
-\label{sect:overview}
+{\color{Blue}{\section{Overall Description}}}\label{sect:overview}
 \input{Files/overview}
 
 %------------------------------------------------------------------------------------------------------------------------------------------------
 \clearpage
-{\color{Blue}{\section{Formal Analysis Using Alloy}}}
-\label{sect:interface}
+{\color{Blue}{\section{Formal Analysis Using Alloy}}}\label{sect:interface}
 \input{Files/interface}
 
 %------------------------------------------------------------------------------------------------------------------------------------------------
 \clearpage
-{\color{Blue}{\section{Specific Requirements}}}
-\label{sect:requirements}
+{\color{Blue}{\section{Specific Requirements}}}\label{sect:requirements}
 \input{Files/requirements}
 
 %------------------------------------------------------------------------------------------------------------------------------------------------
 \clearpage
-{\color{Blue}{\section{Formal Analysis Using Alloy}}}
-\label{sect:implementation}
+{\color{Blue}{\section{Formal Analysis Using Alloy}}}\label{sect:implementation}
 \input{Files/implementation}
 
 %------------------------------------------------------------------------------------------------------------------------------------------------
 \clearpage
-{\color{Blue}{\section{Effort Spent}}}
-\label{sect:effort}
+{\color{Blue}{\section{Effort Spent}}}\label{sect:effort}
 \input{Files/effort}
 
 
@@ -119,7 +147,6 @@
 \bibliographystyle{plain}
 \bibliography{main}
 %------------------------------------------------------------------------------------------------------------------------------------------------
-
 
 
 

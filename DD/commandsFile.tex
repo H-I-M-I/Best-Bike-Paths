@@ -1,4 +1,3 @@
-\documentclass [11pt,twoside]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 
@@ -45,11 +44,14 @@
 \renewcommand{\ttdefault}{lmtt}
 
 %tables
-\usepackage{tabu}
 \usepackage{tabularx}
 \usepackage{ltablex}
 \usepackage{longtable}
 \usepackage{float} % To allow the use of H modifier in long tables
+\usepackage{needspace}
+\usepackage{placeins}   % for \FloatBarrier (optional)
+\usepackage{array}      % better tables
+\renewcommand{\arraystretch}{1.15}
 
 %landscape mode
 \usepackage{pdflscape}
@@ -119,14 +121,6 @@
 \usepackage{xspace}
 \usepackage{enumitem}
 \usepackage{amssymb}
-\usepackage[pdftex, colorlinks]{hyperref}
-\newcommand{\comment}[1]{{\color{Red}$\blacktriangleright$ Comment: #1 $\blacktriangleleft$}}
-
-
-% Some utilities\ldots
-\input{util/highlight}
-\input{util/abbrev}
-
 
 
 \date{}
