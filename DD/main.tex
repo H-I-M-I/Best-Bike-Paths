@@ -62,25 +62,6 @@
 
 \end{titlepage}
 
-%Define deliverable specific info
-%Replace cell contents where needed
-\begin{table}[h!]
-\begin{tabu} to \textwidth { X[0.3,r,p] X[0.7,l,p] }
-\hline
-
-\textbf{Deliverable:} & RASD\\
-\textbf{Title:} & Requirement Analysis and Verification Document \\
-\textbf{Authors:} & YOUR NAMES \\
-\textbf{Version:} & 1.0 \\ 
-\textbf{Date:} & 31-January-2016 \\
-\textbf{Download page:} & LINK TO YOUR REPOSITORY \\
-\textbf{Copyright:} & Copyright © 2017, YOUR NAMES – All rights reserved \\
-\hline
-\end{tabu}
-\end{table}
-
-
-
 
 \setcounter{page}{2}
 
@@ -109,6 +90,12 @@
 
 %------------------------------------------------------------------------------------------------------------------------------------------------
 \clearpage
+{\color{Blue}{\section{Formal Analysis Using Alloy}}}
+\label{sect:interface}
+\input{Files/interface}
+
+%------------------------------------------------------------------------------------------------------------------------------------------------
+\clearpage
 {\color{Blue}{\section{Specific Requirements}}}
 \label{sect:requirements}
 \input{Files/requirements}
@@ -116,8 +103,8 @@
 %------------------------------------------------------------------------------------------------------------------------------------------------
 \clearpage
 {\color{Blue}{\section{Formal Analysis Using Alloy}}}
-\label{sect:alloy}
-\input{Files/alloy}
+\label{sect:implementation}
+\input{Files/implementation}
 
 %------------------------------------------------------------------------------------------------------------------------------------------------
 \clearpage
