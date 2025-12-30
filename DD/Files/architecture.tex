@@ -1,7 +1,41 @@
 % DD - Section 2: Architectural Design (skeleton)
 \subsection{Overview: High level components and their interaction}
 % 2.1 Overview: High level components and their interaction
-% TODO: add high-level components and interactions
+
+\paragraph{Purpose}
+Best Bike Paths (BBP) is a client--server system that supports: trip recording and review, manual and automatic contribution of path issues, validation of auto-detected issues, path search with ranked alternatives, and merging/moderation of crowd-sourced path status. These capabilities are required by the assignment and are specified in the RASD scenarios and requirements.
+
+\paragraph{System-level architecture (logical 3-tier)}
+BBP follows a logical three-tier architecture (separation of responsibilities, not a deployment claim):
+\begin{itemize}
+	\item Presentation tier (Clients): mobile application that offers UI/UX for cyclists/users to record their trips, choose best path, report issues, etc., with an optional Admin Panel web app for moderators.
+	\item Business tier (Backend): a modular monolith backend exposing REST APIs over HTTPS and implementing all BBP business rules (trip/issue/merge/ranking) as modules.
+	\item Data tier (Storage \& caching): persistent storage for different entities (users, trips, ...); also a cache for read-heavy/expensive results.
+\end{itemize}
+
+BBP also relies on external providers (maps/routing, weather, traffic). These providers are outside the system boundary; the backend accesses them through dedicated adapter components (described below).
+
+\paragraph{Architectural choice and rationale (modular backend + async support)}
+BBP implements the business tier as a modular monolith: a single backend application whose internal modules align with major domain responsibilities (Trip, Issue/Validation, Aggregation/Moderation, Path Search/Ranking, Identity \& Access). This is well-suited for a startup/new application because it keeps the domain logic cohesive and easy to evolve while still enforcing clear boundaries between responsibilities.
+
+The backend is complemented by asynchronous processing for tasks that are slow, bursty, or dependent on external services (e.g., enrichment and automatic detection). Instead of blocking interactive requests, the backend can enqueue work and let an internal worker execute it, improving responsiveness and robustness without requiring a fully distributed microservice architecture.
+
+This solution is preferred over a microservices-based distributed architecture because BBP contains cross-cutting domain invariants—most notably the aggregation workflow that maintains a single publishable status per segment and resolves conflicts through confirmations and freshness—that are simpler to enforce when core domain updates occur within a single application boundary. Microservices could still realize the same functionality, but would typically introduce additional coordination mechanisms (messaging, idempotent event handling, and reconciliation) to keep derived “publishable” state aligned with incoming reports/confirmations, increasing design and operational complexity for a startup/new application. At the same time, the modular decomposition keeps boundaries explicit and enables future evolution towards independently deployable services if specific modules (e.g., detection/enrichment) require it.
+
+\paragraph{Backend internal architecture (layers inside the Business tier)}
+Within the backend (tier 2), the codebase is internally organized into layers (Interface, Domain, Repository and Adapter).
+
+\paragraph{Asynchronous processing}
+Some backend activities can take significant time and are not required to complete before the user receives a response. To keep interactive operations responsive, BBP executes these activities asynchronously: the backend records the core data immediately and schedules the additional processing to be handled in the background by a worker. In BBP this is primarily used to (i) enrich uploaded trips with weather/traffic context by contacting external providers without delaying the upload, and (ii) run automatic issue detection on the uploaded trip trace and later make the resulting candidate issues available to the user in the “items to confirm” workflow.
+
+\paragraph{External services}
+BBP relies on external providers that are outside the system boundary and are accessed by the backend through adapter components. These providers supply:
+\begin{itemize}
+	\item Map/Geocoding/Routing functionality (map visualization, geocoding/reverse-geocoding, route alternatives),
+	\item Weather information (trip enrichment and optional ranking context),
+	\item Traffic information (trip/path context and optional ranking or presentation).
+\end{itemize}
+
 
 \subsection{Component view}
 % 2.2 Component view
