@@ -1,44 +1,68 @@
-% DD - Section 1: Introduction (skeleton)
 \subsection{Purpose}
-% 1.1 Purpose (design check)
-% TODO: add Purpose text
+
+The Best Bike Paths (BBP) system is intended to assist bicycle riders in determining and using the best available bike path given a city's context including factors such as path safety, user-friendly design, obstacles etc.
+Users can provide information about the bike path by logging trips or manually and automatically reporting obstacles faced during cycling.
+The objective of this Design Document is to show the structure of BBP system in order meet these goal, report about architectural organization and design decisions which have been made to ensure functionalities described in Requirement Analysis and Specification Document (RASD).
+The aim of this paper is to be a detailed specification for developers and testers in following phases as implementation, integration and testing phase.
 
 \subsection{Scope}
-% 1.2 Scope (design check)
-% TODO: add Scope text
 
-\subsection{Definitions, Acronyms, Abbreviations}
-% 1.3 Definitions, Acronyms, Abbreviations (design check)
-% TODO: add definitions and acronyms
+The BBP system collects, administers and displays bike path and cycling information. More specifically, the system allows for the capturing of bike trips, its includes and validating path-related information, and generating optimal bike paths between any two points based on an aggregated user's input.
+This Design Document proposes how the software architecture should be, and what components are necessary to implement these functionalities, its interactions and their interfaces.
+This is intended to provide a clear reference for developers and testers during the subsequent phases of implementation, integration, and testing.
+
+\subsection{Definitions}
+
+This subsection reports the definitions of the main concepts used throughout this Design Document. Additional definitions introduced during the requirements analysis phase are described in the RASD.
+
+\begin{itemize}
+    \item \textbf{Bike Path}: A path suitable for cycling, either because it includes a dedicated bike lane or because car traffic is limited and compatible with bicycle usage.
+    \item \textbf{Trip}: A cycling activity recorded by a registered user, consisting of spatial and temporal data collected during movement.
+    \item \textbf{Publishable Information}: Information about bike paths or obstacles that has been confirmed by the user and made visible to the community.
+\end{itemize}
+
+\subsection{Acronyms}
+
+\begin{itemize}
+    \item \textbf{BBP}: Best Bike Paths
+    \item \textbf{DD}: Design Document
+    \item \textbf{RASD}: Requirement Analysis and Specification Document
+    \item \textbf{UI}: User Interface
+    \item \textbf{API}: Application Programming Interface
+\end{itemize}
+
+\subsection{Abbreviations}
+
+\begin{itemize}
+    \item \textbf{GPS}: Global Positioning System
+    \item \textbf{DB}: Database
+\end{itemize}
 
 \subsection{Revision History}
-% 1.4 Revision History (design check)
-% TODO: track revisions
+
+Version 1.0 : 07/01/2026.
+
+\subsection{Reference Documents}
+
+This subsection lists the documents that have been consulted and referenced during the preparation of this Design Document and that provide the basis for the architectural and design choices described in the following sections.
+
+\begin{itemize}
+    \item Requirement Analysis and Specification Document (RASD) - Best Bike Paths
+    \item Software Engineering 2 - Assignment R\&DD, A.Y. 2025--2026
+    \item Software Engineering 2 course material and lecture slides
+\end{itemize}
 
 \subsection{Document Structure}
-% 1.5 Document Structure (design check)
-% TODO: list structure of this document
-This document has been prepared to help you approaching Latex as a formatting tool for your Travlendar+ deliverables. This document suggests you a possible style and format for your deliverables and contains information about basic formatting commands in Latex. A good guide to Latex is available here \href{https://tobi.oetiker.ch/lshort/lshort.pdf}{https://tobi.oetiker.ch/lshort/lshort.pdf}, but you can find many other good references on the web. 
 
-Writing in Latex means writing textual files having a \texttt{.tex} extension and exploiting the Latex markup commands for formatting purposes. Your files then need to be compiled using the Latex compiler. Similarly to programming languages, you can find many editors that help you writing and compiling your latex code. Here \href{https://beebom.com/best-latex-editors/}{https://beebom.com/best-latex-editors/} you have a short oviewview of some of them. Feel free to choose the one you like.  
+This document is structured as follows:
 
-Include a subsection for each of the following items\footnote{By the way, what follows is the structure of an itemized list in Latex.}:
-\begin{itemize}
-\item
-Purpose: here we include the goals of the project
-\item
-Scope: here we include an analysis of the world and of the shared phenomena
-\item
-Definitions, Acronyms, Abbreviations
-\item
-Revision history
-\item
-Reference Documents 
-\item
-Document Structure
-\end{itemize}
-Below you see how to define the header for a subsection.
-\subsection{Scope}
-... Here you see a subsubsection
-\subsubsection{World Phenomena}
-%what you write here is a comment that is not shown in the final text
+\begin{enumerate}
+    \item \textbf{Introduction}: provides a brief description of the project, focusing on the motivations and goals to be achieved through its development, as defined in the RASD.
+    \item \textbf{Architectural Design}: describes the architecture of the system at different levels of granularity, including the main components, their interactions, and the adopted architectural patterns.
+    \item \textbf{User Interface Design}: presents the organization of the user interface of the platform and describes how users interact with the system.
+    \item \textbf{Requirements Traceability}: explains how the requirements defined in the RASD are satisfied by the design elements introduced in this document.
+    \item \textbf{Implementation, Integration and Test Plan}: provides an overview of the implementation strategy, integration activities, and testing approach adopted for the system.
+    \item \textbf{Effort Spent}: reports the effort spent by each group member in the preparation of this document.
+    \item \textbf{Bibliography}: contains the references to the documents and tools used to produce this Design Document.
+\end{enumerate}
+
