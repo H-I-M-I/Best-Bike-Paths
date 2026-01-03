@@ -3,7 +3,7 @@
 % 2.1 Overview: High level components and their interaction
 
 \paragraph{Purpose}
-Best Bike Paths (BBP) is a client--server system that supports: trip recording and review, manual and automatic contribution of path issues, validation of auto-detected issues, path search with ranked alternatives, and merging/moderation of crowd-sourced path status. These capabilities are required by the assignment and are specified in the RASD scenarios and requirements.
+Best Bike Paths (BBP) is a client-server system that supports: trip recording and review, manual and automatic contribution of path issues, validation of auto-detected issues, path search with ranked alternatives, and merging/moderation of crowd-sourced path status. These capabilities are required by the assignment and are specified in the RASD scenarios and requirements.
 
 \paragraph{System-level architecture (logical 3-tier)}
 BBP follows a logical three-tier architecture (separation of responsibilities, not a deployment claim):
@@ -46,7 +46,66 @@ BBP relies on external providers that are outside the system boundary and are ac
 
 \subsection{Component view}
 % 2.2 Component view
-% TODO: detail components
+\paragraph{Component structure and system boundary}
+This section describes the main components of BBP and how they collaborate to deliver the system features. The component view follows the same logical three-tier structure introduced above: (i) a presentation tier (clients), (ii) a business tier (backend components that implement the application logic), and (iii) a data tier (persistence and caching). It also highlights where BBP interacts with external services outside the system boundary.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.95\textwidth]{Figures/FinalComponentAnnotated.png}
+\caption{BBP component diagram (annotated)}
+\label{fig:component_view}
+\end{figure}
+
+\paragraph{Presentation tier (Clients)}
+\begin{itemize}
+	\item \textbf{Mobile App}: client application used by cyclists to record trips and navigate. It supports manual issue reporting and confirmation of automatically detected issues. The app stores a limited local state (e.g., trips and reports) to remain usable when connectivity is unavailable; once the network is restored, it synchronizes the pending data with the backend.
+	\item \textbf{Admin Panel}: web interface reserved for moderators to handle unresolved conflicts and execute moderation actions.
+\end{itemize}
+Clients access BBP through a \textbf{public Client API} exposed by the backend.
+
+\paragraph{Business tier (Backend)}
+\begin{itemize}
+	\item \textbf{Backend API}: exposes BBP REST endpoints over HTTPS using JSON. It validates incoming requests, enforces authentication and authorization, and routes valid requests to the core application logic.
+	\item \textbf{Domain Core}: implements the application rules and manages the main workflows (e.g., trip management, issue lifecycle, and validation). It also performs aggregation and segment status updates, and supports path search features such as path ranking. Time-consuming operations that do not need to complete within the request/response cycle can be delegated to asynchronous processing.
+	\item \textbf{Repository}: persistence boundary used by the Domain Core and background worker. It encapsulates access to the database and cache, keeping storage concerns separate from business logic.
+	\item \textbf{Async Path (Queue + Worker)}:
+	\begin{itemize}
+		\item \textbf{Queue}: stores background jobs emitted by the Domain Core (e.g., enrichment and detection tasks).
+		\item \textbf{Worker}: consumes jobs from the queue, executes the required processing, and persists results through the Repository.
+	\end{itemize}
+	\item \textbf{Adapter Layer (Gateway)}: integration boundary for third-party providers. It hides provider-specific APIs and formats, handles failures and retries as needed, and returns normalized data to backend components that require external information.
+\end{itemize}
+
+\paragraph{Data tier (Storage \& caching)}
+\begin{itemize}
+	\item \textbf{Database}: persistent storage for core entities such as users, trips, issues, confirmations, and the computed publishable segment status.
+	\item \textbf{Cache}: used to reduce latency for read-heavy or expensive queries and to avoid repeated computation and repeated provider calls. The cache is accessed through the Repository; it may be refreshed or updated by background processes to keep frequently used data up to date.
+\end{itemize}
+
+\paragraph{External services (outside system boundary)}
+BBP depends on external providers for:
+\begin{itemize}
+	\item \textbf{Maps \& Routing}: geocoding/reverse-geocoding, route alternatives, and other map-related data,
+	\item \textbf{Weather}: trip enrichment and optional ranking context,
+	\item \textbf{Traffic}: trip/path context and optional ranking or presentation.
+\end{itemize}
+These services are accessed only through the Adapter Layer.
+
+\paragraph{Connectors and interactions}
+\begin{itemize}
+	\item \textbf{Client-to-backend}: the Mobile App and Admin Panel communicate with the Backend API via the public Client API using HTTPS (REST + JSON).
+	\item \textbf{Synchronous backend flow}: the Backend API invokes the Domain Core for request handling; the Domain Core persists and retrieves state through the Repository.
+	\item \textbf{Asynchronous backend flow}: the Domain Core enqueues background jobs to the Queue; the Worker consumes them, executes the processing, and stores outcomes via the Repository.
+	\item \textbf{Third-party integrations}: external API calls are performed by the Adapter Layer, which contacts providers (Maps/Routing, Weather, Traffic) and normalizes their responses for backend use.
+\end{itemize}
+
+\paragraph{Constraints captured by the component view}
+\begin{itemize}
+	\item \textbf{No direct access to internal resources}: clients do not directly access the data tier or external services; all access is mediated by the backend (and, for third parties, through the Adapter Layer).
+	\item \textbf{Persistence encapsulation}: persistence is primarily handled through the Repository (database + cache), keeping storage concerns separate from the Domain Core and background worker.
+	\item \textbf{Third-party isolation}: all provider dependencies are isolated inside the Adapter Layer to limit coupling between the core system and external APIs.
+	\item \textbf{Responsiveness}: time-consuming and non-interactive work is handled by the Queue/Worker path to keep request/response operations responsive.
+\end{itemize}
 
 \subsection{Deployment view}
 % 2.3 Deployment view
