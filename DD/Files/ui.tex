@@ -10,7 +10,7 @@ All core functionalities of the system, such as trip recording, path search, and
 
 \subsection{Main User Interfaces}
 
-Based on the interaction scenarios and use cases described in the RASD, the following main user interfaces have been identified and designed.
+Accordingly, the following are the main user interfaces concerning interaction patterns and use case depicted and designed as regards our RASD.
 
 \begin{figure}[H]
 \centering
@@ -19,8 +19,8 @@ Based on the interaction scenarios and use cases described in the RASD, the foll
 \end{figure}
 
 Figure~\ref{fig:ui_main} represents the main map interface of the BBP mobile application.
-This interface acts as the primary entry point for user interactions and supports multiple use cases defined in the RASD, including starting a trip recording, searching for bike paths, and manually inserting path-related information.
-The map visualizes bike paths using color-coded segments and displays point markers to highlight relevant events such as reported issues or obstacles.
+This interface, which is the only one accessible to users, serves as an entry point for several use cases that are listed in the RASD, such as recording a new trip, searching paths and inserting manually of path-related information.
+The map represents bike paths as different color-coded lines and point markers are used to show events like reported issues or obstacles.
 
 \begin{figure}[H]
 \centering
@@ -29,8 +29,8 @@ The map visualizes bike paths using color-coded segments and displays point mark
 \end{figure}
 
 Figure~\ref{fig:ui_trip} illustrates the trip recording interface, which realizes the \textit{Record Trip} use case described in the RASD.
-During trip recording, the interface displays the ongoing path on the map and provides a clear visual indication of the recording status.
-User interaction is intentionally limited to essential actions, such as pausing or stopping the recording, in order to reduce distraction while cycling.
+When recording a trip, the UI will show the current path overlaid on the map with easy to see visual cues of whether the app is still recording.
+User interface is kept to a minimum on purpose - the only thing you need to do will be tap couple buttons every now and then, e.g. when stopping or pausing recording.
 
 \begin{figure}[H]
 \centering
@@ -39,8 +39,8 @@ User interaction is intentionally limited to essential actions, such as pausing 
 \end{figure}
 
 Figure~\ref{fig:ui_search} shows the path search interface, corresponding to the \textit{Search Best Paths} interaction scenarios defined in the RASD.
-Through this interface, users can specify a source and a destination and visualize one or more suggested bike paths on the map.
-Suggested routes are represented using different colors to indicate their quality, and additional markers are used to highlight problematic segments or relevant events along the paths.
+You can enter a source and destination using this interface, and the system would show one or multiple recommended bike paths on the map.
+Recommended paths are drawn in different colors based on quality, and additional markers are placed to mark troubled spots and useful information that the paths pass by.
 
 \begin{figure}[H]
 \centering
@@ -49,79 +49,78 @@ Suggested routes are represented using different colors to indicate their qualit
 \end{figure}
 
 Figure~\ref{fig:ui_issue} represents the interface used for the confirmation of automatically detected issues, as defined in the RASD.
-After the completion of a trip, this interface allows users to review detected issues, inspect their location on the map, and access additional information such as issue type and severity.
-Users can then confirm, edit, or discard the detected information before it is published and shared with other users.
+After a trip has been made, this interface will allow the users to recognize and explore detected defects on the maps as well as to access further information like issue type and severity.
+Users can confirm, edit, or reject the identified information before it is published and shared among other users.
 
 \subsection{Key Screens and Workflows}
 
-The user interaction with the BBP system is structured around a set of key screens that support the main workflows defined in the RASD.
-The main map interface represents the starting point for most interactions and provides access to the core functionalities of the application.
+The user interaction with the BBP is organized over a set of principal screens which enable the core workflows presented in the RASD.
+The main map interface shows that each player will start from the main point of cooperation, which is the main gate opened.
 
-A typical workflow for trip recording starts from the main map interface, where the user initiates the recording of a cycling activity.
-During the trip, the recording interface visualizes the ongoing path while limiting user interaction.
-Once the trip is completed, the user is guided to the issue confirmation interface, where automatically detected issues can be reviewed and validated before publication.
+The usual method for recording a trip would begin with the user on the primary map page, where they would start to record their cycling.
+While you take a trip, the recording interface projects your current path while minimizing user interaction.
+Once the journey has finished, the user is taken to the problem confirmation screen, where automatically recognized problems can be reviewed before confirmation and publishing.
 
-Another key workflow concerns path search.
-From the main map interface, the user can access the path search interface, specify a source and a destination, and visualize one or more suggested bike paths ranked according to their suitability.
-Manual insertion of path-related information follows a similar workflow, starting from the main interface and leading to a dedicated interaction for data input and confirmation.
-
+Path search is another important workflow.
+By interacting with the main map screen, a user can input through the path search interface a start and end point of his or her bike travel and see one or more recommended paths that are ranked based on their fitness to meet the user's needs.
+This process of manual path information input is treated in the same way as above, with a clear distinction between the main interface and the GUI specific for data insertion and confirmation.
+%---------------------------------------------------------
 \subsection{Interface Conventions and Legends}
 
-The user interface figures presented in this section adopt a set of visual conventions to clearly and consistently convey information to the user.
-These conventions are used across all interfaces of the BBP mobile application and are summarized below to facilitate interpretation of the graphical elements.
+The figures with the graphical user interfaces presented in this section set visual standards for showing information to the user.
+These conventions are implemented in all the interfaces of the BBP mobile application and their summaries are provided to facilitate the understanding of what is depicted by certain graphics.
 
 \paragraph{Path Color Coding}
 
-Bike paths displayed on the map are represented using different colors to indicate their overall quality and suitability for cycling.
-Green-colored segments denote paths that are considered highly suitable, based on aggregated user contributions and validated information.
-Yellow segments represent paths with medium suitability, which may present minor issues or limitations.
-Red segments highlight paths with low suitability, indicating the presence of significant issues or unfavorable conditions.
-This color coding allows users to quickly assess the quality of available routes at a glance.
+Cycleways on the map are colored differently to indicate their class or function.
+Green segments are trails marked as 'highly suitable' (based on a combination of user input and confirmed reports).
+The yellow segments denote moderately suitable routes that pose minor or some restrictions.
+Red lines indicate weak pathways, which means that there might be significant problems, or unsuitable habitat.
+The colour coded pattern allows riders to instantly assess the potential quality of available routes.
 
 \paragraph{Point Markers}
 
-Point markers are used on the map to highlight specific locations associated with relevant events or conditions.
-Markers may represent automatically detected issues, user-reported obstacles, or other noteworthy elements along a bike path.
-Each marker is positioned at the corresponding geographic location and is visually distinguishable from the path segments to attract the user’s attention.
+Markers are employed in the map to emphasize certain locations involving events or pertinent conditions therein.
+The markers can depict automatically detected problems, bike-unfriendly situations reported by a user and other interesting items that might be along the bike path.
+Each marker is set on the location at that geographic point, and looks different from path segments for users to catch their eye.
 
 \paragraph{Issue and Obstacle Indicators}
 
-Different marker symbols are used to distinguish among various types of issues.
-For example, warning symbols may indicate obstacles such as potholes or road works, while location pins are used to mark the position of detected or reported issues.
-These indicators support the user in identifying critical points along a route and understanding the nature of the reported problem.
+Different marker shapes serve to indicate the different types of issues.
+For instance, warning symbols may represent obstructions like potholes or road works, and location pins to place the position of detected or reported problems.
+These indicators help the user learn about critical points on a path and appreciate what type of problem was reported.
 
 \paragraph{Information Panels}
 
-Information panels are used to display additional details related to paths, issues, or recorded trips.
-Such panels may include attributes such as path name, length, estimated quality, or issue type and severity.
-By providing structured contextual information, these panels enable users to make informed decisions without overloading the map view.
+Information panels show more details or supplementary info about paths, problems or recording trips.
+Such panels may have features like path name, length of the panel, estimated quality or type and severity of issue.
+These panels convey structured context that empowers users to make decisions informed by the information, but without cluttering the map view.
 
 \paragraph{Recording Status Indicators}
 
-During trip recording, the interface includes explicit visual cues to indicate the current recording status.
-These cues may consist of highlighted paths, status labels, or dedicated interface elements signaling that the recording is active.
-This ensures that users are always aware of whether a cycling activity is being recorded.
+As recording is taking place, the user interface provides clear visual signs of which status the current recording is in.
+Such cues can be indicator lights, status indicators of the recording devices or interface items that indicate the activation of the recording function.
+This way, there is always feedback to the user if a cycling activity is being recorded.
 
 \paragraph{Legend Box}
 
-A legend box is included within the interface to summarize the meaning of colors, markers, and symbols used on the map.
-The legend provides a compact reference that allows users to quickly understand the visual language of the application without requiring additional explanation.
+There is also a legend box on the interface; it summarizes the significance of colors, markers, and symbols used in the map.
+This legend serves as a shorthand explanation that enables viewers to interpret the visual language of the application at-a-glance, without any extra instruction.
 
 \subsection{Accessibility and Interaction Notes}
 
-The BBP user interface is designed with particular attention to accessibility and mobile interaction constraints.
-Given that the application is mainly used during cycling activities, the interface minimizes the need for complex interactions while the user is moving, favoring large touch targets and clear visual feedback.
-
-Color coding is used to convey information about path quality; however, textual labels and legends are also provided to ensure that information remains understandable regardless of color perception.
-Confirmation and editing actions are intentionally deferred to moments when the user is stationary, reducing cognitive load and improving safety.
-These design choices aim to ensure that the application remains usable and accessible in real-world usage conditions.
+The BBP interface is especially mindful on the accessibility paradigm and takes into consideration mobile interaction limitations.
+As the app is primarily used while riding a bike, the design reduces interactions to be as simple as possible through and in motion experience using big touch areas and immediate visual feedback.
+Colour legend offers information on the path quality, but both coloured-text labels and typical legends values lead into that all information are meaningful in every color perception context.
+Further, by processing confirmation and editing operations during times when the user has stopped moving, cognitive load is lowered, and safety is enhanced.
+Such design considerations are intended to help keep the application usable in real-world usage scenarios.
 
 \subsection{Navigation Flow}
 
 The navigation among the different user interfaces is designed to be simple and coherent.
-From the main map interface, users can access the trip recording interface to start a cycling activity or the path search interface to compute a suitable route.
-Upon completion of a trip, users are guided to the issue confirmation interface to validate automatically detected information.
-Additional functionalities, such as manual path insertion and access to trip statistics, are reachable from the main interface through dedicated actions.
-This navigation structure ensures that the core functionalities of the BBP system are easily accessible while maintaining a clear separation between data collection, confirmation, and visualization activities.
+For the primary user interface, users can move to the trip recording screen to begin a cycling activity or path searching screen for route calculation.
+After a tour is finished, users are directed to the issue confirmation interface to confirm auto-extracted information.
+Supplementary features (e.g., input path manually and trip statistics) are available as clickable actions in the main interface.
+This navigation framework provides easy access to the main functions of the BBP system, while maintaining a clear separation among the data collection, validation and display processes.
 
-The user interface figures presented in this section are conceptual mockups created to illustrate the structure and interaction of the mobile interfaces and were produced using a UI prototyping tool~\cite{figma}.
+The user interface figures presented in this section are conceptual mockups and they were created to illustrate the structure and interaction of the mobile interfaces and produced using a UI prototyping tool~\cite{figma}.
