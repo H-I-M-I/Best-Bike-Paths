@@ -1,7 +1,189 @@
 % DD - Section 4: Requirements Traceability (skeleton)
 % 4. Requirements Traceability
-\subsection{Requirements Traceability}
 % TODO: provide traceability matrix linking goals, requirements, and design (design check)
 
-\subsection{Mapping to Components and Tests}
-% TODO: map requirements to components and test cases
+%---------------------------------------------------------
+This section relates the functional requirements defined in the RASD (IDs \texttt{RE-F*})
+to the main DD artifacts that realize them: (i) architectural components and their responsibilities,
+(ii) component interfaces, (iii) runtime interaction diagrams, and (iv) user interface elements.
+The purpose is to demonstrate that each requirement is supported by concrete design choices and
+a clear end-to-end execution path.
+
+\renewcommand{\arraystretch}{1.25}
+\small
+\begin{longtable}{|p{2.4cm}|p{5.2cm}|p{7cm}|}
+\hline
+\textbf{RASD Req. ID} & \textbf{Requirement intent (from RASD)} & \textbf{DD realization (components, interfaces, runtime, UI)} \\
+\hline
+\endfirsthead
+
+\hline
+\textbf{RASD Req. ID} & \textbf{Requirement intent (from RASD)} & \textbf{DD realization (components, interfaces, runtime, UI)} \\
+\hline
+\endhead
+
+%-------------------- F2 --------------------
+\multicolumn{3}{|l|}{\textbf{F2 - Trip Recording and Review}}\\
+\hline
+RE-F2-1 &
+The system shall allow users to record a biking trip. &
+\textbf{Components:} Mobile App, Trip Management, Backend API, Database.\\
+& & \textbf{Runtime:} Trip recording and upload flow.\\
+& & \textbf{UI:} Trip recording screen.\\
+\hline
+
+RE-F2-2 &
+The system shall store recorded trips for later access. &
+\textbf{Components:} Trip Management, Database.\\
+& & \textbf{Runtime:} Persistent storage after trip completion.\\
+& & \textbf{UI:} Trip history and summary screens.\\
+\hline
+
+RE-F2-3 &
+The system shall acquire GPS data during a biking session. &
+\textbf{Components:} Mobile App, GPS sensor services.\\
+& & \textbf{Runtime:} Continuous GPS acquisition during trip recording.\\
+& & \textbf{UI:} Live position feedback during recording.\\
+\hline
+
+RE-F2-4 &
+The system shall acquire motion sensor data during a biking session. &
+\textbf{Components:} Mobile App, Motion sensors.\\
+& & \textbf{Runtime:} Motion data sampling during recording.\\
+& & \textbf{UI:} Background acquisition indicators.\\
+\hline
+
+RE-F2-5 &
+The system shall associate recorded trips with the corresponding user. &
+\textbf{Components:} Authentication service, Trip Management.\\
+& & \textbf{Runtime:} User identity attached to trip metadata.\\
+& & \textbf{UI:} User-specific trip lists.\\
+\hline
+
+RE-F2-7 &
+The system shall enrich recorded trips with contextual information when available. &
+\textbf{Components:} Trip Management, Weather Information Service.\\
+& & \textbf{Runtime:} Contextual enrichment after trip upload.\\
+& & \textbf{UI:} Contextual data displayed in trip details.\\
+\hline
+
+RE-F2-8 &
+The system shall allow users to review previously recorded trips. &
+\textbf{Components:} Trip Management, Backend API, Database.\\
+& & \textbf{Runtime:} Trip retrieval flow.\\
+& & \textbf{UI:} Trip history and detail views.\\
+\hline
+
+
+%-------------------- F3 --------------------
+\multicolumn{3}{|l|}{\textbf{F3 - Manual Contribution}}\\
+\hline
+RE-F3-1 &
+The system shall allow users to manually contribute information about path segments. &
+\textbf{Components:} Path Contribution logic, Backend API, Database.\\
+& & \textbf{Runtime:} Manual contribution submission flow.\\
+& & \textbf{UI:} Path contribution screen.\\
+\hline
+
+RE-F3-2 &
+The system shall allow users to specify the condition or status of path segments. &
+\textbf{Components:} Path Contribution logic, Aggregation service.\\
+& & \textbf{Runtime:} Validation and storage of segment status.\\
+& & \textbf{UI:} Segment status selection controls.\\
+\hline
+
+RE-F3-3 &
+The system shall allow users to publish contributed path information. &
+\textbf{Components:} Aggregation and Moderation service.\\
+& & \textbf{Runtime:} Publication after validation.\\
+& & \textbf{UI:} Submit and confirmation actions.\\
+\hline
+
+RE-F3-4 &
+The system shall allow users to modify or remove previously submitted contributions. &
+\textbf{Components:} Path Contribution logic, Database.\\
+& & \textbf{Runtime:} Update and deletion flows.\\
+& & \textbf{UI:} Contribution management interface.\\
+\hline
+
+
+%-------------------- F4 --------------------
+\multicolumn{3}{|l|}{\textbf{F4 - Issue Detection and Validation}}\\
+\hline
+RE-F4-1 &
+The system shall automatically detect potential issues along recorded trips. &
+\textbf{Components:} Issue Detection service, Mobile App.\\
+& & \textbf{Runtime:} Automatic detection after data upload.\\
+& & \textbf{UI:} Issue notifications.\\
+\hline
+
+RE-F4-2 &
+The system shall present detected issues to users for validation. &
+\textbf{Components:} Issue Validation service, Backend API.\\
+& & \textbf{Runtime:} Retrieval of candidate issues.\\
+& & \textbf{UI:} Issue validation screen.\\
+\hline
+
+RE-F4-3 &
+The system shall allow users to confirm detected issues. &
+\textbf{Components:} Issue Validation service, Aggregation service.\\
+& & \textbf{Runtime:} Confirmation flow updating issue state.\\
+& & \textbf{UI:} Confirm controls.\\
+\hline
+
+RE-F4-4 &
+The system shall allow users to reject detected issues. &
+\textbf{Components:} Issue Validation service.\\
+& & \textbf{Runtime:} Rejection and storage of decision.\\
+& & \textbf{UI:} Reject controls.\\
+\hline
+
+RE-F4-5 &
+The system shall ensure that only validated issues are exposed to other users. &
+\textbf{Components:} Aggregation service, Path Search service.\\
+& & \textbf{Runtime:} Filtering of non-validated issues.\\
+& & \textbf{UI:} Map markers for validated issues only.\\
+\hline
+
+
+%-------------------- F5 --------------------
+\multicolumn{3}{|l|}{\textbf{F5 - Path Search and Visualization}}\\
+\hline
+RE-F5-1 &
+The system shall allow users to search for biking paths between two locations. &
+\textbf{Components:} Path Search service, Routing services.\\
+& & \textbf{Runtime:} Path search execution.\\
+& & \textbf{UI:} Search controls on the main map.\\
+\hline
+
+RE-F5-2 &
+The system shall compute feasible biking paths between origin and destination. &
+\textbf{Components:} Path Search service, Aggregation service.\\
+& & \textbf{Runtime:} Routing and path computation flow.\\
+& & \textbf{UI:} Map-based path visualization.\\
+\hline
+
+RE-F5-3 &
+The system shall rank computed paths according to quality indicators. &
+\textbf{Components:} Aggregation service, Path Search service.\\
+& & \textbf{Runtime:} Path scoring and ranking.\\
+& & \textbf{UI:} Ranked list of paths.\\
+\hline
+
+RE-F5-4 &
+The system shall allow users to visualize suggested biking paths. &
+\textbf{Components:} Client UI, Path Search service.\\
+& & \textbf{Runtime:} Path retrieval and rendering.\\
+& & \textbf{UI:} Main map view with overlays.\\
+\hline
+
+RE-F5-5 &
+The system shall allow users to view detailed information about suggested paths. &
+\textbf{Components:} Path Search service, Database.\\
+& & \textbf{Runtime:} Retrieval of path details.\\
+& & \textbf{UI:} Path detail screen with legend.\\
+\hline
+
+\end{longtable}
+\normalsize
+%---------------------------------------------------------

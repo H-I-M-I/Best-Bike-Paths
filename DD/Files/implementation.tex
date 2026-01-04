@@ -1,30 +1,107 @@
-% DD - Section 5: Implementation , Integration & Testing (skeleton)
-% 5. Implementation , Integration & Testing
-\subsection{Overview}
-% 5.1 Overview (design check)
-% TODO: high-level implementation overview
 
-\subsection{Implementation Plan}
-% 5.2 Implementation Plan (design check)
-% TODO: technology stack, milestones, CI/CD
+This chapter explains how the Best Bike Paths (BBP) system will be implemented and tested.
+The primary goal of testing is to identify and resolve bugs as early as possible, ensuring that
+each increment of the system is stable before adding new functionality.
+The implementation strategy is described in Section~\ref{subsec:impl_plan}, while
+Section~\ref{subsec:integration_testing} focuses on the integration order of components and the
+corresponding integration testing activities.
+Finally, Section~\ref{subsec:system_testing} and Section~\ref{subsec:additional_testing} discuss
+system-level and additional testing activities, respectively, in accordance with the approach
+suggested in the reference DD. % sample DD style
 
-\subsubsection{Features identification}
-% 5.2.1 Features identification (design check)
-% TODO: list and prioritise features (MVP, next releases)
+\subsection{Implementation Plan}\label{subsec:impl_plan}
 
-\subsection{Component Integration and Testing}
-% 5.3 Component Integration and Testing (design check)
-% TODO: describe integration strategy and tests
+Similarly to the reference DD, we adopt a combined strategy based on \textbf{bottom-up}
+and \textbf{thread} development. 
+The \textbf{thread strategy} enables incremental delivery of end-to-end user-visible features
+that can be validated early, while the \textbf{bottom-up strategy} supports gradual integration
+of services by testing intermediate subsystems step by step as additional modules are added.
 
-\subsection{System Testing}
-% 5.4 System Testing (design check)
-% TODO: define system-level tests and acceptance criteria
+This mixed approach is suitable for BBP because most functionalities require cooperation
+between multiple components (mobile client, backend services, persistence, and external APIs).
+In practice, we first stabilize shared foundations (data model, API contracts, persistence access),
+then implement features as threads, integrating them continuously into a growing baseline.
 
-\subsection{Additional Specifications on Testing}
-% 5.5 Additional Specifications on Testing (design check)
-% TODO: add performance, security, privacy testing notes
+\subsubsection{Features Identification}
+The implementation plan is organized around the main functional capabilities defined in the RASD
+and refined in the DD:
+\begin{itemize}
+    \item \textbf{F2: Trip Recording and Review} (trip lifecycle, storage, trip history/details, optional enrichment).
+    \item \textbf{F3: Manual Contribution} (manual reporting of segment status/obstacles and publication).
+    \item \textbf{F4: Issue Detection and Validation} (candidate issues review, confirm/reject, publishable issues).
+    \item \textbf{F5: Path Search and Visualization} (search, ranking, map visualization, path details).
+\end{itemize}
 
+Each feature thread is delivered through iterations that include:
+(i) local implementation and unit tests,
+(ii) integration with related backend services and persistence,
+(iii) end-to-end validation of the user workflow through system tests.
 
-Here is the command to refer to another element (section, figure, table, ...) in the document: \emph{As discussed in Section~\ref{sect:overview} and as shown in Figure~\ref{fig:metamodel}, ...}. Here is how to introduce a bibliographic citation~\cite{DAM}. Bibliographic references should be included in a \texttt{.bib} file. 
+\subsection{Component Integration and Testing}\label{subsec:integration_testing}
 
-Table generation is a bit complicated in Latex. You will soon become proficient, but to start you can rely on tools or external services. See for instance this \href{https://www.tablesgenerator.com}{https://www.tablesgenerator.com}. 
+Following the reference DD approach, each new component or subcomponent is first tested in isolation
+(using drivers and scaffolders that simulate external calls), and then immediately integrated with the
+existing baseline. 
+This minimizes debugging effort because errors are localized to the latest increment, and it ensures
+that already implemented features remain stable through regression tests.
+
+A practical integration order for BBP is:
+\begin{enumerate}
+    \item \textbf{Shared foundations}: database schema, persistence layer, API contracts, authentication/session handling (if applicable).
+    \item \textbf{Trip Management}: create/store trips, retrieve trip history/details; integration with DB.
+    \item \textbf{Manual Contribution}: create/update/delete contributions; store contributions; integration with DB.
+    \item \textbf{Issue Detection and Validation}: candidate issues retrieval and validation; store validated issues.
+    \item \textbf{Aggregation \& Moderation}: compute publishable segment status from contributions/validated issues.
+    \item \textbf{Path Search and Visualization}: routing integration, ranking using aggregated data, path details retrieval.
+    \item \textbf{External adapters}: routing/map API and weather service (when available), tested via mocked responses first,
+    then validated through real calls.
+\end{enumerate}
+
+For each integration step we run:
+\begin{itemize}
+    \item \textbf{Unit tests} for the new module and its boundary conditions.
+    \item \textbf{Integration tests} validating service-to-service and service-to-DB interactions.
+    \item \textbf{Regression tests} covering already implemented feature threads.
+\end{itemize}
+
+\subsection{System Testing}\label{subsec:system_testing}
+
+As suggested in the sample DD, system testing is performed continuously during development:
+as soon as a new component is integrated, the available end-to-end workflows are executed to verify
+cross-component interactions. 
+
+For BBP, system tests focus on complete user workflows corresponding to the main use cases, e.g.:
+\begin{itemize}
+    \item Record a trip $\rightarrow$ store $\rightarrow$ review in history/details (F2).
+    \item Submit a manual contribution $\rightarrow$ publish $\rightarrow$ see effect in map/path details (F3+F5).
+    \item Validate detected issues $\rightarrow$ publishable issues $\rightarrow$ visible markers/legend (F4+F5).
+    \item Search paths $\rightarrow$ rank $\rightarrow$ open details $\rightarrow$ visualize segments/issues (F5).
+\end{itemize}
+
+\subsection{Additional Specifications on Testing}\label{subsec:additional_testing}
+
+In line with the reference DD, the testing plan includes not only functional testing but also
+additional activities aimed at validating quality attributes. 
+
+\paragraph{Functional testing}
+Ensures that the implemented features satisfy the functional requirements and that
+only consistent and validated information is exposed to users.
+
+\paragraph{Performance testing}
+Targets potential bottlenecks, especially in search, ranking, and aggregation flows,
+where large amounts of data or repeated queries may occur. 
+
+\paragraph{Usability testing}
+Checks the clarity and accessibility of user interactions, particularly for map-based exploration,
+legend interpretation, and issue validation tasks. 
+
+\paragraph{Load and stress testing}
+Verifies system behavior under concurrent usage and extreme conditions, aiming to identify
+breaking points and degradation patterns. 
+
+\paragraph{User acceptance testing (alpha/beta)}
+During implementation, acceptance testing should be performed in two phases:
+(i) \textbf{alpha testing} executed internally by developers and selected stakeholders, and
+(ii) \textbf{beta testing} executed by a larger group of users in realistic conditions, in order to
+capture issues not revealed in controlled environments. 
+
