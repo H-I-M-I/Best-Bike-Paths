@@ -121,7 +121,33 @@ These services are accessed only through the Adapter Layer.
 
 \subsection{Selected architectural styles and patterns}
 % 2.6 Selected architectural styles and patterns
-% TODO: record chosen styles and patterns
+
+BBP uses a set of simple design ideas that work well with the way it interacts with users. There are two main interaction modes: (i) when a user performs an action and BBP responds immediately, and (ii) when BBP performs work in the background without making the user wait. Consequently, BBP combines synchronous request/response for interactive operations with asynchronous background processing for work that can be safely deferred.
+
+\paragraph{Synchronous interaction style (request/response)}
+\begin{itemize}
+	\item \textbf{Client--Server + RESTful API}: the Mobile App and the Admin Panel invoke backend functionality through a REST-like API over HTTPS/JSON. This covers the majority of interactive use cases (e.g., uploading/reviewing trips, reporting issues, confirming moderation actions, and searching for paths). This design keeps the clients decoupled from the backend implementation details and makes the system easier to evolve and maintain.
+	\item \textbf{Logical three-tier architecture (Presentation--Business--Data)}: BBP is organized into three tiers: Presentation (clients), Business (backend logic), and Data (database and cache). This separation keeps the user interface concerns distinct from business rules and from storage details, improving understandability and maintainability.
+	\item \textbf{Modular monolith backend}: the Business tier is implemented as a single deployable application with clear internal module boundaries. This supports cohesive behavior (e.g., consistent handling of publishable segment status) while keeping the backend evolvable as the system grows.
+	\item \textbf{Layered backend (Controller--Service--Repository)}: internally, the backend follows a layered structure:
+	\begin{itemize}
+		\item \textbf{Controller/API} handles HTTP requests and access control.
+		\item \textbf{Service/Domain} applies the business rules.
+		\item \textbf{Repository} encapsulates data access to the database and cache.
+	\end{itemize}
+	This reduces coupling across concerns and keeps persistence details separate from the domain logic.
+	\item \textbf{Adapter/Gateway pattern for external integrations}: external providers (e.g., maps and traffic updates) are accessed through an Adapter Layer. This centralizes provider-specific details and failures (timeouts, partial responses, format differences) so the rest of the system can remain simpler and more stable.
+	\item \textbf{Caching (client-side and backend)}:
+	\begin{itemize}
+		\item \textbf{Client-side offline cache}: the Mobile App temporarily stores traces and reports on the device when connectivity is poor, and synchronizes them to the server when the network is available again. This keeps the user experience responsive even under intermittent connectivity.
+		\item \textbf{Backend cache}: the Data tier includes caching for data that is read frequently or is expensive to compute or fetch. The cache is accessed through the Repository so caching does not leak into the business logic.
+	\end{itemize}
+\end{itemize}
+
+\paragraph{Asynchronous interaction style (background processing)}
+\begin{itemize}
+	\item \textbf{Asynchronous messaging (Queue + Worker)}: BBP uses a queue/worker pattern for work that is slow, bursty, or not required to complete before responding to the user (e.g., enrichment and automatic detection). This preserves responsiveness for interactive operations and decouples request handling from background processing while still persisting outcomes through the same Repository path as the synchronous workflow.
+\end{itemize}
 
 \subsection{Other design decisions}
 % 2.7 Other design decisions
