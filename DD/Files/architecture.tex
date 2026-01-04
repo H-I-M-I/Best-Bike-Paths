@@ -151,4 +151,21 @@ BBP uses a set of simple design ideas that work well with the way it interacts w
 
 \subsection{Other design decisions}
 % 2.7 Other design decisions
-% TODO: list other important design decisions (design check)
+
+\paragraph{Authentication and authorization policy}
+Protected operations require an authenticated user session. Each request to the backend includes an authentication token transmitted securely over HTTPS. Moderator capabilities are exposed through the Admin Panel, and the backend enforces role-based authorization checks to ensure that only users with the appropriate role can execute privileged operations.
+
+\paragraph{Offline synchronization policy}
+The Mobile App applies a \emph{store-and-forward} strategy for trip tracks and reports: when offline, it stores data locally and forwards it once connectivity is restored. Client submissions are designed to be safe to retry (idempotent) using stable identifiers, so temporary connectivity issues do not result in duplicated records on the backend.
+
+\paragraph{SegmentStatus consistency decision}
+For each road segment, the system maintains a single shared \emph{SegmentStatus}. Incoming reports and confirmations update this status according to consistency rules. When the system observes conflicting or non-matching information, it flags the segment for manual review. This prevents the system from presenting different statuses for the same road at the same time and helps keep SegmentStatus accurate and up to date.
+
+\paragraph{Background job execution semantics}
+The Worker executes background tasks such as enrichment, detection, and periodic refresh. Background jobs are designed to be safely retryable and to persist their outcomes through the same Repository path used by synchronous workflows, ensuring results are durable and not lost if a job needs to be re-executed.
+
+\paragraph{External-service resilience policy}
+Calls to external services are performed defensively (timeouts and limited retries when safe). If optional context such as weather or traffic data cannot be retrieved, BBP still returns core results (e.g., route options) and marks the missing enrichment as unavailable rather than failing the entire request.
+
+\paragraph{Caching policy}
+Caching is applied only to read-heavy or expensive computations (e.g., reusable ranking inputs or frequently requested route-related results). Cached entries are refreshed or invalidated when the underlying SegmentStatus changes to reduce the risk of serving stale information.
