@@ -108,16 +108,204 @@ These services are accessed only through the Adapter Layer.
 \end{itemize}
 
 \subsection{Deployment view}
-% 2.3 Deployment view
-% TODO: describe deployment topology
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\textwidth]{Figures/Deployment View.drawio.png}
+    \caption{Deployment View of Best Bike Path}
+\end{figure}
+
+\paragraph{Smartphone (Mobile Device)} \mbox{}\\
+A smartphone used by registered bikers to access BBP through the mobile application. The device provides access to GPS and inertial sensors used during trip recording and automatic issue detection. In case of intermittent connectivity, the mobile app can temporarily store trip and sensor data locally and later synchronize it when the network becomes available.
+
+\paragraph{Computer / Browser (Optional Web Access)} \mbox{}\\
+A computer (or any device) used by users to access BBP through a web browser.
+The browser interacts with the system through HTTPS requests to visualize paths on a map
+and browse public information.
+
+\paragraph{Internet / Network Connection} \mbox{}\\
+The connection between clients and the backend is established over HTTPS/TLS.
+The same network boundary separates BBP's trusted backend infrastructure from external
+third-party services.
+
+\paragraph{Firewall / Perimeter Security} \mbox{}\\
+A logical firewall protects the backend infrastructure by filtering incoming traffic and allowing
+only expected HTTPS communication toward BBP's exposed endpoints. This component
+represents the security boundary between the public Internet and the trusted backend
+network.
+
+\paragraph{Load Balancer / API Entry Point} \mbox{}\\
+The load balancer is responsible for routing client requests to available instances in a
+scalable way. It avoids overloading a single server and provides a stable access point for
+both the mobile app and the web UI.
+
+\paragraph{API Gateway / Web Server} \mbox{}\\
+The API gateway terminates HTTPS connections and exposes the REST-like API endpoints
+used by clients. It routes requests to the backend application services and can serve static
+web resources without involving application logic when applicable.
+
+\paragraph{Application Server (Backend Services)} \mbox{}\\
+The application server hosts BBP's application logic. It manages authentication, trip
+recording and review, path search and ranking, issue reporting/validation, and the
+aggregation of contributions from multiple users. It is also the component responsible for
+interacting with the persistence layer and orchestrating calls to external services when
+required by the use cases.
+
+\paragraph{Database Server} \mbox{}\\
+The database stores persistent information required by BBP, including users, trips and their
+statistics, recorded path segments, issues and confirmations, and the aggregated publishable
+status of segments. The database is only accessed by the application server, ensuring that
+clients never directly interact with stored data.
+
+\paragraph{Map / Geocoding / Routing Service (External)} \mbox{}\\
+A third-party external service used by BBP to translate user locations into geographic
+coordinates (geocoding) and to compute candidate routes between origin and destination.
+BBP uses its responses to construct and visualize candidate bike paths and to support
+ranking.
+
+\paragraph{Weather Information Service (External)} \mbox{}\\
+A third-party external service used by BBP to retrieve meteorological data (e.g., temperature,
+wind). BBP uses this data to enrich trip records and as an input factor when presenting and
+ranking paths.
 
 \subsection{Runtime view}
-% 2.4 Runtime view
-% TODO: describe runtime scenarios
+
+In this section we describe how BBP components interact at runtime to accomplish key tasks.
+The following sequence diagrams are design-level. Lifelines represent architectural
+components (client, gateway, backend services, database, external services) rather than a
+single system black box. For readability, authentication checks and minor validation steps
+are omitted unless central to the interaction.
+
+\paragraph{UC5/UC6 Search Path + View Suggested Paths} \mbox{}\\
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\textwidth]{Figures/UC5_UC6 – Search Path & View Suggested Paths (Runtime View).drawio.png}
+    \caption{Runtime View of UC5+UC6}
+\end{figure}
+\mbox{}\\
+This sequence shows how BBP answers a path query between an origin and destination. The client sends a request to the backend through the API gateway. The Path Search Service retrieves candidate routes from an external routing provider and then requests the publishable, merged segment information (SegmentStatus) for the segments involved in those routes. The Aggregation Service fetches the relevant SegmentStatus data from the database and returns it to the Path Search Service, which computes a path score combining route effectiveness and reported quality. Optionally, weather data can be retrieved from an external service and included as an additional ranking factor. Finally, the ranked paths are returned to the client for visualization on the map.
+
+\paragraph{UC1 Record Trip + Weather Enrichment} \mbox{}\\
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\textwidth]{Figures/Runtime Diagram 2 — UC1 Record Trip + Weather Enrichment.drawio.png}
+    \caption{Runtime View of UC1}
+\end{figure}
+\mbox{}\\
+In this interaction, a registered biker records a trip using the mobile application. The app starts acquiring GPS and motion-related data through OS services. Once the user stops recording, the app computes basic statistics such as duration, distance, and average speed. If connectivity is available, the client uploads the trip data to the backend through the API gateway. The Trip Management Service stores the trip and related statistics in the database and enriches the record with meteorological information retrieved from an external Weather Information Service for the trip time window and area. In case of intermittent connectivity, the client stores the trip in a local buffer and synchronizes it later when the network becomes available.
+
+\paragraph{UC3 Manual Path Contribution} \mbox{}\\
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\textwidth]{Figures/UC3 Manual Path Contribution.drawio.png}
+    \caption{Runtime View of UC3}
+\end{figure}
+\mbox{}\\
+In this interaction a registered biker manually contributes publishable information about one or more path segments. The client first retrieves candidate segments and shows them for selection. When the user submits the contribution, the backend stores it as a manual Issue. To keep public information consistent and up to date, the system then updates the aggregated publishable representation of the segment by recomputing the SegmentStatus using existing contributions and their recency/confirmation information and stores the updated SegmentStatus in the database. Finally, the system returns confirmation of the publication and the updated segment status to the user.
+
+\paragraph{UC4 Automatic Detection + User Confirmation/Correction} \mbox{}\\
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\textwidth]{Figures/UC4 — Automatic Detection + User Confirmation_Correction.drawio.png}
+    \caption{Runtime View of UC4}
+\end{figure}
+\mbox{}\\
+After a trip is recorded, the mobile client uploads a telemetry summary (e.g., travelled segments and derived motion features) to the backend through the API gateway. The Issue Detection \& Validation Service stores this data and executes an automatic detection procedure to infer candidate issues, which are stored as Issues in a pending-validation state. When the user opens the validation screen, the client retrieves the pending candidates and displays them. The user can then confirm, reject, or refine a candidate issue. The backend stores the user’s decision as a Confirmation and updates the Issue state accordingly. For confirmed/refined issues, the system triggers an update of the publishable aggregated information by recomputing the SegmentStatus for the affected segment and storing the updated SegmentStatus in the database, so that it can be used for future path ranking and visualization.
+
+
+\paragraph{G5 / F6 Aggregation and Conflict Resolution} \mbox{}\\
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\textwidth]{Figures/G5 _ F6 — Aggregation & Conflict Resolution.drawio.png}
+    \caption{Runtime View of G6/F6}
+\end{figure}
+\mbox{}\\
+This sequence describes how BBP maintains a consistent publishable view of path conditions by aggregating contributions from multiple users. Aggregation can be triggered either event-driven or periodically to refresh recent segments. The Aggregation \& Moderation Service retrieves the relevant evidence for each segment from the database and resolves conflicts by combining confirmation count and recency (freshness) into an updated SegmentStatus with an associated confidence value. The resulting SegmentStatus is persisted and becomes the authoritative aggregated information used by other services (e.g., the Path Search Service) to rank and present suggested paths.
 
 \subsection{Component interfaces}
-% 2.5 Component interfaces
-% TODO: list interfaces and API contracts
+This section provides a summary of the interfaces exposed by the components of the Best
+Bike Paths (BBP) system. The internal interface of all the system components is based on
+the REST-like interface via HTTPS, and the interactions between the system component and
+external services presuppose the existence of standard APIs that are usually provided by
+third parties. The names of the methods are abstractly defined with the prefix
+(\texttt{get}, \texttt{post}, \texttt{put}, \texttt{delete}) which mentions the type of operation.
+The use of overloading is made in cases where the same operation can take different
+parameters. The names of classes that are used as method parameters are self-explanatory
+and are in line with the terminology that is presented in the RASD.
+
+\paragraph{Authentication and User Management Interface} \mbox{}\\
+This interface controls the user authentication and the session management of registered users.
+\begin{itemize}
+    \item \texttt{post\_register(ClientID, UserData)}
+    \item \texttt{post\_login(ClientID, Credentials)}
+    \item \texttt{post\_logout(AuthToken)}
+\end{itemize}
+
+\paragraph{Trip Management Interface} \mbox{}\\
+This interface allows the recording, storing, and retrieving of personal trips that have been
+undertaken by registered users, and submission of telemetry data utilized in auto-detection of issues.
+\begin{itemize}
+    \item \texttt{post\_createTrip(TripRaw)}
+    \item \texttt{get\_listTrips(User)}
+    \item \texttt{get\_tripDetails(TripID)}
+    \item \texttt{post\_submitTelemetry(TripID, TelemetryData)}
+\end{itemize}
+
+\paragraph{Manual Contribution Interface} \mbox{}\\
+The interface permits registered users to add and update publishable information displaying
+the status of the bike paths and obstacles.
+\begin{itemize}
+    \item \texttt{get\_segments(Query)}
+    \item \texttt{post\_createManualIssue(SegmentID, Status, Obstacles, Comment)}
+    \item \texttt{put\_updateManualIssue(IssueID, UpdatedFields)}
+    \item \texttt{delete\_manualIssue(IssueID)}
+\end{itemize}
+
+\paragraph{Automatic Issue Validation Interface} \mbox{}\\
+The interface is used for accepting, rejecting, or refining automatically raised issues from
+sensor data collected during trips.
+\begin{itemize}
+    \item \texttt{get\_candidateIssues(TripID)}
+    \item \texttt{post\_confirmIssue(IssueID, ConfirmationData)}
+    \item \texttt{post\_rejectIssue(IssueID, Reason)}
+    \item \texttt{post\_skipIssue(IssueID)}
+\end{itemize}
+
+\paragraph{Path Search and Visualization Interface} \mbox{}\\
+The interface allows both registered and unregistered users to search for cycling route
+options from a given origin to destination and view information on route options.
+\begin{itemize}
+    \item \texttt{get\_searchPaths(Origin, Destination)}
+    \item \texttt{get\_pathDetails(PathID)}
+\end{itemize}
+
+\paragraph{Aggregation and Moderation Interface (Internal)} \mbox{}\\
+This internal interface engages in ensuring a stable publishable version of bike path
+conditions through convergence of input from several users.
+\begin{itemize}
+    \item \texttt{post\_updateSegmentStatus(SegmentID)}
+    \item \texttt{get\_segmentStatuses(SegmentIDList)}
+    \item \texttt{post\_refreshStatuses(TimeWindow)}
+\end{itemize}
+
+\paragraph{External Service Interfaces} \mbox{}\\
+The following interfaces are the assumed capabilities of the third-party services utilized by BBP.
+
+\paragraph{Map / Geocoding / Routing Service} \mbox{}\\
+\begin{itemize}
+    \item \texttt{get\_geocode(Location)}
+    \item \texttt{get\_candidateRoutes(Origin, Destination)}
+\end{itemize}
+
+\paragraph{Weather Information Service} \mbox{}\\
+\begin{itemize}
+    \item \texttt{get\_weatherSummary(Area, TimeWindow)}
+\end{itemize}
 
 \subsection{Selected architectural styles and patterns}
 % 2.6 Selected architectural styles and patterns
