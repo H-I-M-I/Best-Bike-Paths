@@ -1,107 +1,138 @@
 
-This chapter explains how the Best Bike Paths (BBP) system will be implemented and tested.
-The primary goal of testing is to identify and resolve bugs as early as possible, ensuring that
-each increment of the system is stable before adding new functionality.
-The implementation strategy is described in Section~\ref{subsec:impl_plan}, while
-Section~\ref{subsec:integration_testing} focuses on the integration order of components and the
-corresponding integration testing activities.
-Finally, Section~\ref{subsec:system_testing} and Section~\ref{subsec:additional_testing} discuss
-system-level and additional testing activities, respectively, in accordance with the approach
-suggested in the reference DD. % sample DD style
+In this section, the application of the system for implementation, integration and test is described in detail.
+The goal of this plan is to eliminate integration risks and to have the final system do what it is supposed to after one has put together all subsystems.
+The activities reported in this category are planned activities and shall be performed in the development and validation process. 
 
-\subsection{Implementation Plan}\label{subsec:impl_plan}
+\subsection{Implementation Strategy}
 
-Similarly to the reference DD, we adopt a combined strategy based on \textbf{bottom-up}
-and \textbf{thread} development. 
-The \textbf{thread strategy} enables incremental delivery of end-to-end user-visible features
-that can be validated early, while the \textbf{bottom-up strategy} supports gradual integration
-of services by testing intermediate subsystems step by step as additional modules are added.
+The system will be constructed as an ensemble of loosely coupled components. Each module will represent a certain role in the architecture.
+Components will communicate through well-defined interfaces. This modular approach will support parallel development and simplify testing. External services, like routing or weather providers will be accessed through
+specialized interfaces, which will reduce coupling and serve to improve testability.
 
-This mixed approach is suitable for BBP because most functionalities require cooperation
-between multiple components (mobile client, backend services, persistence, and external APIs).
-In practice, we first stabilize shared foundations (data model, API contracts, persistence access),
-then implement features as threads, integrating them continuously into a growing baseline.
+\subsection{Feature Identification}
 
-\subsubsection{Features Identification}
-The implementation plan is organized around the main functional capabilities defined in the RASD
-and refined in the DD:
+This section lists the key features of the system which will drive integration and testing work. When the complete behavior is correct, a feature will be marked as done
+and then back through the backend to user interface.
+
+The identified features will include:
 \begin{itemize}
-    \item \textbf{F2: Trip Recording and Review} (trip lifecycle, storage, trip history/details, optional enrichment).
-    \item \textbf{F3: Manual Contribution} (manual reporting of segment status/obstacles and publication).
-    \item \textbf{F4: Issue Detection and Validation} (candidate issues review, confirm/reject, publishable issues).
-    \item \textbf{F5: Path Search and Visualization} (search, ranking, map visualization, path details).
+    \item user management, including registration and authentication;
+    \item trip recording and review;
+    \item manual contribution of path information;
+    \item issue detection and validation;
+    \item path search and visualization;
+    \item aggregation and moderation of community data.
 \end{itemize}
 
-Each feature thread is delivered through iterations that include:
-(i) local implementation and unit tests,
-(ii) integration with related backend services and persistence,
-(iii) end-to-end validation of the user workflow through system tests.
+These will be used to characterize the representative integration threads and system-level test scenarios.
 
-\subsection{Component Integration and Testing}\label{subsec:integration_testing}
 
-Following the reference DD approach, each new component or subcomponent is first tested in isolation
-(using drivers and scaffolders that simulate external calls), and then immediately integrated with the
-existing baseline. 
-This minimizes debugging effort because errors are localized to the latest increment, and it ensures
-that already implemented features remain stable through regression tests.
+\subsection{Component Testing}
 
-A practical integration order for BBP is:
-\begin{enumerate}
-    \item \textbf{Shared foundations}: database schema, persistence layer, API contracts, authentication/session handling (if applicable).
-    \item \textbf{Trip Management}: create/store trips, retrieve trip history/details; integration with DB.
-    \item \textbf{Manual Contribution}: create/update/delete contributions; store contributions; integration with DB.
-    \item \textbf{Issue Detection and Validation}: candidate issues retrieval and validation; store validated issues.
-    \item \textbf{Aggregation \& Moderation}: compute publishable segment status from contributions/validated issues.
-    \item \textbf{Path Search and Visualization}: routing integration, ranking using aggregated data, path details retrieval.
-    \item \textbf{External adapters}: routing/map API and weather service (when available), tested via mocked responses first,
-    then validated through real calls.
-\end{enumerate}
+Component testing will verify the behavior of individual components in isolation,
+before any form of system-level integration is performed.
 
-For each integration step we run:
-\begin{itemize}
-    \item \textbf{Unit tests} for the new module and its boundary conditions.
-    \item \textbf{Integration tests} validating service-to-service and service-to-DB interactions.
-    \item \textbf{Regression tests} covering already implemented feature threads.
-\end{itemize}
+\paragraph{Visual Conventions.}
+The following visual conventions are used in this section. Software components or subsytems are shown as rectangular boxes.
+Solid-line boxes represent components which are actually implemented and running.
+Dashed-line boxes illustrate stubs (simulated components are employed during testing to
+replace external dependencies.
+Control or Data flow are represented with arrows between components and indicate the direction of invocation.
 
-\subsection{System Testing}\label{subsec:system_testing}
+Colors are only used to make the text more readable and do not carry any further semantics or architectural constraints.
 
-As suggested in the sample DD, system testing is performed continuously during development:
-as soon as a new component is integrated, the available end-to-end workflows are executed to verify
-cross-component interactions. 
+During component testing, all external dependencies of the component under test will be replaced by stubs.
+The number of stubs is not fixed and depends on the number of external dependencies:
+one stub will be introduced for each external system that is not part of the
+component under test.
 
-For BBP, system tests focus on complete user workflows corresponding to the main use cases, e.g.:
-\begin{itemize}
-    \item Record a trip $\rightarrow$ store $\rightarrow$ review in history/details (F2).
-    \item Submit a manual contribution $\rightarrow$ publish $\rightarrow$ see effect in map/path details (F3+F5).
-    \item Validate detected issues $\rightarrow$ publishable issues $\rightarrow$ visible markers/legend (F4+F5).
-    \item Search paths $\rightarrow$ rank $\rightarrow$ open details $\rightarrow$ visualize segments/issues (F5).
-\end{itemize}
+Figure~\ref{fig:component_testing} illustrates the planned component testing setup.
+The figure shows a test driver invoking the component under test, while all external
+dependencies are simulated using stubs.
+This setup will be used in testing the internal logic of the component without depending on outside systems like databases or third-party services.
 
-\subsection{Additional Specifications on Testing}\label{subsec:additional_testing}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{Figures/component_testing}
+    \caption{Component testing using a test driver and stubs.}
+    \label{fig:component_testing}
+\end{figure}
 
-In line with the reference DD, the testing plan includes not only functional testing but also
-additional activities aimed at validating quality attributes. 
+The caller of the component under test will be simulated by a test driver and will trigger its operations. Stubs will return predefined responses and will make tests deterministic and
+repeatable.
 
-\paragraph{Functional testing}
-Ensures that the implemented features satisfy the functional requirements and that
-only consistent and validated information is exposed to users.
+%---------------------------------------------------------
 
-\paragraph{Performance testing}
-Targets potential bottlenecks, especially in search, ranking, and aggregation flows,
-where large amounts of data or repeated queries may occur. 
+\subsection{Incremental Integration Strategy}
 
-\paragraph{Usability testing}
-Checks the clarity and accessibility of user interactions, particularly for map-based exploration,
-legend interpretation, and issue validation tasks. 
+After component testing, system integration will be performed incrementally.
+Subsystems will not be integrated all at once.
 
-\paragraph{Load and stress testing}
-Verifies system behavior under concurrent usage and extreme conditions, aiming to identify
-breaking points and degradation patterns. 
+Figure~\ref{fig:incremental_integration} shows the planned incremental integration strategy.
+Integration will proceed through successive steps, where the number of real subsystems
+will gradually increase.
+In early steps, only core infrastructure will be real, while other subsystems and
+external services will be replaced by stubs.
+As integration progresses, stubs will be progressively replaced by real components.
 
-\paragraph{User acceptance testing (alpha/beta)}
-During implementation, acceptance testing should be performed in two phases:
-(i) \textbf{alpha testing} executed internally by developers and selected stakeholders, and
-(ii) \textbf{beta testing} executed by a larger group of users in realistic conditions, in order to
-capture issues not revealed in controlled environments. 
+This approach will make it possible to identify integration problems early and
+to limit the impact of faults during later development stages.
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{Figures/incremental_integration}
+    \caption{Incremental integration strategy with progressive replacement of stubs.}
+    \label{fig:incremental_integration}
+\end{figure}
+
+%---------------------------------------------------------
+
+\subsection{Thread-Based Integration}
+
+Apart from this incremental integration, a thread-based integrated approach will be adopted.
+
+A thread is a coherent visible to the user operation that ranges many
+components.
+Thread-based integration will focus on validating full execution paths rather
+than individual subsystems.
+
+Figure~\ref{fig:thread_integration} illustrates the integration of a representative
+thread, namely the Path Search and Visualization feature.
+The diagram illustrates how the client interface, backend services, stateful storage and any external services collaborate to deliver a single functionality.
+
+This thread will be tested to allow verification of interactions across all involved components and should identify the issues which cannot be detected via
+component testing alone.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{Figures/thread_integration}
+    \caption{Thread-based integration of the Path Search and Visualization feature.}
+    \label{fig:thread_integration}
+\end{figure}
+
+%---------------------------------------------------------
+
+\subsection{Final System Integration}
+
+Once all subsystems and representative threads are integrated, the system will
+reach its final configuration.
+
+Figure~\ref{fig:final_integration} presents the fully integrated system.
+At this stage, all components will be real and no drivers or stubs will be used.
+The figure represents the system as it will be executed in production.
+
+System testing will be performed on this configuration in order to validate
+overall system behavior and interactions from the user's perspective.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{Figures/final_system}
+    \caption{Final system configuration after full integration.}
+    \label{fig:final_integration}
+\end{figure}
+
+%---------------------------------------------------------
+
+\subsection{Testing Summary}
+
+Testing will be conducted in various levels. Individual modules will be validated by component testing in isolation. Integration testing will validate interactions among subsystems using incremental and thread-based strategies. System tests will verify the behavior of the fully integrated system. This structured testing plan would enhance software quality and minimize integration risks.

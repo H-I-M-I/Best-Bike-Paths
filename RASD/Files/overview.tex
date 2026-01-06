@@ -204,7 +204,7 @@ Each function corresponds to one or more of the goals defined in Section 1.1.
     \textit{(mainly supports G2, G6)}
 
     \item[F4 --- Support for Automatic Detection and Validation of Issues]
-    BBP supports the automatic detection of possible issues on bike paths during users’ trips and their subsequent validation. Based on sensor data collected while a user is riding, the system can infer candidate issues on path segments and present them to the user, who can confirm, reject, or refine them. Only validated information becomes part of the publishable path information.\\
+    BBP supports the automatic detection of possible issues on bike paths during users' trips and their subsequent validation. Based on sensor data collected while a user is riding, the system can infer candidate issues on path segments and present them to the user, who can confirm, reject, or refine them. Only validated information becomes part of the publishable path information.\\
     \textit{(mainly supports G2, G3, G6)}
 
     \item[F5 --- Path Search and Ranked Presentation]
@@ -346,7 +346,7 @@ Every use case is provided with a sequence diagram which specifies the dynamic b
 (a) The user opens the Trips section \newline
 (b) The user selects the option to start recording a new trip \newline
 (c) The system records the start time and creates a new trip record in recording state \newline
-(d) While the trip is ongoing, the system periodically collects positional and motion-related data from the user’s device \newline
+(d) While the trip is ongoing, the system periodically collects positional and motion-related data from the user's device \newline
 (e) At the end of the ride, the user selects the option to stop recording the trip \newline
 (f) The system finalizes the trip record, stores the collected data, and marks the trip as completed \\ \hline
 \textbf{Exit Condition} &
@@ -431,7 +431,7 @@ A completed trip is stored in the system with associated raw data and can later 
 \hspace*{0.5cm}(i) confirm the issue as valid \newline
 \hspace*{0.5cm}(ii) reject it as a false positive \newline
 \hspace*{0.5cm}(iii) correct it \newline
-(d) The system updates the corresponding publishable information for the path segment according to the user’s decision \\ \hline
+(d) The system updates the corresponding publishable information for the path segment according to the user's decision \\ \hline
 \textbf{Exit Condition} & All processed candidate issues are either confirmed, rejected, or corrected, and the corresponding publishable path information is updated \\ \hline
 \textbf{Exception} &
 (b) No pending issues are available. The system informs the user and returns to the previous view \\ \hline
