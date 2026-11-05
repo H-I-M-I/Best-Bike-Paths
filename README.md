@@ -1,7 +1,7 @@
 # Best Bike Paths 
 ### Requirements Engineering and Software Architecture
 
-A software engineering project focused on specifying and designing a platform for recording cycling trips, sharing bike path conditions, and discovering suitable cycling routes.
+A software engineering project focused on specifying and designing a platform for recording cycling trips, sharing bike path conditions and discovering suitable cycling routes.
 
 Developed for the **Software Engineering 2** course at **Politecnico di Milano**, academic year **2025–2026**.
 
@@ -17,7 +17,7 @@ The proposed system supports:
 
 - **Trip recording:** Record cycling trips and review statistics such as distance and average speed.
 - **Weather information:** Enrich recorded trips with weather conditions when external data is available.
-- **Manual path reporting:** Submit information about bike paths, their condition, and relevant obstacles.
+- **Manual path reporting:** Submit information about bike paths, their condition and relevant obstacles.
 - **Automatic data collection:** Use GPS and mobile sensor data to reconstruct routes and identify potential road problems.
 - **Report confirmation:** Allow users to review and correct automatically collected information before publication.
 - **Route discovery:** Search for bike paths between an origin and a destination and compare routes based on their condition and suitability.
@@ -29,7 +29,7 @@ These capabilities describe the target system. This repository focuses on its sp
 
 ### Requirements Analysis and Specification Document (RASD)
 
-Defines the problem, expected system behaviour, and constraints, including:
+Defines the problem, expected system behaviour and constraints, including:
 
 - System goals, scope, and domain assumptions.
 - User scenarios and use cases.
@@ -48,7 +48,7 @@ Describes how the requirements map to a proposed technical solution, including:
 - Architectural styles and design decisions.
 - User interface wireframes.
 - Traceability between requirements and design elements.
-- Implementation, integration, and testing plans.
+- Implementation, integration and testing plans.
 
 ## Engineering Approach
 
